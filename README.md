@@ -12,14 +12,15 @@
 3. Fill out the table below. Note that roles are not yet defined for members of the team, they can be added later on. However, the fields of "Student name", "Student Email", and "Github Username" are mandatory to be completed the same day the repository is created. 
 
 
-| Student Name | Student Email | GitHub Username |        Role         |
-|    :---:     |     :---:     |     :---:       |        :---:        | 
-| member1      |               |                 |   Team Lead         |
-| member2      |               |                 |   Frontend Lead     |
-| member3      |               |                 |   Backend Lead      |
-| member4      |               |                 |   Github Master     |
-| member5      |               |                 |   Database Master   |
-| member6      |               |                 |   Document Editor   |
+| Student Name | Student Email         | GitHub Username |        Role         |
+|    :---:     |     :---:             |     :---:       |        :---:        | 
+| member1      |emileepadilla@gmail    |  emnemgirl22    |   Team Lead         |
+| member2      |jlee120@sfsu.edu       |  jiji14         |   Frontend Lead     |
+| member3      |cpadill2@mail.sfsu.edu |  cris-SFSU      |   Backend Lead      |
+| member4      |kazimov@mail.sfsu.edu  |  xaetbek        |   Github Master     |
+| member5      |majeff126@gmail.com    |  Jxfe           |   Database Master   |
+| member6      |mbush4@sfsu.edu        |   |   Document Editor   |
+| member7      |hmagallaneslua@sfsu.edu|   |   Team Role         |
 
 
 4. All the team members must sign the team contract found [here](https://forms.gle/PoTXjTmPGGKKZjsT6). Missing signatures from students will result in these students being dropped from the course since this means that they disagree with the policies and terms needed to work in a term environment. 
