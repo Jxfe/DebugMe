@@ -19,7 +19,7 @@
 | member3      |cpadill2@mail.sfsu.edu |  crispadilla    |   Backend Lead      |
 | member4      |kazimov@mail.sfsu.edu  |  xaetbek        |   Github Master     |
 | member5      |majeff126@gmail.com    |  Jxfe           |   Database Master   |
-| member6      |mbush4@sfsu.edu        |   |   Document Editor   |
+| member6      |mbush4@sfsu.edu        |  fattymatty15   |   Document Editor   |
 | member7      |hmagallaneslua@sfsu.edu|hectormagallanes |   Team Role         |
 
 
