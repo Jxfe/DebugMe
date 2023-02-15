@@ -16,7 +16,7 @@
 |    :---:     |     :---:             |     :---:       |        :---:        | 
 | member1      |emileepadilla@gmail    |  emnemgirl22    |   Team Lead         |
 | member2      |jlee120@sfsu.edu       |  jiji14         |   Frontend Lead     |
-| member3      |cpadill2@mail.sfsu.edu |  cris-SFSU      |   Backend Lead      |
+| member3      |cpadill2@mail.sfsu.edu |  crispadilla    |   Backend Lead      |
 | member4      |kazimov@mail.sfsu.edu  |  xaetbek        |   Github Master     |
 | member5      |majeff126@gmail.com    |  Jxfe           |   Database Master   |
 | member6      |mbush4@sfsu.edu        |   |   Document Editor   |
