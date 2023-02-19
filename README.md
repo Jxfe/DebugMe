@@ -28,7 +28,7 @@
 4. Please when ready, add your application's name and URL or IP to the following table. It is the responsability of the team lead to keep this up to date 
 
 |             Name of the Project               |                            URL of the Project                          | 
-|                    :---:                      |                                 :---:                                  |
+|                    :DebugMe:                      |                                 :---:                                  |
 |   Replace this text with your project's name  |              Replace this text with your application's URL or IP       |                                                        
  
 
