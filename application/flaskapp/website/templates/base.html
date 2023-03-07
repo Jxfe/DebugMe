@@ -12,25 +12,12 @@
       <a id="signUp" href="/sign-up">Sign Up</a>
       <a id="logout" href="/logout">Log Out</a>
       
-      <div>
       
+      
+      <div>
           {% block content %}{%endblock%}
       </div>
 </body>
-<!-->
-{% block javascript %}
-    <script type="text/javascript">
-      function deleteNote(noteId) {
-  fetch("/delete-note", {
-    method: "POST",
-    body: JSON.stringify({ noteId: noteId }),
-  }).then((_res) => {
-    window.location.href = "/";
-  });
-  }
-</script>
-{% endblock %}
-      
-<!-->
+
   
 </html>

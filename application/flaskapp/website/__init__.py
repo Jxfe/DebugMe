@@ -1,9 +1,18 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from os import path
 
+db = SQLAlchemy()
+DB_NAME = 'database.db'
 
 def setup_app():
     
     app = Flask(__name__)
+    app.config['SECRET_KEY'] = 'Team EEEEGGS'
+    
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    db.init_app(app)
     
     
     from .views import views
@@ -13,5 +22,17 @@ def setup_app():
     app.register_blueprint(views, url_prefix='/')
     
     
+    from .models import User,Note
+    
+    
+    make_database(app)
     
     return app
+
+
+def make_database(app):
+    if not path.exists('website/' + DB_NAME):
+        with app.app_context():
+            db.create_all()
+        
+        print('Databases not found making new databases')
