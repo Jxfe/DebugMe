@@ -22,12 +22,12 @@ class Post(Resource):
 
         self.Base = automap_base()
         self.Base.prepare(db.engine, reflect=True)
-        self.User_Model = self.Base.classes.User
+        self.Post_Model = self.Base.classes.User
 
     @marshal_with(resource_fields)
     def get(self, user_id):
 
-        result = db.session.query(self.User_Model).filter_by(user_id=user_id).first()
+        result = db.session.query(self.Post_Model).filter_by(user_id=user_id).first()
         if not result:
             abort(404, message='Post not in database')
 
@@ -37,7 +37,7 @@ class Post(Resource):
     def put(self, user_id):
         args = self.add_user_parser.parse_args()
 
-        result = db.session.query(self.User_Model).filter_by(user_id=args['user_id']).first()
+        result = db.session.query(self.Post_Model).filter_by(user_id=args['user_id']).first()
 
         if result:
             abort(409, message='Post already in database')
@@ -51,7 +51,7 @@ class Post(Resource):
     def patch(self, user_name):
         args = self.post_parser.parse_args()
 
-        update_post = db.session.query(self.User_Model).filter_by(user_id=user_name).first()
+        update_post = db.session.query(self.Post_Model).filter_by(user_id=user_name).first()
         if not update_post:
             abort(404, message='No user by that name')
 
@@ -74,7 +74,7 @@ class Post(Resource):
 
     def _add_post_to_database(self, post_info):
 
-        new_post = self.User_Model(content=post_info['content'],
+        new_post = self.Post_Model(content=post_info['content'],
                                    user_id=post_info['user_id'],
                                    form_id=post_info['form_id'],
                                    created_at=post_info['created_at'],
