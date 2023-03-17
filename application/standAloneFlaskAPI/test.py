@@ -5,6 +5,10 @@ data = {
     'email': 'e',
     'password': 'p'
 }
-response = requests.get(BASE + "/test", {})
+#response = requests.put(BASE + "/user/apple", {'name':'AppleMan','email':'apples@gmail.com','password':'apples'})
+#print(response)
+#print(response.json())
+
+response = requests.get(BASE + "/user-auth/AppleMan/apple", {})
 print(response)
-# print(response.json())
+print(response.json())
