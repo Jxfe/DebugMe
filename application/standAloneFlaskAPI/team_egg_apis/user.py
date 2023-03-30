@@ -65,8 +65,6 @@ class User(Resource):
 
         return patch_user, 200
 
-
-
     def _is_valid_password(self, password):
         return True
 

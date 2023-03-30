@@ -4,7 +4,7 @@ from . import db
 from werkzeug.security import check_password_hash
 
 
-class User_Auth(Resource):
+class UserAuth(Resource):
 
     def __init__(self):
         self.user_table = db.Table('User', db.metadata, autoload_with=db.engine)
@@ -20,6 +20,6 @@ class User_Auth(Resource):
             abort(404, message='User not in database')
 
         if check_password_hash(result.password, user_password):
-            return {'Valid Password': True}, 200
+            return {'message': 'Successful password match'}, 200
         else:
             abort(403, message='Passwords did not match')
