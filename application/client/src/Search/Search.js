@@ -1,16 +1,10 @@
 import { useState } from "react";
 import "./Search.css";
 
-const dummyData = [
-  { id: 1, title: "post", created_at: "03/30/2023" },
-  { id: 2, name: "user", created_at: "03/30/2023" },
-  { id: 3, title: "calander", created_at: "03/30/2023" },
-];
-
 function Search() {
   const [searchList, setSearchList] = useState(null);
   const [keyword, setKeyword] = useState("");
-  const [category, setCategory] = useState("post");
+  const [category, setCategory] = useState("Post");
 
   const resetSearch = () => {
     setSearchList(null);
@@ -19,9 +13,50 @@ function Search() {
   const submitSearch = (e) => {
     e.preventDefault();
     if (keyword === "") return;
-    const apiURL = process.env.REACT_APP_API_URL + "/search";
-    console.log(apiURL);
-    setSearchList(dummyData);
+    const apiURL = "http://127.0.0.1:5000/search";
+    const body = { category, key: keyword };
+    fetch(apiURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchList(data.data);
+      })
+      .catch((error) => {
+        setSearchList([]);
+        console.error("Error:", error);
+      });
+  };
+
+  const renderPostList = () => {
+    searchList.map((item, index) => {
+      return (
+        <div className="search-item" key={item.id + item.created_at}>
+          <div className="search-index">{index + 1}</div>
+          <div className="search-title">
+            {item.name} / {item.email}
+          </div>
+          <div className="search-date">{item.created_at}</div>
+        </div>
+      );
+    });
+  };
+
+  const renderUserList = () => {
+    searchList.map((item, index) => {
+      return (
+        <div className="search-item" key={item.id + item.created_at}>
+          <div className="search-index">{index + 1}</div>
+          <div className="search-title">{item.content}</div>
+          <div className="search-date">{item.created_at}</div>
+        </div>
+      );
+    });
   };
 
   return (
@@ -34,9 +69,8 @@ function Search() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option value="post">Post</option>
-          <option value="user">User</option>
-          <option value="calander">Calander</option>
+          <option value="Post">Post</option>
+          <option value="User">User</option>
         </select>
         <input
           className="input-box"
@@ -56,17 +90,8 @@ function Search() {
             <div className="noresult">Sorry, no result found!</div>
           ) : (
             <div>
-              {searchList.map((item, index) => {
-                return (
-                  <div className="search-item" key={item.id + item.created_at}>
-                    <div className="search-index">{index + 1}</div>
-                    <div className="search-title">
-                      {item.name ? item.name : item.title}
-                    </div>
-                    <div className="search-date">{item.created_at}</div>
-                  </div>
-                );
-              })}
+              {category === "User" && renderUserList()}
+              {category === "Post" && renderPostList()}
             </div>
           )}
         </div>
