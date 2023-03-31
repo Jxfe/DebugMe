@@ -1,20 +1,23 @@
-from flask_restful import Resource, reqparse, abort, fields, marshal_with
-from sqlalchemy.ext.automap import automap_base
-from . import db
+from flask_restful import Resource, abort
 from werkzeug.security import check_password_hash
-
+from . import db
 
 class UserAuth(Resource):
 
-    def __init__(self):
-        self.user_table = db.Table('User', db.metadata, autoload_with=db.engine)
+    class User(db.Model):
+        __tablename__ = 'User'
+        id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+        name = db.Column(db.String(255), nullable=False)
+        email = db.Column(db.String(255), nullable=False, unique=True)
+        password = db.Column(db.String(255), nullable=False)
+        userRank = db.Column(db.String(255))
+        created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.current_timestamp())
 
-        self.Base = automap_base()
-        self.Base.prepare(db.engine, reflect=True)
-        self.User_Model = self.Base.classes.User
+    def __init__(self):
+        self.User_Model = self.User
 
     def get(self, user_name, user_password):
-        result = db.session.query(self.User_Model).filter_by(name=user_name).first()
+        result = self.User_Model.query.filter_by(name=user_name).first()
 
         if not result:
             abort(404, message='User not in database')
