@@ -2,6 +2,7 @@ Flask==2.2.2
 Flask-SQLAlchemy
 flask-login
 flask-restful
+mysql-connector-python
 
 SQLAlchemy~=2.0.5.post1
 Werkzeug~=2.2.3
