@@ -21,6 +21,9 @@ class User(Resource):
 
         self.Base = automap_base()
         self.Base.prepare(db.engine, reflect=True)
+        # print('Testing connection with user table \n\n\n')
+        # print((self.user_table))
+        # print('Should say User\n\n\n')
         self.User_Model = self.Base.classes.User
 
     @marshal_with(resource_fields)
@@ -36,7 +39,7 @@ class User(Resource):
     def put(self, user_name):
         args = self.add_user_parser.parse_args()
 
-        result = db.session.query(self.User_Model).filter_by(email=args['email']).first()
+        result = db.session.query(self.user_table).filter_by(email=args['email']).first()
 
         if result:
             abort(409, message='User already in database')
@@ -66,7 +69,7 @@ class User(Resource):
         return patch_user, 200
 
     def _is_valid_password(self, password):
-        return True
+        return len(password) > 3
 
     def _add_use_to_database(self, user_info):
 

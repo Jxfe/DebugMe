@@ -2,8 +2,8 @@ from flask_restful import Resource, abort
 from werkzeug.security import check_password_hash
 from . import db
 
-class UserAuth(Resource):
 
+class UserAuth(Resource):
     class User(db.Model):
         __tablename__ = 'User'
         id = db.Column(db.Integer, primary_key=True, autoincrement=True)

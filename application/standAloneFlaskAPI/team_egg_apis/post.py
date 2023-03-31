@@ -8,7 +8,7 @@ class Post(Resource):
         'id': fields.Integer,
         'content': fields.String,
         'user_id': fields.Integer,
-        'form_id': fields.Integer,
+        'forum_id': fields.Integer,
         'created_at': fields.DateTime,
         'updated_at': fields.DateTime,
 
@@ -22,7 +22,7 @@ class Post(Resource):
 
         self.Base = automap_base()
         self.Base.prepare(db.engine, reflect=True)
-        self.Post_Model = self.Base.classes.User
+        self.Post_Model = self.Base.classes.Post
 
     @marshal_with(resource_fields)
     def get(self, user_id):
@@ -35,7 +35,7 @@ class Post(Resource):
 
     @marshal_with(resource_fields)
     def put(self, user_id):
-        args = self.add_user_parser.parse_args()
+        args = self.post_parser.parse_args()
 
         result = db.session.query(self.Post_Model).filter_by(user_id=args['user_id']).first()
 
@@ -44,14 +44,14 @@ class Post(Resource):
         elif not self._is_valid_post(args['content']):
             abort(403, message='Not valid content')
         else:
-            new_post = self._add_use_to_database(args)
+            new_post = self._add_post_to_database(args)
             return new_post, 201
 
     @marshal_with(resource_fields)
-    def patch(self, user_name):
+    def patch(self, user_id):
         args = self.post_parser.parse_args()
 
-        update_post = db.session.query(self.Post_Model).filter_by(user_id=user_name).first()
+        update_post = db.session.query(self.Post_Model).filter_by(user_id=user_id).first()
         if not update_post:
             abort(404, message='No user by that name')
 
@@ -76,8 +76,7 @@ class Post(Resource):
 
         new_post = self.Post_Model(content=post_info['content'],
                                    user_id=post_info['user_id'],
-                                   form_id=post_info['form_id'],
-                                   created_at=post_info['created_at'],
+                                   forum_id=post_info['forum_id']
 
                                    )
         db.session.add(new_post)
@@ -89,7 +88,7 @@ class Post(Resource):
         self.post_parser.add_argument("content", type=str, help="content of the post", required=False, location='form')
         self.post_parser.add_argument("user_id", type=str, help="ID of user making post", required=False,
                                       location='form')
-        self.post_parser.add_argument("form_id", type=str, help="ID of form post is in", required=False,
+        self.post_parser.add_argument("forum_id", type=str, help="ID of form post is in", required=False,
                                       location='form')
         self.post_parser.add_argument("created_at", type=str, help="When the post was made", required=False,
                                       location='form')
