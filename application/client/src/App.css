@@ -1,3 +1,15 @@
+:root {
+  --primary: #2de38e;
+  --warning: #f44336;
+  --black: #333;
+  --white: #ffffff;
+  --darkgray: #666;
+  --lightgray: #f8f8f8;
+  --defaultfont: 14px;
+  --smallfont: 12px;
+  --largefont: 24px;
+}
+
 .App {
   text-align: center;
 }

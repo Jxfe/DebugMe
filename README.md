@@ -16,11 +16,11 @@
 |    :---:     |     :---:             |     :---:       |        :---:        | 
 | member1      |emileepadilla@gmail    |  emnemgirl22    |   Team Lead         |
 | member2      |jlee120@sfsu.edu       |  jiji14         |   Frontend Lead     |
-| member3      |cpadill2@mail.sfsu.edu |  crispadilla    |   Backend Lead      |
-| member4      |kazimov@mail.sfsu.edu  |  xaetbek        |   Github Master     |
-| member5      |majeff126@gmail.com    |  Jxfe           |   Database Master   |
-| member6      |mbush4@sfsu.edu        |  fattymatty15   |   Document Editor   |
-| member7      |hmagallaneslua@sfsu.edu|hectormagallanes |   Team Role         |
+| member3      |cpadill2@mail.sfsu.edu |  crispadilla    |   Github Lead       |
+| member4      |kazimov@mail.sfsu.edu  |  xaetbek        |   Cloud Lead        |
+| member5      |majeff126@gmail.com    |  Jxfe           |   Database Lead     |
+| member6      |mbush4@sfsu.edu        |  fattymatty15   |   Backend Lead      |
+| member7      |hmagallaneslua@sfsu.edu|hectormagallanes |   Document Lead     |
 
 
 4. All the team members must sign the team contract found [here](https://forms.gle/PoTXjTmPGGKKZjsT6). Missing signatures from students will result in these students being dropped from the course since this means that they disagree with the policies and terms needed to work in a term environment. 
@@ -28,7 +28,7 @@
 4. Please when ready, add your application's name and URL or IP to the following table. It is the responsability of the team lead to keep this up to date 
 
 |             Name of the Project               |                            URL of the Project                          | 
-|                    :DebugMe:                      |                                 :---:                                  |
+|                    :DebugMe:                  |                          :http://34.220.164.81/:                       |
 |   Replace this text with your project's name  |              Replace this text with your application's URL or IP       |                                                        
  
 
