@@ -16,17 +16,11 @@ function Search() {
     if (keyword === "") return;
 
     // Todo : change API url
-    const apiURL = `http://127.0.0.1:5000/search?key=${keyword}&category=${category}`;
-    fetch(apiURL, {
-      method: "GET",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1:5000",
-      },
-    })
+    const apiURL = `http://127.0.0.1:5000/search/?key=${keyword}&category=${category}`;
+    fetch(apiURL)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.found);
         setSearchList(data.found);
       })
       .catch((error) => {
@@ -35,8 +29,8 @@ function Search() {
       });
   };
 
-  const renderPostList = () => {
-    searchList.map((item, index) => {
+  const renderUserList = () => {
+    return searchList.map((item, index) => {
       return (
         <div className="search-item" key={item.id + item.created_at}>
           <div className="search-index">{index + 1}</div>
@@ -49,8 +43,8 @@ function Search() {
     });
   };
 
-  const renderUserList = () => {
-    searchList.map((item, index) => {
+  const renderPostList = () => {
+    return searchList.map((item, index) => {
       return (
         <div className="search-item" key={item.id + item.created_at}>
           <div className="search-index">{index + 1}</div>
