@@ -10,22 +10,24 @@ function Search() {
     setSearchList(null);
     setKeyword("");
   };
+
   const submitSearch = (e) => {
     e.preventDefault();
     if (keyword === "") return;
-    const apiURL = "http://127.0.0.1:5000/search";
-    const body = { category, key: keyword };
+
+    // Todo : change API url
+    const apiURL = `http://127.0.0.1:5000/search?key=${keyword}&category=${category}`;
     fetch(apiURL, {
-      method: "POST",
+      method: "GET",
+      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://127.0.0.1:5000",
       },
-      mode: "cors",
-      body: JSON.stringify(body),
     })
       .then((response) => response.json())
       .then((data) => {
-        setSearchList(data.data);
+        setSearchList(data.found);
       })
       .catch((error) => {
         setSearchList([]);

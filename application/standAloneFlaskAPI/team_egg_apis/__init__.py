@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 app = Flask(__name__)
 
 # app.config['SECRET_KEY'] = 'Team EEEEGGS asdf as fa'
 
+cors = CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:3000"}})
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="admin",

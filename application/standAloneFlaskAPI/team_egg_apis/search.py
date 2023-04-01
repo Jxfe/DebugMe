@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse, abort, fields
+from flask_cors import cross_origin
 from . import db
 
 
@@ -12,7 +13,8 @@ class Search(Resource):
         self.user_table = db.Table('User', db.metadata, autoload_with=db.engine)
         self.post_table = db.Table('Post', db.metadata, autoload_with=db.engine)
         self._set_up_search_parser()
-
+        
+    @cross_origin()
     def get(self):
         args = self.search_parser.parse_args()
 
@@ -27,9 +29,11 @@ class Search(Resource):
             found_items['found'] = self._search_user(key)
         elif category == 'Post':
             found_items['found'] = self._search_posts(key)
+        else:
+            abort(400, message='Invalid category')
 
-        if len(found_items['found']) == 0:
-            abort(400, message='No Items matched the search')
+        # if len(found_items['found']) == 0:
+        #     abort(400, message='No Items matched the search')
 
         return found_items, 200
 
@@ -41,7 +45,7 @@ class Search(Resource):
         for user in all_users:
 
             if key in user.name or key in user.email:
-                found_items.append({'user name': user.name, 'user email': user.email})
+                found_items.append({'id': user.id, 'name': user.name, 'email': user.email, 'created_at' : user.created_at.isoformat()})
 
         return found_items
 
@@ -53,7 +57,7 @@ class Search(Resource):
         for post in all_posts:
 
             if key in post.content:
-                found_items.append({'content': post.content})
+                found_items.append({'id': post.id, 'content': post.content, 'created_at' : post.created_at.isoformat() })
 
         return found_items
 
