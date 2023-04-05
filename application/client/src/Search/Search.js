@@ -15,9 +15,13 @@ function Search() {
     e.preventDefault();
     if (keyword === "") return;
 
-    // Todo : change API url
-    const apiURL = `http://127.0.0.1:5000/search/?key=${keyword}&category=${category}`;
-    fetch(apiURL)
+    const API_URL =
+      document.location.hostname === "127.0.0.1" ||
+      document.location.hostname === "localhost"
+        ? "http://127.0.0.1:5000/"
+        : "http://35.93.49.231:5000/";
+    const api = API_URL + `search/?key=${keyword}&category=${category}`;
+    fetch(api)
       .then((response) => response.json())
       .then((data) => {
         console.log(data.found);
