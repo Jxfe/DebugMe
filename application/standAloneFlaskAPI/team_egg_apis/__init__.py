@@ -2,9 +2,10 @@ from flask import Flask
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import collections
 
 app = Flask(__name__)
-
+collections.Iterable = collections.abc.Iterable
 # app.config['SECRET_KEY'] = 'Team EEEEGGS asdf as fa'
 
 cors = CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:3000"}})
