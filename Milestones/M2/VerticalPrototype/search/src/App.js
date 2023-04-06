@@ -7,7 +7,7 @@ function App() {
   const [users, setUsers] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const base_url = "http://52.41.50.55/:5000";
+  const base_url = "http://52.41.50.55:5000";
 
   const handleSearch = async (e) => {
     e.preventDefault();
