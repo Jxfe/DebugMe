@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # app.config['SECRET_KEY'] = 'Team EEEEGGS asdf as fa'
 
