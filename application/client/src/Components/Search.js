@@ -18,7 +18,7 @@ function Search() {
     if (keyword === "") return;
 
     try {
-      const url = `${SEARCH_URL}key=${keyword}&category=${category}`;
+      const url = `${SEARCH_URL}?key=${keyword}&category=${category}`;
       const res = await axios(url);
       console.log(res);
       setSearchList(res.data.found);
