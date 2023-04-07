@@ -28,7 +28,7 @@ def create_user():
         'INSERT INTO User (name, email, password, userRank) VALUES (%s, %s, %s, %s)',
         (name, email, password, userRank)
     )
-    connection.commit()
+    mysql.connection.commit()
     cursor.close()
 
     return jsonify({"status": "success", "message": "User created successfully"}), 201
@@ -127,7 +127,7 @@ def get_posts():
 
     posts = []
     for row in rows:
-        users.append({
+        posts.append({
             "id": row[0],
             "content": row[1],
             "user_id": row[2],
@@ -150,7 +150,7 @@ def create_post():
         'INSERT INTO User (id, content, user_id, forum_id) VALUES (%s, %s, %s, %s)',
         (id, content, user_id, forum_id)
     )
-    connection.commit()
+    mysql.connection.commit()
     cursor.close()
 
     return jsonify({"status": "success", "message": "User created successfully"}), 201
