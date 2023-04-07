@@ -1,5 +1,7 @@
 import { useState } from "react";
-import "./Search.css";
+import "./style.css";
+import axios from "axios";
+import { SEARCH_URL } from "../utils/url";
 
 function Search() {
   const [searchList, setSearchList] = useState(null);
@@ -11,27 +13,19 @@ function Search() {
     setKeyword("");
   };
 
-  const submitSearch = (e) => {
+  const submitSearch = async (e) => {
     e.preventDefault();
     if (keyword === "") return;
 
-    //const API_URL = "http://35.93.49.231:5000/";
-    const API_URL =
-       document.location.hostname === "127.0.0.1" ||
-       document.location.hostname === "localhost"
-         ? "http://127.0.0.1:5000/"
-         : "http://35.93.49.231:5000/";
-    const api = API_URL + `search/?key=${keyword}&category=${category}`;
-    fetch(api)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.found);
-        setSearchList(data.found);
-      })
-      .catch((error) => {
-        setSearchList([]);
-        console.error("Error:", error);
-      });
+    try {
+      const url = `${SEARCH_URL}key=${keyword}&category=${category}`;
+      const res = await axios(url);
+      console.log(res);
+      setSearchList(res.data.found);
+    } catch (e) {
+      setSearchList([]);
+      console.log(e);
+    }
   };
 
   const renderUserList = () => {
@@ -82,7 +76,7 @@ function Search() {
           onChange={(e) => setKeyword(e.target.value)}
         />
       </form>
-      <button className="reset-button" onClick={resetSearch}>
+      <button className="button" onClick={resetSearch}>
         RESET
       </button>
       {searchList && (
