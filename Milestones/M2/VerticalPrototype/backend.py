@@ -28,7 +28,7 @@ def create_user():
         'INSERT INTO User (name, email, password, userRank) VALUES (%s, %s, %s, %s)',
         (name, email, password, userRank)
     )
-    mysql.connection.commit()
+    connection.commit()
     cursor.close()
 
     return jsonify({"status": "success", "message": "User created successfully"}), 201

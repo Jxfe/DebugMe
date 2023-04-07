@@ -6,9 +6,14 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
 
   const base_url = "http://52.41.50.55:5000";
-
+  //const base_url = "http://localhost:5000";
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
@@ -19,6 +24,17 @@ function App() {
       setErrorMessage("");
     } catch (error) {
       setErrorMessage("An error occurred while fetching users.");
+    }
+  };
+
+  const handleNewUser = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${base_url}/users`, newUser);
+      setNewUser({ name: "", email: "" });
+      setSuccessMessage("User added successfully!");
+    } catch (error) {
+      setErrorMessage("An error occurred while adding the user." + error);
     }
   };
 
@@ -50,6 +66,30 @@ function App() {
             <div className="noresult">Sorry, no result found!</div>
           ))}
       </div>
+      <h2>Add User</h2>
+      {successMessage && <p>{successMessage}</p>}
+      {errorMessage && <p>{errorMessage}</p>}
+      <form className="add-user-form" onSubmit={handleNewUser}>
+        <input
+          type="text"
+          placeholder="Name"
+          value={newUser.name}
+          onChange={(e) =>
+            setNewUser({ ...newUser, name: e.target.value })
+          }
+        />
+        <input
+          type="text"
+          placeholder="Email"
+          value={newUser.email}
+          onChange={(e) =>
+            setNewUser({ ...newUser, email: e.target.value })
+          }
+        />
+        <button className="add-user-button" type="submit">
+          Add User
+        </button>
+      </form>
     </div>
   );
 }
