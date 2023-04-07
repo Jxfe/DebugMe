@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./style.css";
 import axios from "axios";
+import { POST_URL } from "../utils/url";
 
 function Post() {
   const [post, setPost] = useState("");
@@ -13,10 +14,23 @@ function Post() {
     }
 
     console.log(post);
-
     try {
-      //   const res = await axios(url);
-      //   console.log(res);
+      const randomId = Math.floor(Math.random() * 10) + 1;
+      const url = `${POST_URL}${randomId}`;
+      console.log(url);
+      const res = await axios.post(
+        url,
+        { content: post },
+        {
+          headers: {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          },
+        }
+      );
+      if (res.data) {
+        window.alert("Your post has ben successfuly created!");
+        window.location.reload();
+      }
     } catch (e) {
       console.log(e);
     }
