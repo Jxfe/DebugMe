@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./style.css";
 import axios from "axios";
-import { SEARCH_URL } from "../utils/url";
+import { POST_URL } from "../utils/url";
 
 function Search() {
   const [searchList, setSearchList] = useState(null);
@@ -17,7 +17,7 @@ function Search() {
     if (keyword === "") return;
 
     try {
-      const url = `${SEARCH_URL}?search=${keyword}`;
+      const url = `${POST_URL}?search=${keyword}`;
       const res = await axios(url);
       console.log(res);
       setSearchList(res.data.found);

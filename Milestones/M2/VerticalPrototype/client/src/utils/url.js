@@ -5,4 +5,4 @@ const API_URL =
     : "http://35.93.49.231:5000/";
 
 export const SEARCH_URL = `${API_URL}search/`;
-export const POST_URL = `${API_URL}post/`;
+export const POST_URL = `${API_URL}posts/`;
