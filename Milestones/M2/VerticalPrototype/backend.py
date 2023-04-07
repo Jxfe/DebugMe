@@ -7,6 +7,7 @@ collections.Iterable = collections.abc.Iterable
 
 app = Flask(__name__)
 CORS(app)
+#cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 # MySQL configurations
 app.config['MYSQL_USER'] = 'admin'

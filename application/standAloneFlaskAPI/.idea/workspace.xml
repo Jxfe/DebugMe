@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d4d1c1f8-7819-4c52-bc8e-8e1b9657a73c" name="Default Changelist" comment="" />
+    <list default="true" id="d4d1c1f8-7819-4c52-bc8e-8e1b9657a73c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Milestones/M2/VerticalPrototype/backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Milestones/M2/VerticalPrototype/backend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quickTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/quickTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team_egg_apis/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/team_egg_apis/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team_egg_apis/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/team_egg_apis/user.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

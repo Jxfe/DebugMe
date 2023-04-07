@@ -35,17 +35,22 @@ class User(Resource):
 
         return result, 200
 
-    @marshal_with(resource_fields)
+    #@marshal_with(resource_fields)
     def put(self, user_name):
         args = self.add_user_parser.parse_args()
-
+        print(args)
         result = db.session.query(self.user_table).filter_by(email=args['email']).first()
+        print('got values')
 
         if result:
-            abort(409, message='User already in database')
+            print('1')
+            #abort(200, message='User already in database')
+            return {'message':'Person already in database'}, 201
         elif not self._is_valid_password(args['password']):
-            abort(403, message='Not a valid password')
+            print('2')
+            abort(200, message='Not a valid password')
         else:
+            print('3')
             new_user = self._add_use_to_database(args)
             return new_user, 201
 
@@ -84,10 +89,9 @@ class User(Resource):
 
     def _set_up_add_user_parser(self):
         self.add_user_parser = reqparse.RequestParser()
-        self.add_user_parser.add_argument("email", type=str, help="Email is required", required=True, location='form')
-        self.add_user_parser.add_argument("password", type=str, help="Must pass a password", required=True,
-                                          location='form')
-        self.add_user_parser.add_argument("name", type=str, help="Name is required", required=True, location='form')
+        self.add_user_parser.add_argument("email", type=str, help="Email is required", required=True)
+        self.add_user_parser.add_argument("password", type=str, help="Must pass a password", required=True)
+        self.add_user_parser.add_argument("name", type=str, help="Name is required", required=True)
 
     def _set_up_basic_user_parser(self):
         self.user_parser = reqparse.RequestParser()
