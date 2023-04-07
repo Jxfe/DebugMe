@@ -118,7 +118,7 @@ def get_posts():
     cursor = mysql.connection.cursor()
 
     if search:
-        cursor.execute('SELECT * FROM Post WHERE content LIKE %s ', (f'%{search}%''))
+        cursor.execute('SELECT * FROM Post WHERE content LIKE %s ', (f'%{search}%'))
     else:
         cursor.execute('SELECT * FROM Post')
 
