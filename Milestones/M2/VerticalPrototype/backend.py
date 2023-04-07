@@ -59,6 +59,8 @@ def get_users():
         })
 
     return jsonify(users)
+    
+
 
 
 @app.route('/users/<int:user_id>', methods=['GET'])
@@ -106,6 +108,53 @@ def delete_user(user_id):
     cursor.close()
 
     return jsonify({"status": "success", "message": "User deleted successfully"})
+
+
+    
+@app.route('/posts', methods=['GET'])
+def get_posts():
+    search = request.args.get('search', '')
+
+    cursor = mysql.connection.cursor()
+
+    if search:
+        cursor.execute('SELECT * FROM Post WHERE content LIKE %s ', (f'%{search}%''))
+    else:
+        cursor.execute('SELECT * FROM Post')
+
+    rows = cursor.fetchall()
+    cursor.close()
+
+    posts = []
+    for row in rows:
+        users.append({
+            "id": row[0],
+            "content": row[1],
+            "user_id": row[2],
+            "forum_id": row[3],
+            "created_at": row[4],
+            "updated_at": row[5]
+        })
+
+    return jsonify(posts)
+    
+@app.route('/posts', methods=['POST'])
+def create_post():
+    id = request.form['id']
+    content = request.form['content']
+    user_id = request.form['user_id']
+    forum_id = request.form['forum_id']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(
+        'INSERT INTO User (id, content, user_id, forum_id) VALUES (%s, %s, %s, %s)',
+        (id, content, user_id, forum_id)
+    )
+    connection.commit()
+    cursor.close()
+
+    return jsonify({"status": "success", "message": "User created successfully"}), 201
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
