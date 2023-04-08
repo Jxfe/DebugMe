@@ -4,11 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import collections
 
-collections.Iterable = collections.abc.Iterable
-
 app = Flask(__name__)
-CORS(app)
-
+collections.Iterable = collections.abc.Iterable
 # app.config['SECRET_KEY'] = 'Team EEEEGGS asdf as fa'
 
 #cors = CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:3000"}})
