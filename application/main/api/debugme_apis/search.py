@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse, abort, fields
-from flask_cors import cross_origin
-from . import db
+#from flask_cors import cross_origin
+from . import get_db
 
 
 class Search(Resource):
@@ -10,11 +10,12 @@ class Search(Resource):
     }
 
     def __init__(self):
-        self.user_table = db.Table('User', db.metadata, autoload_with=db.engine)
-        self.post_table = db.Table('Post', db.metadata, autoload_with=db.engine)
+        self.db = get_db()
+        self.user_table = self.db.Table('User', self.db.metadata, autoload_with=self.db.engine)
+        self.post_table = self.db.Table('Post', self.db.metadata, autoload_with=self.db.engine)
         self._set_up_search_parser()
         
-    @cross_origin()
+    #@cross_origin()
     def get(self):
         args = self.search_parser.parse_args()
 
@@ -38,7 +39,7 @@ class Search(Resource):
         return found_items, 200
 
     def _search_user(self, key):
-        all_users = db.session.query(self.user_table).all()
+        all_users = self.db.session.query(self.user_table).all()
 
         found_items = []
 
@@ -50,7 +51,7 @@ class Search(Resource):
         return found_items
 
     def _search_posts(self, key):
-        all_posts = db.session.query(self.post_table).all()
+        all_posts = self.db.session.query(self.post_table).all()
 
         found_items = []
 

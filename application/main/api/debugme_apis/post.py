@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse, abort, fields, marshal_with
 from sqlalchemy.ext.automap import automap_base
-from . import db
+from . import get_db
 
 
 class Post(Resource):
@@ -15,19 +15,19 @@ class Post(Resource):
     }
 
     def __init__(self):
-
+        self.db = get_db()
         self._set_up_basic_form_parser()
 
-        self.post_table = db.Table('Post', db.metadata, autoload_with=db.engine)
+        self.post_table = self.db.Table('Post', self.db.metadata, autoload_with=self.db.engine)
 
         self.Base = automap_base()
-        self.Base.prepare(db.engine, reflect=True)
+        self.Base.prepare(self.db.engine, reflect=True)
         self.Post_Model = self.Base.classes.Post
 
     @marshal_with(resource_fields)
     def get(self, user_id):
 
-        result = db.session.query(self.Post_Model).filter_by(user_id=user_id).first()
+        result = self.db.session.query(self.Post_Model).filter_by(user_id=user_id).first()
         if not result:
             abort(404, message='Post not in database')
 
@@ -37,7 +37,7 @@ class Post(Resource):
     def put(self, user_id):
         args = self.post_parser.parse_args()
 
-        result = db.session.query(self.Post_Model).filter_by(user_id=args['user_id']).first()
+        result = self.db.session.query(self.Post_Model).filter_by(user_id=args['user_id']).first()
 
         if result:
             abort(409, message='Post already in database')
@@ -51,7 +51,7 @@ class Post(Resource):
     def patch(self, user_id):
         args = self.post_parser.parse_args()
 
-        update_post = db.session.query(self.Post_Model).filter_by(user_id=user_id).first()
+        update_post = self.db.session.query(self.Post_Model).filter_by(user_id=user_id).first()
         if not update_post:
             abort(404, message='No user by that name')
 
@@ -62,7 +62,7 @@ class Post(Resource):
         if args['updated_at']:
             update_post.updated_at = args['updated_at']
 
-        db.session.commit()
+        self.db.session.commit()
 
         return update_post, 200
 
@@ -79,8 +79,8 @@ class Post(Resource):
                                    forum_id=post_info['forum_id']
 
                                    )
-        db.session.add(new_post)
-        db.session.commit()
+        self.db.session.add(new_post)
+        self.db.session.commit()
         return new_post
 
     def _set_up_basic_form_parser(self):
