@@ -1,0 +1,14 @@
+server {
+    listen 80;
+    root /home/ubuntu/debugme/Milestones/M2/VerticalPrototype/client/build;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html =404;
+    }
+
+    location /api {
+        include proxy_params;
+        proxy_pass http://localhost:5000;
+    }
+}

@@ -23,7 +23,7 @@
   padding: 8px;
 }
 
-.reset-button {
+.button {
   align-self: end;
   border: none;
   border-radius: 8px;
@@ -56,4 +56,9 @@
 .search-date {
   width: 20%;
   text-align: right;
+}
+
+.post-header {
+  text-align: left;
+  margin-top: 40px;
 }

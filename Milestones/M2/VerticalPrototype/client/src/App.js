@@ -2,7 +2,7 @@ import "./App.css";
 import Post from "./Components/Post";
 import Search from "./Components/Search";
 
-function Home() {
+function App() {
   return (
     <div className="App">
       <h1>DebugMe</h1>
@@ -12,4 +12,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default App;

@@ -10,7 +10,3 @@ if __name__ == '__main__':
     api.add_resource(Post, '/post/<int:user_id>')
     api.add_resource(Search, '/search/')
     app.run(debug=True)
-
-
-
-

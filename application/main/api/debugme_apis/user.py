@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse, abort, fields, marshal_with
 from sqlalchemy.ext.automap import automap_base
-from . import db
+from . import  get_db
 from werkzeug.security import generate_password_hash
 
 
@@ -16,11 +16,13 @@ class User(Resource):
     def __init__(self):
         self._set_up_add_user_parser()
         self._set_up_basic_user_parser()
+        
+        self.db = get_db()
 
-        self.user_table = db.Table('User', db.metadata, autoload_with=db.engine)
+        self.user_table = self.db.Table('User', self.db.metadata, autoload_with=self.db.engine)
 
         self.Base = automap_base()
-        self.Base.prepare(db.engine, reflect=True)
+        self.Base.prepare(self.db.engine, reflect=True)
         # print('Testing connection with user table \n\n\n')
         # print((self.user_table))
         # print('Should say User\n\n\n')
@@ -29,7 +31,7 @@ class User(Resource):
     @marshal_with(resource_fields)
     def get(self, user_name):
 
-        result = db.session.query(self.User_Model).filter_by(name=user_name).first()
+        result = self.db.session.query(self.User_Model).filter_by(name=user_name).first()
         if not result:
             abort(404, message='User not in database')
 
@@ -39,7 +41,7 @@ class User(Resource):
     def put(self, user_name):
         args = self.add_user_parser.parse_args()
         print(args)
-        result = db.session.query(self.user_table).filter_by(email=args['email']).first()
+        result = self.db.session.query(self.user_table).filter_by(email=args['email']).first()
         print('got values')
 
         if result:
@@ -58,7 +60,7 @@ class User(Resource):
     def patch(self, user_name):
         args = self.user_parser.parse_args()
 
-        patch_user = db.session.query(self.User_Model).filter_by(name=user_name).first()
+        patch_user = self.db.session.query(self.User_Model).filter_by(name=user_name).first()
         if not patch_user:
             abort(404, message='No user by that name')
 
@@ -69,7 +71,7 @@ class User(Resource):
         if args['password']:
             patch_user.password = generate_password_hash(args['password'], method='sha256')
 
-        db.session.commit()
+        self.db.session.commit()
 
         return patch_user, 200
 
@@ -83,8 +85,8 @@ class User(Resource):
         new_user = self.User_Model(name=user_info['name'],
                                    email=user_info['email'],
                                    password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+        self.db.session.add(new_user)
+        self.db.session.commit()
         return new_user
 
     def _set_up_add_user_parser(self):

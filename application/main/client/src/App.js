@@ -6,10 +6,10 @@ function App() {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    fetch("/api/time")
+    fetch("/user/Piper")
       .then((res) => res.json())
       .then((data) => {
-        setCurrentTime(data.time);
+        setCurrentTime(data.name);
       });
   }, []);
 
@@ -28,7 +28,7 @@ function App() {
         >
           Learn React
         </a>
-        <p>The current time is {currentTime}.</p>
+        <p>A User from the database is {currentTime}.</p>
       </header>
     </div>
   );

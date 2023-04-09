@@ -9,8 +9,8 @@ collections.Iterable = collections.abc.Iterable
 # app.config['SECRET_KEY'] = 'Team EEEEGGS asdf as fa'
 
 #cors = CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:3000"}})
-#cors = CORS(app, resources={r"/*": {"origins": "*"}})
-cors = CORS(app, resources={r"/*": {"origins": "http://52.41.50.55"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+#cors = CORS(app, resources={r"/*": {"origins": "http://52.41.50.55"}})
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="admin",
