@@ -1,5 +1,6 @@
 server {
     listen 80;
+    server_name 18.237.101.95;
     root /home/ubuntu/debugme/Milestones/M2/VerticalPrototype/client/build;
     index index.html;
 
@@ -10,5 +11,6 @@ server {
     location /api {
         include proxy_params;
         proxy_pass http://localhost:5000;
+	proxy_set_header Host $host;
     }
 }
