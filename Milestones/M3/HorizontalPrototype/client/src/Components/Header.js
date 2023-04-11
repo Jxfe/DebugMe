@@ -10,6 +10,7 @@ function Header() {
       <nav className="wrapper link-wrapper">
         <Link to="/posts">Posts</Link>
         <Link to="/premiumguides">Premium Gudies</Link>
+        <Link to="/calendar">Calendar</Link>
       </nav>
       <nav className="wrapper link-wrapper">
         <Link to="/mypage">My Page</Link>
