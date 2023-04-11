@@ -61,9 +61,6 @@ def get_users():
 
     return jsonify(users)
 
-
-
-
 @app.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     cursor = mysql.connection.cursor()
@@ -138,29 +135,19 @@ def get_posts():
             "updated_at": row[5]
         })
 
-    # posts = [{
-    #     "id": 1,
-    #     "content": "Test",
-    #     "user_id": 1234,
-    #     "forum_id": 1,
-    #     "created_at": "now",
-    #     "updated_at": "null"
-    # }]
-
     return jsonify(posts)
 
 @app.route('/api/posts', methods=['POST'])
 def create_post():
-    id = request.form['id']
+    #id = request.form['id']
     content = request.form['content']
     user_id = request.form['user_id']
     forum_id = request.form['forum_id']
 
     cursor = mysql.connection.cursor()
     cursor.execute(
-        'INSERT INTO Post (id, content, user_id, forum_id, created_at, updated_at) VALUES (%(id)s, %(content)s, %(user_id)s, %(forum_id)s, NOW(), NOW())',
-        ({'id': id,
-          'content': content,
+        'INSERT INTO Post (content, user_id, forum_id) VALUES (%(content)s, %(user_id)s, %(forum_id)s)',
+        ({'content': content,
           'user_id': user_id,
           'forum_id': forum_id})
     )
@@ -168,7 +155,6 @@ def create_post():
     cursor.close()
 
     return jsonify({"status": "success", "message": "User created successfully"}), 201
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

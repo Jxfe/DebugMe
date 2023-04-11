@@ -15,19 +15,34 @@ function Post() {
 
     console.log(post);
     try {
-      const randomId = Math.floor(Math.random() * 10) + 1;
+      const randomId = Math.floor(Math.random() * (10 - 1) + 1);
       const url = `${POST_URL}`;
-      console.log(url);
-      const res = await axios.post(url, {
-        data: { content: post, id: randomId, user_id: 3, forum_id: randomId },
+      const body = {
+        content: post,
+        id: randomId,
+        user_id: 3,
+        forum_id: 1
+      };
+
+      axios({
+        method: "post",
+        url: url,
+        data: body,
         headers: {
-          "Access-Control-Allow-Headers": "Content-Type, Authorization"
+          "Content-Type": "application/x-www-form-urlencoded"
         }
-      });
-      if (res.data) {
-        window.alert("Your post has ben successfuly created!");
-        window.location.reload();
-      }
+      })
+        .then((response) => {
+          console.log("got a response from post");
+          if (response.data) {
+            window.alert("Your post has ben successfuly created!");
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          console.log("got an error from post");
+          console.log(err);
+        });
     } catch (e) {
       console.log(e);
     }
