@@ -4,6 +4,7 @@
   --black: #333;
   --white: #ffffff;
   --darkgray: #666;
+  --gray: #e6e6e6;
   --lightgray: #f8f8f8;
   --defaultfont: 14px;
   --smallfont: 12px;
@@ -19,6 +20,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.wrapper {
-  margin: 20px 40px;
+.layout {
+  padding: 20px;
 }

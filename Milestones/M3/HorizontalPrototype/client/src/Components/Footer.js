@@ -1,5 +1,7 @@
+import "./style.css";
+
 function Footer() {
-  return <div>Footer</div>;
+  return <div className="footer-wrapper">This is Footer.</div>;
 }
 
 export default Footer;

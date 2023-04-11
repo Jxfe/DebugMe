@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.header-wrapper {
+  border-bottom: 1px solid var(--gray);
+}
+
+.link-wrapper {
+  gap: 20px;
+}
+
+.link-wrapper > a {
+  text-decoration: none;
+  color: var(--black);
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.footer-wrapper {
+  background-color: var(--lightgray);
+  height: 200px;
+  padding: 20px;
+}
