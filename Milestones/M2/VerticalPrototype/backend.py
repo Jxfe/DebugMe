@@ -6,8 +6,8 @@ import collections
 collections.Iterable = collections.abc.Iterable
 
 app = Flask(__name__)
-CORS(app)
-#cors = CORS(app, resources={r"/*": {"origins": "*"}})
+#CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # MySQL configurations
 app.config['MYSQL_USER'] = 'admin'
@@ -60,7 +60,7 @@ def get_users():
         })
 
     return jsonify(users)
-    
+
 
 
 
@@ -111,20 +111,21 @@ def delete_user(user_id):
     return jsonify({"status": "success", "message": "User deleted successfully"})
 
 
-    
-@app.route('/posts', methods=['GET'])
+
+@app.route('/api/posts', methods=['GET'])
 def get_posts():
     search = request.args.get('search', '')
 
     cursor = mysql.connection.cursor()
 
     if search:
-        cursor.execute('SELECT * FROM Post WHERE content LIKE %s ', (f'%{search}%'))
+        cursor.execute('SELECT * FROM Post WHERE content LIKE %(search)s ', {'search': search})
     else:
         cursor.execute('SELECT * FROM Post')
 
     rows = cursor.fetchall()
     cursor.close()
+
 
     posts = []
     for row in rows:
@@ -137,9 +138,18 @@ def get_posts():
             "updated_at": row[5]
         })
 
+    # posts = [{
+    #     "id": 1,
+    #     "content": "Test",
+    #     "user_id": 1234,
+    #     "forum_id": 1,
+    #     "created_at": "now",
+    #     "updated_at": "null"
+    # }]
+
     return jsonify(posts)
-    
-@app.route('/posts', methods=['POST'])
+
+@app.route('/api/posts', methods=['POST'])
 def create_post():
     id = request.form['id']
     content = request.form['content']
@@ -148,14 +158,17 @@ def create_post():
 
     cursor = mysql.connection.cursor()
     cursor.execute(
-        'INSERT INTO User (id, content, user_id, forum_id) VALUES (%s, %s, %s, %s)',
-        (id, content, user_id, forum_id)
+        'INSERT INTO Post (id, content, user_id, forum_id, created_at, updated_at) VALUES (%(id)s, %(content)s, %(user_id)s, %(forum_id)s, NOW(), NOW())',
+        ({'id': id,
+          'content': content,
+          'user_id': user_id,
+          'forum_id': forum_id})
     )
     mysql.connection.commit()
     cursor.close()
 
     return jsonify({"status": "success", "message": "User created successfully"}), 201
-    
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

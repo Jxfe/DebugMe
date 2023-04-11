@@ -20,7 +20,8 @@ function Search() {
       const url = `${POST_URL}?search=${keyword}`;
       const res = await axios(url);
       console.log(res);
-      setSearchList(res.data.found);
+      console.log(res.data);
+      setSearchList(res.data);
     } catch (e) {
       setSearchList([]);
       console.log(e);

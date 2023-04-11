@@ -16,17 +16,14 @@ function Post() {
     console.log(post);
     try {
       const randomId = Math.floor(Math.random() * 10) + 1;
-      const url = `${POST_URL}${randomId}`;
+      const url = `${POST_URL}`;
       console.log(url);
-      const res = await axios.post(
-        url,
-        { content: post },
-        {
-          headers: {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-          },
+      const res = await axios.post(url, {
+        data: { content: post, id: randomId, user_id: 3, forum_id: randomId },
+        headers: {
+          "Access-Control-Allow-Headers": "Content-Type, Authorization"
         }
-      );
+      });
       if (res.data) {
         window.alert("Your post has ben successfuly created!");
         window.location.reload();
