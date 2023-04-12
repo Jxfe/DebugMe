@@ -1,3 +1,4 @@
+import React from "react"; // Needed for AWS since it's using node 16
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Footer from "./Components/Footer";
