@@ -25,12 +25,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: "./Milestones/M3/HorizontalPrototype/client/package-lock.json"
+          clean: false
       - run: npm ci
       - run: npm run build --if-present
       - run: sudo systemctl stop nginx
       - run: sudo systemctl start nginx
 
-      - uses: actions/checkout@v3
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
