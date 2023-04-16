@@ -1,32 +1,27 @@
 name: Deploy to AWS Production
 on:
   push:
-    branches:
-      — master
-  jobs:
-    deploy:
-      name: Deploy branch master
-      runs-on: ubuntu-latest
+    branches: [ "master" ]
+  # pull_request:
+  #   branches: [ "master" ]
 
-      steps:
-        — name: Checkout
-          uses: actions/checkout@v3
+jobs:
+  build:
 
-        - name: Configure AWS credentials
-          with:
-            host: ${{ secrets.AWS_PRODUCTION }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.PRIVATE_KEY }}
-            script: |
-              cd /home/ubuntu/debugme/Milestones/M3/HorizontalPrototype/client
-              git pull origin master
-              sudo systemctl stop debugme
-              sudo systemctl stop nginx
-              rm -r build nodes_modules
-              yarn install
-              yarn build
-             # source api/env/bin/activate
-             # pip3 install -r api/requirements.txt
-             # deactivate
-              sudo systemctl start degubme
-              sudo systemctl start nginx`
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: cd /home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/Milestones/M3/HorizontalPrototype/client
+    - run: npm ci
+    - run: npm run build --if-present
