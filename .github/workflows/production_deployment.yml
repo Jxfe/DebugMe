@@ -7,9 +7,12 @@ on:
     deploy:
       name: Deploy branch master
       runs-on: ubuntu-latest
+
       steps:
-        — name: Checkout and restart the server
-          uses: appleboy/ssh-action@master
+        — name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Configure AWS credentials
           with:
             host: ${{ secrets.AWS_PRODUCTION }}
             username: ${{ secrets.USERNAME }}
@@ -26,4 +29,4 @@ on:
              # pip3 install -r api/requirements.txt
              # deactivate
               sudo systemctl start degubme
-              sudo systemctl start nginx
+              sudo systemctl start nginx`
