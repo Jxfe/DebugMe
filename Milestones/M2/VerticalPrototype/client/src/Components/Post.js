@@ -16,7 +16,8 @@ function Post() {
     console.log(post);
     try {
       const randomId = Math.floor(Math.random() * (10 - 1) + 1);
-      const url = `${POST_URL}`;
+      //const url = `${POST_URL}`;
+      const url = "/api/posts";
       const body = {
         content: post,
         id: randomId,
