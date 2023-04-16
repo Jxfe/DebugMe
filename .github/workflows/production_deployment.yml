@@ -1,31 +1,46 @@
 name: Deploy to AWS Production
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   # pull_request:
   #   branches: [ "master" ]
 
 jobs:
   build:
-
     runs-on: self-hosted
     defaults:
       run:
         working-directory: ./Milestones/M3/HorizontalPrototype/client
-    
+
     strategy:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: './Milestones/M3/HorizontalPrototype/client/package-lock.json'
-    #- run: cd /home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/Milestones/M3/HorizontalPrototype/client
-    - run: npm ci
-    - run: npm run build --if-present
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "./Milestones/M3/HorizontalPrototype/client/package-lock.json"
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: source env/bin/activate
+      - run: pip3 install -r api/requirements.txt
+      - run: deactivate
+
+  # verticalPrototype:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: executing remote ssh commands using password
+  #     uses: appleboy/ssh-action@v0.1.10
+  #     with:
+  #       host: ${{ secrets.AWS_PROTOTYPES }}
+  #       username: ${{ secrets.USERNAME }}
+  #       password: ${{ secrets.PRIVATE_KEY }}
+  #       port: ${{ secrets.AWS_PORT }}
+  #       script: whoami
