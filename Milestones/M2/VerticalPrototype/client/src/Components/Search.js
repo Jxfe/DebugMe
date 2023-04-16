@@ -17,7 +17,8 @@ function Search() {
     if (keyword === "") return;
 
     try {
-      const url = `${POST_URL}?search=${keyword}`;
+      //const url = `${POST_URL}?search=${keyword}`;
+      const url = `/api/posts?search=${keyword}`;
       console.log("Search URL: " + POST_URL);
       const res = await axios(url);
       console.log(res);

@@ -1,0 +1,29 @@
+name: Deploy to AWS Production
+on:
+  push:
+    branches:
+      — master
+  jobs:
+    deploy:
+      name: Deploy branch master
+      runs-on: ubuntu-latest
+      steps:
+        — name: Checkout and restart the server
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.AWS_PRODUCTION }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.PRIVATE_KEY }}
+            script: |
+              cd /home/ubuntu/debugme/Milestones/M3/HorizontalPrototype/client
+              git pull origin master
+              sudo systemctl stop debugme
+              sudo systemctl stop nginx
+              rm -r build nodes_modules
+              yarn install
+              yarn build
+             # source api/env/bin/activate
+             # pip3 install -r api/requirements.txt
+             # deactivate
+              sudo systemctl start degubme
+              sudo systemctl start nginx

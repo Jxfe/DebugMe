@@ -111,7 +111,8 @@ def delete_user(user_id):
 
 @app.route('/api/posts', methods=['GET'])
 def get_posts():
-    search = request.args.get('search', '')
+    input = request.args.get('search', '')
+    search = '%' + input + '%'
 
     cursor = mysql.connection.cursor()
 
