@@ -5,9 +5,10 @@ function Main() {
     <div>
       <div>Main</div>
       <Button
-        className="disabled-button"
-        content="test"
+        className="default-button"
+        content="jiji"
         onClickEvent={() => window.alert("test")}
+        isDisabled={false}
       />
     </div>
   );
