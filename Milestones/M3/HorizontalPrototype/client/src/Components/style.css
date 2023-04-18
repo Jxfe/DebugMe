@@ -29,7 +29,6 @@
   padding: 20px;
 }
 .button {
-  width: 120px;
   border: none;
   border-radius: 8px;
   padding: 8px;
@@ -45,4 +44,18 @@
 .disabled-button {
   background-color: var(--gray);
   color: var(--black);
+}
+
+.default-input {
+  padding: 8px;
+  border: 1px solid var(--darkgray);
+  background-color: var(--lightgray);
+  border-radius: 8px;
+}
+
+.default-textarea {
+  padding: 8px;
+  border: 1px solid var(--darkgray);
+  background-color: var(--lightgray);
+  border-radius: 8px;
 }
