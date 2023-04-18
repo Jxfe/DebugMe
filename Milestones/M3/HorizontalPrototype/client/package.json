@@ -17,6 +17,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "start:dev": "concurrently --kill-others 'npm start' 'cd api &&  env/bin/gunicorn -w 2 --reload -b 127.0.0.1:5000 \"run:create_app(\\\"production\\\")\"'",
+    "update:requirements": "pip3 freeze > api/requirements.txt",
+    "install:requirements": "pip3 install -r api/requirements.txt",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
