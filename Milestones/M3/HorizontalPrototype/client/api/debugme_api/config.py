@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 load_dotenv()    # Load environment variables from .env
 
 class Config:
-    """Add credentials here
+    """Add credentials here. Note: you must have a .env file on this directory, with the
+    desired values.
     """
 
     # Add AWS settings
