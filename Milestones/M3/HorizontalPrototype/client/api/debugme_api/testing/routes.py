@@ -1,6 +1,6 @@
 from flask import request, flash, jsonify, Blueprint, render_template
 from debugme_api.config import Config
-from debugme_api import db
+from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text
 
 tests = Blueprint('tests', __name__)
