@@ -1,15 +1,11 @@
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
-import './style.css';
-import Button from '../../Components/Button';
-
-import Main from '../Main/Main';
-
-function Calendar() {
-  return (
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Calendar</title>
+    <link rel="stylesheet" type="text/css" href="Calendar.css">
+  </head>
+  <body>
     <div class="calendar-container">
-      
-      
         <div class="calendar">
           <div class="month"> 
             <h2>April 2023</h2> 
@@ -66,10 +62,8 @@ function Calendar() {
         
         <div class="filter-container">
           <div class="calendar-filters">
-            
-            <Button className='filter-button' content='Type' />
-            <Button className='filter-button' onClickEvent={ ()=>useState("premiumguides") } content='Distance' />
-      
+            <button class="filter-button">Type</button>
+            <button class="filter-button">Distance</button>
           </div>
             
           <div class="event-buttons">
@@ -89,8 +83,9 @@ function Calendar() {
         </div>
         
     </div>
+      
+    
 
-);
-}
+  </body>
+</html>
 
-export default Calendar;
