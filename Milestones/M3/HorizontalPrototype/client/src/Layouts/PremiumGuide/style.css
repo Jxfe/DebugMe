@@ -1,0 +1,58 @@
+.container {
+  width: 1400px;
+  height: 580px;
+  background-color: lightgrey;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  margin: 0 auto;
+}
+
+h3 {
+  font-family: Arial, sans-serif;
+  margin-left: 12%;
+  font-size: 25px;
+}
+
+table {
+  width: 100%;
+  background-color: auto;
+  border: none;  
+}
+
+th, td {
+  padding: 20px;
+  border: none;
+  text-align: left;
+}
+
+.btn {
+  display: block;
+  margin: 0 auto;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/*To remove the underline from links */
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }
+
