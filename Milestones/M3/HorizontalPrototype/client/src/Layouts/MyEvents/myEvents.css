@@ -34,3 +34,11 @@
   display: flex;
   justify-content: right;
 }
+
+.active {
+  background-color: lightskyblue;
+}
+
+.inactive {
+  background-color: lightgray;
+}

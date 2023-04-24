@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
-import EventInfo_1 from "./EventInfo_1";
-import EventInfo_2 from "./EventInfo_2";
+import EventInfoOne from "./EventInfoOne";
+import EventInfoTwo from "./EventInfoTwo";
 
 function Form() {
   const FormPageTitles = ["Event Description", "Event Image"];
@@ -16,12 +17,16 @@ function Form() {
 
   const DisplayPage = () => {
     if (page === 0) {
-      return <EventInfo_1 formData={formData} setFormData={setFormData} />;
+      return <EventInfoOne formData={formData} setFormData={setFormData} />;
     } else {
-      return <EventInfo_2 formData={formData} setFormData={setFormData} />;
+      return <EventInfoTwo formData={formData} setFormData={setFormData} />;
     }
   };
 
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/myevents");
+  };
   return (
     <div className="form">
       <div className="progress-bar"></div>
@@ -39,11 +44,10 @@ function Form() {
             content="Previous"
           />
           <Button
-            // isDisabled={page === FormPageTitles.length - 1}
             onClickEvent={() => {
               if (page === FormPageTitles.length - 1) {
                 alert("Event Created");
-                console.log(formData);
+                handleClick();
               } else {
                 setPage((currentPage) => currentPage + 1);
               }

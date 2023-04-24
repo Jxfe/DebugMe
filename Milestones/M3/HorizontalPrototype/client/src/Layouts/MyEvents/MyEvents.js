@@ -1,16 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./myEvents.css";
 import Button from "../../Components/Button";
 
 const MyEvent = () => {
+  const [activeBtn, setActiveBtn] = useState({
+    activeObject: null,
+    objects: [{ id: 0 }, { id: 1 }, { id: 2 }],
+    contents: ["Attending", "Hosting", "Saved"]
+  });
+  const navigate = useNavigate();
+
+  const goToCreateEvent = () => {
+    navigate("/createevent");
+  };
+
+  function toggleActiveStyle(index) {
+    if (activeBtn.objects[index] === activeBtn.activeObject) {
+      return "active";
+    } else {
+      return "undefined";
+    }
+  }
+
+  function toggleActive(index) {
+    setActiveBtn({
+      ...activeBtn,
+      activeObject: activeBtn.objects[index]
+    });
+  }
+
   return (
     <main className="container">
       <h3>Your Events</h3>
       <div className="events-container">
         <div className="events-buttons">
-          <Button content="Attending" />
-          <Button content="Hosting" />
-          <Button content="Saved" />
+          {activeBtn.objects.map((elements, index) => (
+            <Button
+              key={index}
+              className={toggleActiveStyle(index)}
+              content={activeBtn.contents[index]}
+              onClickEvent={() => {
+                toggleActive(index);
+              }}
+            />
+          ))}
         </div>
         <div>
           <ul>
@@ -21,7 +55,7 @@ const MyEvent = () => {
         </div>
       </div>
       <div className="create-btn-container">
-        <Button content="Create" />
+        <Button content="Create" onClickEvent={goToCreateEvent} />
       </div>
     </main>
   );
