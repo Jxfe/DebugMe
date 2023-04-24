@@ -1,0 +1,12 @@
+.forum-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 66%;
+    background-color: var(--lightgray);
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button-center {
+    margin: auto;
+}
