@@ -12,6 +12,7 @@ import PremiumGuide from "./Layouts/PremiumGuide/PremiumGuide";
 import UpgradePage from "./Layouts/PremiumGuide/UpgradePage";
 import SuccessPage from "./Layouts/PremiumGuide/SuccessPage";
 import ShowGuide from "./Layouts/PremiumGuide/ShowGuide";
+import FeedbackPage from "./Layouts/PremiumGuide/FeedbackPage";
 import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="upgradepage" element={<UpgradePage />} />
           <Route path="successpage" element={<SuccessPage />} />
           <Route path="showguide" element={<ShowGuide />} />
+          <Route path="feedbackpage" element={<FeedbackPage />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="*" element={<Error />} />
         </Routes>
