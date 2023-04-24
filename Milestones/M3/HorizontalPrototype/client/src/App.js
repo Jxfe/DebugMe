@@ -13,6 +13,7 @@ import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
 import MyEvents from "./Layouts/MyEvents/MyEvents";
 import CreateEvent from "./Layouts/MyEvents/CreateEvent";
+import Event from "./Layouts/MyEvents/Event";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="myevents" element={<MyEvents />} />
           <Route path="createevent" element={<CreateEvent />} />
+          <Route path="event" element={<Event />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>

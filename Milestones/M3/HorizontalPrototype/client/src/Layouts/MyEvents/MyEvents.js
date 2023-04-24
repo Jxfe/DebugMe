@@ -5,7 +5,7 @@ import Button from "../../Components/Button";
 
 const MyEvent = () => {
   const [activeBtn, setActiveBtn] = useState({
-    activeObject: null,
+    activeObject: { id: 0 },
     objects: [{ id: 0 }, { id: 1 }, { id: 2 }],
     contents: ["Attending", "Hosting", "Saved"]
   });
@@ -35,16 +35,32 @@ const MyEvent = () => {
       <h3>Your Events</h3>
       <div className="events-container">
         <div className="events-buttons">
-          {activeBtn.objects.map((elements, index) => (
+          {/* {activeBtn.objects.map((elements, index) => (
             <Button
               key={index}
               className={toggleActiveStyle(index)}
               content={activeBtn.contents[index]}
-              onClickEvent={() => {
-                toggleActive(index);
-              }}
+              onClickEvent={() => toggleActive(index)}
             />
-          ))}
+          ))} */}
+          <Button
+            key={0}
+            className={toggleActiveStyle(0)}
+            content={activeBtn.contents[0]}
+            onClickEvent={() => toggleActive(0)}
+          />
+          <Button
+            key={1}
+            className={toggleActiveStyle(1)}
+            content={activeBtn.contents[1]}
+            onClickEvent={() => toggleActive(1)}
+          />
+          <Button
+            key={2}
+            className={toggleActiveStyle(2)}
+            content={activeBtn.contents[2]}
+            onClickEvent={() => toggleActive(2)}
+          />
         </div>
         <div>
           <ul>
