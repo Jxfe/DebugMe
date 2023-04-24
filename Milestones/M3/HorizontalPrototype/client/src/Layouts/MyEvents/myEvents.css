@@ -1,0 +1,36 @@
+.container {
+  margin: 0 auto;
+  max-width: 600px; /* set maximum width of the container */
+  max-height: 300px;
+  border: 1px solid #ccc;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+}
+
+.events-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.events-buttons {
+  display: block;
+}
+
+.button {
+  display: block;
+  width: 120px;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.create-btn-container {
+  display: flex;
+  justify-content: right;
+}

@@ -11,6 +11,8 @@ import Posts from "./Layouts/Posts/Posts";
 import PremiumGuide from "./Layouts/PremiumGuide/PremiumGuide";
 import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
+import MyEvents from "./Layouts/MyEvents/MyEvents";
+import CreateEvent from "./Layouts/MyEvents/CreateEvent";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="posts" element={<Posts />} />
           <Route path="premiumguides" element={<PremiumGuide />} />
           <Route path="mypage" element={<MyPage />} />
+          <Route path="myevents" element={<MyEvents />} />
+          <Route path="createevent" element={<CreateEvent />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
