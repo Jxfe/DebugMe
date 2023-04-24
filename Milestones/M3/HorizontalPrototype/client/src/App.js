@@ -9,6 +9,9 @@ import Main from "./Layouts/Main/Main";
 import MyPage from "./Layouts/MyPage/MyPage";
 import Posts from "./Layouts/Posts/Posts";
 import PremiumGuide from "./Layouts/PremiumGuide/PremiumGuide";
+import UpgradePage from "./Layouts/PremiumGuide/UpgradePage";
+import SuccessPage from "./Layouts/PremiumGuide/SuccessPage";
+import ShowGuide from "./Layouts/PremiumGuide/ShowGuide";
 import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
 
@@ -24,6 +27,9 @@ function App() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="posts" element={<Posts />} />
           <Route path="premiumguides" element={<PremiumGuide />} />
+          <Route path="upgradepage" element={<UpgradePage />} />
+          <Route path="successpage" element={<SuccessPage />} />
+          <Route path="showguide" element={<ShowGuide />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="*" element={<Error />} />
         </Routes>
