@@ -12,7 +12,6 @@ function PremiumGuides() {
                     <th>No</th>
                     <th>Title</th>
                     <th>Author</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>

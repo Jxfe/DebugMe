@@ -15,7 +15,7 @@ function SubmitFeedback() {
         <a href="#" class="fas fa-star s4"></a>
         <a href="#" class="fas fa-star s5"></a>
       </div> <br/><br/><br/><br/><br/>
-      <Link class="submit">Submit</Link>
+      <Link to={"/premiumguides"} class="submit">Submit</Link>
     </div>
   );
 }
