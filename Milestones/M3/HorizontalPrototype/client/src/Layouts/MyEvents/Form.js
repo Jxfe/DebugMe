@@ -5,29 +5,12 @@ import EventInfoOne from "./EventInfoOne";
 import EventInfoTwo from "./EventInfoTwo";
 
 function Form() {
-  // const [eventIndex, setEventIndex] = useState(() => {
-  //   if (localStorage.getItem("eventIndex")) {
-  //     return JSON.parse(localStorage.getItem("eventIndex"));
-  //   } else {
-  //     return 0;
-  //   }
-  // });
-
   const [eventIndex, setEventIndex] = useState(
     JSON.parse(localStorage.getItem("eventIndex")) || 0
   );
 
-  const [events, setEvents] = useState(() => {
-    if (localStorage.getItem("eventData")) {
-      return JSON.parse(localStorage.getItem("eventData"));
-    } else {
-      return [];
-    }
-  });
-  const FormPageTitles = ["Event Description", "Event Image"];
-  const [page, setPage] = useState(0);
   const [formData, setFormData] = useState({
-    id: -1,
+    id: eventIndex,
     title: "",
     location: "",
     date: "",
@@ -35,23 +18,17 @@ function Form() {
     membersOnly: false
   });
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem("eventData");
+  const [events, setEvents] = useState(
+    JSON.parse(localStorage.getItem("eventData")) || []
+  );
 
-  //   if (data) {
-  //     setEvents(JSON.parse(data));
-  //   }
-  // }, []);
+  const [page, setPage] = useState(0);
+  const FormPageTitles = ["Event Description", "Event Image"];
 
   useEffect(() => {
-    console.log("inside useEffect");
+    console.log("Inside useEffect. Events data:");
     localStorage.setItem("eventData", JSON.stringify(events));
-    //localStorage.setItem("eventData", JSON.stringify(formData));
   }, [events]);
-
-  // useEffect(() => {
-  //   localStorage.setItem("eventIndex", eventIndex + 1);
-  // }, [eventIndex]);
 
   const DisplayPage = () => {
     if (page === 0) {
@@ -63,8 +40,11 @@ function Form() {
 
   const navigate = useNavigate();
   const handleClick = () => {
-    // localStorage.setItem("eventData", JSON.stringify(formData));
+    const tmpArr = [...events];
+    tmpArr.push(formData);
     localStorage.setItem("eventIndex", eventIndex + 1);
+    localStorage.setItem("eventData", JSON.stringify(tmpArr));
+    setEvents(tmpArr);
     navigate("/myevents");
   };
   return (
@@ -87,8 +67,6 @@ function Form() {
             onClickEvent={() => {
               if (page === FormPageTitles.length - 1) {
                 alert("Event Created");
-                setFormData({ ...formData, id: eventIndex });
-                setEvents((prevState) => [...prevState, formData]);
                 setEventIndex((prevIndex) => prevIndex + 1);
                 handleClick();
               } else {
