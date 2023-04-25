@@ -19,7 +19,7 @@ import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
 import UpdatePayment from "./Layouts/UpdatePayment/UpdatePayment";
 import MyEvents from "./Layouts/MyEvents/MyEvents";
-import CreateEvent from "./Layouts/MyEvents/CreateEvent";
+// import CreateEvent from "./Layouts/MyEvents/CreateEvent";
 import Event from "./Layouts/MyEvents/Event";
 import CreateGuide from "./Layouts/CreateGuide/CreateGuide";
 
@@ -41,7 +41,7 @@ function App() {
           <Route path="feedback" element={<Feedback />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="myevents" element={<MyEvents />} />
-          <Route path="createevent" element={<CreateEvent />} />
+          {/* <Route path="createevent" element={<CreateEvent />} /> */}
           <Route path="event/:id" element={<Event />} />
           <Route path="mypage" exact element={<MyPage />} />
           <Route

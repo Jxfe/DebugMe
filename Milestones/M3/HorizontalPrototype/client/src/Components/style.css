@@ -76,9 +76,9 @@
   border-bottom: 2px solid var(--primary);
 }
 
-.modal {
+.common-modal {
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
@@ -87,7 +87,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.common-modal-content {
   background-color: var(--white);
   margin: 10% auto;
   padding: 20px;
@@ -101,7 +101,7 @@
   justify-content: space-between;
 }
 
-.close {
+.common-modal-close {
   float: right;
   color: var(--darkgray);
   font-size: 40px;
@@ -109,13 +109,14 @@
   margin-top: -10px;
 }
 
-.close:hover,
-.close:focus {
+.common-modal-close:hover,
+.common-modal-close:focus {
   text-decoration: none;
   cursor: pointer;
 }
 
-.modal-button {
+.common-modal-button {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
 }
