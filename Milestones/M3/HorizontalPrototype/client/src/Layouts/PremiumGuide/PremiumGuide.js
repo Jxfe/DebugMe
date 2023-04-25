@@ -1,43 +1,43 @@
 import React from "react"; // Needed for AWS since it's using node 16
 import './style.css';
+import { Link } from "react-router-dom";
 
-function PremiumGuide() {
+function PremiumGuides() {
   return (
     <div><h3>Premium Guides</h3>
     <div class="container">
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>How to ace interviews?</td>
-                <td>Anna</td>
-                <td><a href="#" class="btn">Get Access</a></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Important leetcode problems</td>
-                <td>Josh</td>
-                <td><a href="#" class="btn">Get Access</a></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>The most important algorithm questions</td>
-                <td>Mark</td>
-                <td><a href="#" class="btn">Get Access</a></td>
-            </tr>
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>How to ace interviews?</td>
+                    <td>Anna</td>
+                    <td><Link to="/upgradepage" class="feedback-btn">Get Access</Link></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Important leetcode problems</td>
+                    <td>Josh</td>
+                    <td><Link to="/upgradepage" class="feedback-btn">Get Access</Link></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>The most important algorithm questions</td>
+                    <td>Mark</td>
+                    <td><Link to="/upgradepage" class="feedback-btn">Get Access</Link></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     </div>
   );
 }
 
-export default PremiumGuide;
+export default PremiumGuides;
