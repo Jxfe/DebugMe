@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../../Components/Button";
 import "./style.css";
 
 function UpdatePayment() {
@@ -50,9 +51,7 @@ function UpdatePayment() {
             <p>3 or 4 digits usually found <br /> on the signature strip</p>
           </div>
         </div>
-        <button className="proceed-btn" type="submit">
-          Submit
-        </button>
+        <Button className="default-button" content="Submit" />
       </div>
     </form>
   );
