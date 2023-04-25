@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./myEvents.css";
 import Button from "../../Components/Button";
 
 const MyEvent = () => {
+  const navigate = useNavigate();
   const [activeBtn, setActiveBtn] = useState({
     activeObject: { id: 0 },
     objects: [{ id: 0 }, { id: 1 }, { id: 2 }],
     contents: ["Attending", "Hosting", "Saved"]
   });
-  const navigate = useNavigate();
 
   const goToCreateEvent = () => {
     navigate("/createevent");
@@ -64,9 +64,9 @@ const MyEvent = () => {
         </div>
         <div>
           <ul>
-            <li>Event 1</li>
-            <li>Event 2</li>
-            <li>Event 3</li>
+            <li>
+              <Link to="/event/1">Event 1</Link>
+            </li>
           </ul>
         </div>
       </div>

@@ -30,7 +30,7 @@ function App() {
           <Route path="mypage" element={<MyPage />} />
           <Route path="myevents" element={<MyEvents />} />
           <Route path="createevent" element={<CreateEvent />} />
-          <Route path="event" element={<Event />} />
+          <Route path="event/:id" element={<Event />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>

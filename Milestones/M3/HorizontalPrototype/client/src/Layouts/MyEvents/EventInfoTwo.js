@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../Components/Button";
 import Switch from "../../Components/Switch";
 
-const EventInfo_2 = ({ formData, setFormData }) => {
+const EventInfoTwo = ({ formData, setFormData }) => {
   return (
     <div>
       <div className="event-form2">
@@ -24,4 +24,4 @@ const EventInfo_2 = ({ formData, setFormData }) => {
   );
 };
 
-export default EventInfo_2;
+export default EventInfoTwo;

@@ -2,7 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const EventInfo_1 = ({ formData, setFormData }) => {
+const EventInfoOne = ({ formData, setFormData }) => {
   return (
     <div className="event-form1">
       <input
@@ -31,4 +31,4 @@ const EventInfo_1 = ({ formData, setFormData }) => {
   );
 };
 
-export default EventInfo_1;
+export default EventInfoOne;
