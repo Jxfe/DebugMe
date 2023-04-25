@@ -26,7 +26,7 @@ const mentoringLists = [
     requestedDate: "3-21",
   },
 ];
-function Chatting() {
+function MentoringRequest() {
   const navigate = useNavigate();
   const [selectedMentoring, setSelectedMentoring] = useState(null);
   const [showAcceptModal, setShowAcceptModal] = useState(false);
@@ -100,4 +100,4 @@ function Chatting() {
   );
 }
 
-export default Chatting;
+export default MentoringRequest;
