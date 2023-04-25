@@ -12,6 +12,9 @@ import PremiumGuide from "./Layouts/PremiumGuide/PremiumGuide";
 import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
 import UpdatePayment from "./Layouts/UpdatePayment/UpdatePayment";
+import MyEvents from "./Layouts/MyEvents/MyEvents";
+import CreateEvent from "./Layouts/MyEvents/CreateEvent";
+import Event from "./Layouts/MyEvents/Event";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
           <Route path="posts" element={<Posts />} />
           <Route path="premiumguides" element={<PremiumGuide />} />
           <Route path="mypage" element={<MyPage />} />
+          <Route path="myevents" element={<MyEvents />} />
+          <Route path="createevent" element={<CreateEvent />} />
+          <Route path="event/:id" element={<Event />} />
           <Route path="*" element={<Error />} />
           <Route path="updatepayment" element={<UpdatePayment />} />
         </Routes>
