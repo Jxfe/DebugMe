@@ -1,10 +1,26 @@
 import "./style.css";
 import React, { useState } from "react"; // Needed for AWS since it's using node 16
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Popover from "@mui/material/Popover";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
 
 function Header() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   return (
     <header className="wrapper header-wrapper">
@@ -41,6 +57,32 @@ function Header() {
             >
               My Page
             </Link>
+            <Badge badgeContent={2} color="primary" className="header-badge">
+              <MailIcon
+                color="action"
+                aria-describedby={id}
+                onClick={handleClick}
+              />
+            </Badge>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <div className="popover-container">
+                <div onClick={() => navigate("/mypage/mentoring-requests")}>
+                  You have a new montoring request.
+                </div>
+                <div onClick={() => navigate("/mypage/messages")}>
+                  You have a new message.
+                </div>
+              </div>
+            </Popover>
             <Link to="/signout">Sign Out</Link>
           </>
         ) : (

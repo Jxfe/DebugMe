@@ -40,7 +40,7 @@ const messageList = [
 ];
 
 function Messages() {
-  const [selectedMentoring, setSelectedMentoring] = useState(null);
+  const [selectedMentoring, setSelectedMentoring] = useState(mentoringLists[0]);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState(messageList);
 

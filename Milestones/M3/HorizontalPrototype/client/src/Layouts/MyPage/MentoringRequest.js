@@ -28,12 +28,12 @@ const mentoringLists = [
 ];
 function MentoringRequest() {
   const navigate = useNavigate();
-  const [selectedMentoring, setSelectedMentoring] = useState(null);
+  const [selectedMentoring, setSelectedMentoring] = useState(mentoringLists[0]);
   const [showAcceptModal, setShowAcceptModal] = useState(false);
   const [showDeclineModal, setShowDeclineModal] = useState(false);
 
   const sendMessage = () => {
-    navigate("/messages");
+    navigate("/mypage/messages");
   };
 
   return (
@@ -75,25 +75,25 @@ function MentoringRequest() {
             </div>
           )}
         </div>
-        {selectedMentoring && (
-          <>
-            <Modal
-              title="New Mentoring"
-              content={`Start message to ${selectedMentoring.name}`}
-              buttonContent="SEND"
-              buttonAction={sendMessage}
-              showModal={showAcceptModal}
-              closeModal={() => setShowAcceptModal(false)}
-            />
-            <Modal
-              title="New Mentoring"
-              content={`You declined ${selectedMentoring.name}'s mentoring request`}
-              buttonContent="CLOSE"
-              buttonAction={() => setShowDeclineModal(false)}
-              showModal={showDeclineModal}
-              closeModal={() => setShowDeclineModal(false)}
-            />
-          </>
+        {showAcceptModal && (
+          <Modal
+            title="New Mentoring"
+            content={`Start message to ${selectedMentoring.name}`}
+            buttonContent="SEND"
+            buttonAction={sendMessage}
+            showModal={showAcceptModal}
+            closeModal={() => setShowAcceptModal(false)}
+          />
+        )}
+        {showDeclineModal && (
+          <Modal
+            title="New Mentoring"
+            content={`You declined ${selectedMentoring.name}'s mentoring request`}
+            buttonContent="CLOSE"
+            buttonAction={() => setShowDeclineModal(false)}
+            showModal={showDeclineModal}
+            closeModal={() => setShowDeclineModal(false)}
+          />
         )}
       </div>
     </div>
