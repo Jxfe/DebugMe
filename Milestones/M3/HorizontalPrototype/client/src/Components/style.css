@@ -16,6 +16,11 @@
 .link-wrapper > a {
   text-decoration: none;
   color: var(--black);
+  padding-bottom: 10px;
+}
+
+.link-wrapper > div {
+  padding-bottom: 10px;
 }
 
 .logo {
@@ -29,7 +34,6 @@
   padding: 20px;
 }
 .button {
-  width: 120px;
   border: none;
   border-radius: 8px;
   padding: 8px;
@@ -42,7 +46,76 @@
   box-shadow: 4px 4px var(--lightgray);
 }
 
+.outline-button {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  border-radius: 8px;
+  box-shadow: 4px 4px var(--lightgray);
+}
+
 .disabled-button {
   background-color: var(--gray);
   color: var(--black);
+}
+
+.default-input {
+  padding: 8px;
+  border: 1px solid var(--darkgray);
+  background-color: var(--lightgray);
+  border-radius: 8px;
+}
+
+.default-textarea {
+  padding: 8px;
+  border: 1px solid var(--darkgray);
+  background-color: var(--lightgray);
+  border-radius: 8px;
+}
+
+.highlight {
+  border-bottom: 2px solid var(--primary);
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: var(--white);
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid var(--darkgray);
+  border-radius: 16px;
+  width: 80%;
+  height: 60vh;
+  font-size: var(--largefont);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.close {
+  float: right;
+  color: var(--darkgray);
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+.close:hover,
+.close:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-button {
+  display: flex;
+  justify-content: flex-end;
 }
