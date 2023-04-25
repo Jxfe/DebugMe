@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './style.css';
+import Button from "../../Components/Button";
 
 function SignIn() {
   const [username, setUsername] = useState('');
@@ -22,7 +23,11 @@ function SignIn() {
         <div className="form-group">
           <input type="password" name="password" id="password" placeholder="Password" />
         </div>
-        <button type="submit" className="login-btn">Sign In</button>
+        <Button 
+          className="default-button"
+          content="Submit"
+          onClickEvent={handleSubmit}
+          />
       </form>
       <div className="signup-link">
         Don't have an account? <a href="./signup">Sign up</a>
