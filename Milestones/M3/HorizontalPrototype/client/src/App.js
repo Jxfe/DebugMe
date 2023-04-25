@@ -4,6 +4,7 @@ import "./App.css";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Calendar from "./Layouts/Calendar/Calendar";
+import MentoringRequest from "./Layouts/MyPage/MentoringRequest";
 import Error from "./Layouts/Error/Error";
 import Main from "./Layouts/Main/Main";
 import MyPage from "./Layouts/MyPage/MyPage";
@@ -26,7 +27,11 @@ function App() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="posts" element={<Posts />} />
           <Route path="premiumguides" element={<PremiumGuide />} />
-          <Route path="mypage" element={<MyPage />} />
+          <Route path="mypage" exact element={<MyPage />} />
+          <Route
+            path="mypage/mentoring-requests"
+            element={<MentoringRequest />}
+          />
           <Route path="*" element={<Error />} />
           <Route path="updatepayment" element={<UpdatePayment />} />
           <Route path="CreateGuide" element={<CreateGuide />} />

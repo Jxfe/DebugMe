@@ -1,21 +1,54 @@
 import "./style.css";
-import React from "react"; // Needed for AWS since it's using node 16
-import { Link } from "react-router-dom";
+import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import { Link, useLocation } from "react-router-dom";
 
 function Header() {
+  const { pathname } = useLocation();
+  const [isSignIn, setIsSignIn] = useState(true);
+
   return (
     <header className="wrapper header-wrapper">
       <Link className="logo" to="/">
         DEBUGME
       </Link>
       <nav className="wrapper link-wrapper">
-        <Link to="/posts">Posts</Link>
-        <Link to="/premiumguides">Premium Guides</Link>
-        <Link to="/calendar">Calendar</Link>
+        <Link
+          to="/posts"
+          className={pathname.includes("posts") ? "highlight" : null}
+        >
+          Posts
+        </Link>
+        <Link
+          to="/premiumguides"
+          className={pathname.includes("premiumguides") ? "highlight" : null}
+        >
+          Premium Guides
+        </Link>
+        <Link
+          to="/calendar"
+          className={pathname.includes("calendar") ? "highlight" : null}
+        >
+          Calendar
+        </Link>
       </nav>
       <nav className="wrapper link-wrapper">
-        <Link to="/mypage">My Page</Link>
-        <Link to="/signin">Sign In</Link>
+        <div>Hello, Jose!</div>
+        {isSignIn ? (
+          <>
+            <Link
+              to="/mypage"
+              className={pathname.includes("mypage") ? "highlight" : null}
+            >
+              My Page
+            </Link>
+            <Link to="/signout">Sign Out</Link>
+          </>
+        ) : (
+          <>
+            <Link to="/signin">Sign In</Link>
+            <Link to="/signup">Sign Up</Link>
+          </>
+        )}
       </nav>
     </header>
   );
