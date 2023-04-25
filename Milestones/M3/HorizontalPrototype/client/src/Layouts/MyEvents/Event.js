@@ -5,12 +5,14 @@ import "./event.css";
 
 const Event = () => {
   const { id } = useParams();
+  const data = JSON.parse(localStorage.getItem("eventData"));
 
   return (
     <main className="container">
+      <h4>{data[id].title}</h4>
       <div>
         <div className="event-header">
-          <h3>Event {id}</h3>
+          <span>[ Attending ]</span>
         </div>
         <div className="event-body">
           <div className="event-participants">
