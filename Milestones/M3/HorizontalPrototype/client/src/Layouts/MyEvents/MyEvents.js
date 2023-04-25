@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./myEvents.css";
 import Button from "../../Components/Button";
 
 const MyEvent = () => {
   const navigate = useNavigate();
+  const [eventInfo, setEventInfo] = useState();
   const [activeBtn, setActiveBtn] = useState({
     activeObject: { id: 0 },
     objects: [{ id: 0 }, { id: 1 }, { id: 2 }],
     contents: ["Attending", "Hosting", "Saved"]
   });
 
-  const goToCreateEvent = () => {
-    navigate("/createevent");
-  };
+  useEffect(() => {
+    toggleActive(0);
+    toggleActiveStyle(0);
+    toggleDisplay(0);
+  }, []);
 
   function toggleActiveStyle(index) {
     if (activeBtn.objects[index] === activeBtn.activeObject) {
@@ -24,49 +27,61 @@ const MyEvent = () => {
   }
 
   function toggleActive(index) {
+    toggleDisplay(index);
     setActiveBtn({
       ...activeBtn,
       activeObject: activeBtn.objects[index]
     });
   }
 
+  function toggleDisplay(index) {
+    if (index === 0) {
+      setEventInfo("Not attending any events");
+    } else if (index === 1) {
+      const data = !localStorage.getItem("eventData") ? (
+        <li>Not hosting any events</li>
+      ) : (
+        JSON.parse(localStorage.getItem("eventData")).map((element, index) => (
+          <li>
+            <Link to={`/event/${index}`}>{element.title}</Link>
+          </li>
+        ))
+      );
+      setEventInfo(<div>{data}</div>);
+    } else {
+      setEventInfo("No events saved");
+    }
+  }
+
+  const goToCreateEvent = () => {
+    navigate("/createevent");
+  };
+
   return (
     <main className="container">
       <h3>Your Events</h3>
       <div className="events-container">
         <div className="events-buttons">
-          {/* {activeBtn.objects.map((elements, index) => (
+          {activeBtn.objects.map((elements, index) => (
             <Button
               key={index}
               className={toggleActiveStyle(index)}
               content={activeBtn.contents[index]}
               onClickEvent={() => toggleActive(index)}
             />
-          ))} */}
-          <Button
-            key={0}
-            className={toggleActiveStyle(0)}
-            content={activeBtn.contents[0]}
-            onClickEvent={() => toggleActive(0)}
-          />
-          <Button
-            key={1}
-            className={toggleActiveStyle(1)}
-            content={activeBtn.contents[1]}
-            onClickEvent={() => toggleActive(1)}
-          />
-          <Button
-            key={2}
-            className={toggleActiveStyle(2)}
-            content={activeBtn.contents[2]}
-            onClickEvent={() => toggleActive(2)}
-          />
+          ))}
         </div>
         <div>
           <ul>
-            <li>
+            {eventInfo}
+            {/* {!localStorage.getItem("eventData") ? (
+              <li>Not hosting Any Events</li>
+            ) : (
+              true
+            )} */}
+            {/* <li>
               <Link to="/event/1">Event 1</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
