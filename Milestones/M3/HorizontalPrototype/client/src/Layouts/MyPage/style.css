@@ -1,0 +1,44 @@
+.chatting-layout {
+  margin-top: 40px;
+  display: flex;
+  gap: 40px;
+}
+
+.mentoring-list {
+  background-color: var(--lightgray);
+  padding: 20px;
+  flex: 1;
+  border-radius: 4px;
+  min-height: 60vh;
+}
+
+.chatting-box {
+  background-color: var(--lightgray);
+  padding: 20px;
+  flex: 2;
+  border-radius: 4px;
+  min-height: 60vh;
+}
+
+.request-name {
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: var(--largefont);
+  cursor: pointer;
+  border-bottom: 1px solid var(--darkgray);
+}
+
+.mentoring-detail {
+  padding: 20px;
+  font-size: var(--largefont);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  align-self: flex-end;
+}
