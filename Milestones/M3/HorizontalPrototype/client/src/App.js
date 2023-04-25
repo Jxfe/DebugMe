@@ -11,6 +11,7 @@ import Posts from "./Layouts/Posts/Posts";
 import PremiumGuide from "./Layouts/PremiumGuide/PremiumGuide";
 import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
+import UpdatePayment from "./Layouts/UpdatePayment/UpdatePayment";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="premiumguides" element={<PremiumGuide />} />
           <Route path="mypage" element={<MyPage />} />
           <Route path="*" element={<Error />} />
+          <Route path="updatepayment" element={<UpdatePayment />} />
         </Routes>
       </div>
       <Footer />

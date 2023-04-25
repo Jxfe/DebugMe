@@ -1,0 +1,147 @@
+/* Global */
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body,
+  html {
+    height: 100%;
+    min-height: 100%;
+  }
+  
+  body {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  /* Credit Card */
+  
+  .credit-card {
+    width: 360px;
+    height: auto;
+    margin: 60px auto 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-header {
+    height: 60px;
+    padding: 20px 30px 0;
+    border-bottom: 1px solid #e1e8ee;
+  }
+  
+  .form-body {
+    height: auto;
+    padding: 30px 30px 20px;
+  }
+  
+  /* Title */
+  
+  .title {
+    margin: 0;
+    color: #5e6977;
+    font-size: 18px;
+  }
+  
+  /* Common */
+  
+  .card-number,
+  .cvv-input input,
+  .monthdate select,
+  .year select {
+    height: 42px;
+  }
+  
+  .card-number,
+  .cvv-input input,
+  .monthdate select,
+  .year select {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 14px;
+  }
+  
+  .card-number,
+  .cvv-details,
+  .cvv-input input,
+  .monthdate select,
+  .year select {
+    color: #86939e;
+    opacity: 0.7;
+  }
+  
+  /* Card Number */
+  
+  .card-number {
+    width: 100%;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border: 2px solid #e1e8ee;
+    border-radius: 6px;
+  }
+  
+  /* Date Field */
+  
+  .date-field {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .monthdate select,
+  .year select {
+    width: 145px;
+    padding-left: 20px;
+    border: 2px solid #e1e8ee;
+    border-radius: 6px;
+    background-position: 85% 50%;
+  }
+  
+  /* Card Verification Field */
+  
+  .card-verification {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .cvv-input input {
+    width: 145px;
+    padding-left: 20px;
+    border: 2px solid #e1e8ee;
+    border-radius: 6px;
+    background: #fff;
+  }
+  
+  .cvv-details {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16px;
+  }
+  
+  .cvv-details p {
+    margin-top: 6px;
+  }
+  
+  /* Submit Button */
+  
+  .proceed-btn {
+    cursor: pointer;
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #7dc855;
+    color: #fff;
+    transition: background 0.3s ease;
+  }
+  
+  .proceed-btn:hover {
+    background: #6ab344;
+  }
+  
+  
