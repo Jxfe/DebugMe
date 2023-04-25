@@ -16,11 +16,6 @@ container {
   justify-content: left;
 }
 
-/* .event-body {
-  display: flex;
-  justify-content: space-around;
-} */
-
 .event-footer {
   display: flex;
   justify-content: right;
