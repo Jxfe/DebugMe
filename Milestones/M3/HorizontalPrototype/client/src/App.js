@@ -18,6 +18,9 @@ import Feedback from "./Layouts/PremiumGuide/Feedback";
 import SignIn from "./Layouts/SignIn/SignIn";
 import SignUp from "./Layouts/SignUp/SignUp";
 import UpdatePayment from "./Layouts/UpdatePayment/UpdatePayment";
+import MyEvents from "./Layouts/MyEvents/MyEvents";
+import CreateEvent from "./Layouts/MyEvents/CreateEvent";
+import Event from "./Layouts/MyEvents/Event";
 import CreateGuide from "./Layouts/CreateGuide/CreateGuide";
 
 function App() {
@@ -32,20 +35,20 @@ function App() {
           <Route path="calendar" element={<Calendar />} />
           <Route path="posts" element={<Posts />} />
           <Route path="premiumguides" element={<PremiumGuide />} />
-<<<<<<< HEAD
           <Route path="upgradepage" element={<UpgradePage />} />
           <Route path="successpage" element={<SuccessPage />} />
           <Route path="showguide" element={<ShowGuide />} />
           <Route path="feedback" element={<Feedback />} />
           <Route path="mypage" element={<MyPage />} />
-=======
+          <Route path="myevents" element={<MyEvents />} />
+          <Route path="createevent" element={<CreateEvent />} />
+          <Route path="event/:id" element={<Event />} />
           <Route path="mypage" exact element={<MyPage />} />
           <Route
             path="mypage/mentoring-requests"
             element={<MentoringRequest />}
           />
           <Route path="mypage/messages" element={<Messages />} />
->>>>>>> 0f8d69f8c36e3431a1ba50b42c80751bbac51276
           <Route path="*" element={<Error />} />
           <Route path="updatepayment" element={<UpdatePayment />} />
           <Route path="CreateGuide" element={<CreateGuide />} />

@@ -1,0 +1,37 @@
+container {
+  margin: 0 auto;
+  max-width: 600px; /* set maximum width of the container */
+  max-height: 300px;
+  border: 1px solid #ccc;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+}
+
+.event-header {
+  display: flex;
+  position: relative;
+  justify-content: left;
+}
+
+/* .event-body {
+  display: flex;
+  justify-content: space-around;
+} */
+
+.event-footer {
+  display: flex;
+  justify-content: right;
+}
+
+.event-participants {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.event-participants-btns {
+  display: flex;
+}
