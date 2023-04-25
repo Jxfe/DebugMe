@@ -1,5 +1,6 @@
 import React from "react"; // Needed for AWS since it's using node 16
 import './style.css';
+import { Link } from "react-router-dom";
 
 function PremiumGuides() {
   return (
@@ -19,19 +20,19 @@ function PremiumGuides() {
                     <td>1</td>
                     <td>How to ace interviews?</td>
                     <td>Anna</td>
-                    <td><a href="/upgradepage" class="btn">Get Access</a></td>
+                    <td><Link to="/upgradepage" class="feedback-btn">Get Access</Link></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Important leetcode problems</td>
                     <td>Josh</td>
-                    <td><a href="/upgradepage" class="btn">Get Access</a></td>
+                    <td><Link to="/upgradepage" class="feedback-btn">Get Access</Link></td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>The most important algorithm questions</td>
                     <td>Mark</td>
-                    <td><a href="/upgradepage" class="btn">Get Access</a></td>
+                    <td><Link to="/upgradepage" class="feedback-btn">Get Access</Link></td>
                 </tr>
             </tbody>
         </table>

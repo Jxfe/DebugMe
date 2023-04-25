@@ -239,6 +239,11 @@ a:active { text-decoration: none; }
   color: #064579;
 }
 
+.nav-name {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+}
+
 .main {
   margin-left: 140px; /* Same width as the sidebar + left position in px */
   font-size: 28px; /* Increased text to enable scrolling */
