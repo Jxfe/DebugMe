@@ -1,4 +1,4 @@
-container {
+.container {
   margin: 0 auto;
   max-width: 600px; /* set maximum width of the container */
   max-height: 300px;

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 import EventInfoOne from "./EventInfoOne";
 import EventInfoTwo from "./EventInfoTwo";
+import "./createEvent.css";
 
 function Form() {
   const [eventIndex, setEventIndex] = useState(
@@ -48,34 +49,29 @@ function Form() {
     navigate("/myevents");
   };
   return (
-    <div className="form">
-      <div className="progress-bar"></div>
-      <div className="form-container">
-        <div className="form-header">
-          <h3>{FormPageTitles[page]}</h3>
-        </div>
-        <div className="form-body">{DisplayPage()}</div>
-        <div className="form-footer btn-container">
-          <Button
-            isDisabled={page === 0}
-            onClickEvent={() => {
-              setPage((currentPage) => currentPage - 1);
-            }}
-            content="Previous"
-          />
-          <Button
-            onClickEvent={() => {
-              if (page === FormPageTitles.length - 1) {
-                alert("Event Created");
-                setEventIndex((prevIndex) => prevIndex + 1);
-                handleClick();
-              } else {
-                setPage((currentPage) => currentPage + 1);
-              }
-            }}
-            content={page === FormPageTitles.length - 1 ? "Create" : "Next"}
-          />
-        </div>
+    <div className="container">
+      <h3 className="title">{FormPageTitles[page]}</h3>
+      <div className="form-body">{DisplayPage()}</div>
+      <div className="form-footer btn-container">
+        <Button
+          isDisabled={page === 0}
+          onClickEvent={() => {
+            setPage((currentPage) => currentPage - 1);
+          }}
+          content="Previous"
+        />
+        <Button
+          onClickEvent={() => {
+            if (page === FormPageTitles.length - 1) {
+              alert("Event Created");
+              setEventIndex((prevIndex) => prevIndex + 1);
+              handleClick();
+            } else {
+              setPage((currentPage) => currentPage + 1);
+            }
+          }}
+          content={page === FormPageTitles.length - 1 ? "Create" : "Next"}
+        />
       </div>
     </div>
   );

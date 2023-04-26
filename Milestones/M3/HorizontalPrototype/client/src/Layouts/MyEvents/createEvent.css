@@ -24,6 +24,8 @@
 .event-form2 {
   display: flex;
   margin: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .members-only-block {
@@ -35,4 +37,40 @@
 .create-btn {
   display: flex;
   justify-content: right;
+}
+
+.form-container {
+  margin-top: 0;
+}
+
+.form-header {
+  margin: 0;
+  height: 20px;
+}
+
+.title {
+  position: relative;
+  margin-top: 0;
+}
+
+.form-image {
+  width: 200px;
+  text-align: center;
+}
+
+.form-image-input {
+  width: 230px;
+  height: 50px;
+}
+
+.form-image-delete {
+  height: 25px;
+  align-content: center;
+  align-items: center;
+}
+
+.image-btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
 }
