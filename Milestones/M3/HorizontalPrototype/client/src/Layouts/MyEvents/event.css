@@ -1,4 +1,4 @@
-container {
+.container {
   margin: 0 auto;
   max-width: 600px; /* set maximum width of the container */
   max-height: 300px;
@@ -15,11 +15,6 @@ container {
   position: relative;
   justify-content: left;
 }
-
-/* .event-body {
-  display: flex;
-  justify-content: space-around;
-} */
 
 .event-footer {
   display: flex;

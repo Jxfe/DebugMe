@@ -47,9 +47,9 @@ const MyEvent = () => {
           </li>
         ))
       );
-      setEventInfo(<div>{data}</div>);
+      setEventInfo(<li>{data}</li>);
     } else {
-      setEventInfo("No events saved");
+      setEventInfo(<li>No events saved</li>);
     }
   }
 
@@ -72,17 +72,7 @@ const MyEvent = () => {
           ))}
         </div>
         <div>
-          <ul>
-            {eventInfo}
-            {/* {!localStorage.getItem("eventData") ? (
-              <li>Not hosting Any Events</li>
-            ) : (
-              true
-            )} */}
-            {/* <li>
-              <Link to="/event/1">Event 1</Link>
-            </li> */}
-          </ul>
+          <ul>{eventInfo}</ul>
         </div>
       </div>
       <div className="create-btn-container">
