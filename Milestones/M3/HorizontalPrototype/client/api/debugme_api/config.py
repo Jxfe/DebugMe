@@ -7,6 +7,7 @@ class Config:
     """Add credentials here. Note: you must have a .env file on this directory, with the
     desired values.
     """
+    SECRET_KEY=os.environ.get('SECRET_KEY')
 
     # Add AWS settings
     AWS_USERNAME=os.environ.get('AWS_USERNAME')
@@ -35,7 +36,7 @@ class DevelopmentConfig(Config):
     Args:
         Config (_type_): _description_
     """
-    DEBUG=True
+    Config.DEBUG=True
 
 app_config = {
     'development': DevelopmentConfig,
