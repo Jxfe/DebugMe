@@ -190,3 +190,11 @@
   width: 25%;
   height: 95%;
 }
+
+.input-box {
+  padding: 8px;
+  border: 1px solid var(--darkgray);
+  background-color: var(--lightgray);
+  border-radius: 8px;
+  width: calc(100% - 20px);
+}

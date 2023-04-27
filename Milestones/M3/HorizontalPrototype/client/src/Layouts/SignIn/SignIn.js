@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './style.css';
 import Button from "../../Components/Button";
+import { Link } from 'react-router-dom';
 
 function SignIn() {
   const [username, setUsername] = useState('');
@@ -23,11 +24,13 @@ function SignIn() {
         <div className="form-group">
           <input type="password" name="password" id="password" placeholder="Password" />
         </div>
+        <Link to="posts" >
         <Button 
           className="default-button"
           content="Submit"
-          onClickEvent={handleSubmit}
           />
+        </Link>
+        
       </form>
       <div className="signup-link">
         Don't have an account? <a href="./signup">Sign up</a>

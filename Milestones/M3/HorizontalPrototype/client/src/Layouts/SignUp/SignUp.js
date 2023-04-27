@@ -114,6 +114,7 @@ function SignUp() {
           changeValue={changeName}
           isValidValue={isValidname}
           warning="Name should be more than 3 characters."
+          placeholder={"Full Name"}
         />
         <SignUpInput
           name="email"
@@ -121,6 +122,7 @@ function SignUp() {
           changeValue={changeEmail}
           isValidValue={isValidEmail}
           warning={emailWarning}
+          placeholder={"Email"}
         />
         <SignUpInput
           name="password"
@@ -128,6 +130,7 @@ function SignUp() {
           changeValue={changePassword}
           isValidValue={isValidPassword}
           warning="Password needs to contain at least one uppercase letter, one digit, one special character, and have a minimum length of 8 characters."
+          placeholder={"Password"}
         />
         <SignUpInput
           name="password-confirm"
@@ -135,6 +138,7 @@ function SignUp() {
           changeValue={changePasswordConfirm}
           isValidValue={isValidPasswordConfirm}
           warning="password and password confirm must be same."
+          placeholder={"Confirm Password"}
         />
         <div className="checkbox-container">
           <input
