@@ -30,3 +30,13 @@
 .event-participants-btns {
   display: flex;
 }
+
+.title {
+  margin: auto;
+}
+
+.event-nav {
+  display: flex;
+  justify-content: space-evenly;
+  height: 20px;
+}

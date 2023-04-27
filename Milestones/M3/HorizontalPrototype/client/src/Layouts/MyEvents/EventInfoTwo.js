@@ -6,12 +6,7 @@ const EventInfoTwo = ({ formData, setFormData }) => {
   return (
     <div>
       <div className="event-form2">
-        <img
-          className="form-image"
-          alt="Girl in a jacket"
-          width="100"
-          height="100"
-        />
+        <img className="form-image" alt="Image" width="100" height="100" />
         <div className="image-btns">
           <input className="form-image-input" type="file" />
           <Button content="delete" />
