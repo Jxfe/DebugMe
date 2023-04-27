@@ -3,6 +3,7 @@ import './style.css';
 import Button from '../../Components/Button';
 
 import Main from '../Main/Main';
+import { Link } from "react-router-dom";
 
 
 
@@ -38,7 +39,6 @@ function Calendar() {
     }
     
     var state_1 = (
-
     <div class="calendar-container">
       
       
@@ -119,9 +119,8 @@ function Calendar() {
             </button>
           </div>  
         </div>
-        
+        <Link to="/createevent" className="btn">Create Event</Link>
     </div>
-
 );
     
     
