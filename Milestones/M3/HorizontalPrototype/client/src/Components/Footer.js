@@ -5,7 +5,19 @@ import "./style.css";
  * Todo
  */
 function Footer() {
-  return <footer className="footer-wrapper">This is Footer.</footer>;
+  return (
+    <footer className="footer-wrapper">
+      <div>© 2023 DEGUBME, Inc.</div>
+      <div className="footer-content">
+        <div>Terms</div>
+        <div>Privacy</div>
+        <div>Security</div>
+        <div>Status</div>
+        <div>About</div>
+        <div>Career</div>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;
