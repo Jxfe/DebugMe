@@ -1,5 +1,6 @@
-import React from 'react'
-import Button from './Button'
+import React from 'react';
+import Button from './Button';
+import "./style.css";
 
 export default function CreatePost({showing, onClose}) {
     if (!showing) return null
@@ -8,8 +9,8 @@ export default function CreatePost({showing, onClose}) {
     <div className='post-popup-container'>
         <div className='create-post-info'>
             <h2>Write your new post</h2>
-            <textarea className='post-title-input' placeholder='Post Title'></textarea>
-            <textarea className='post-body-input' placeholder='What do you want to share?'></textarea>
+            <input placeholder='Post Title'></input>
+            <textarea placeholder='What do you want to share?'></textarea>
         </div>
 
         <div className='create-post-utils'>

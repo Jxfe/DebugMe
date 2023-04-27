@@ -5,11 +5,14 @@ import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Calendar from "./Layouts/Calendar/Calendar";
 import MentoringRequest from "./Layouts/MyPage/MentoringRequest";
+import CustomerRequest from "./Layouts/MyPage/CustomerRequests";
+import MentoringSessions from "./Layouts/MyPage/MentoringSessions";
 import Messages from "./Layouts/MyPage/Messages";
 import Error from "./Layouts/Error/Error";
 import Main from "./Layouts/Main/Main";
 import MyPage from "./Layouts/MyPage/MyPage";
 import Posts from "./Layouts/Posts/Posts";
+import Post from "./Layouts/Posts/Post";
 import PremiumGuide from "./Layouts/PremiumGuide/PremiumGuide";
 import UpgradePage from "./Layouts/PremiumGuide/UpgradePage";
 import SuccessPage from "./Layouts/PremiumGuide/SuccessPage";
@@ -34,6 +37,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="posts" element={<Posts />} />
+          <Route path="posts/post" element={<Post />} />
           <Route path="premiumguides" element={<PremiumGuide />} />
           <Route path="upgradepage" element={<UpgradePage />} />
           <Route path="successpage" element={<SuccessPage />} />
@@ -47,6 +51,14 @@ function App() {
           <Route
             path="mypage/mentoring-requests"
             element={<MentoringRequest />}
+          />
+          <Route
+            path="mypage/customer-requests"
+            element={<CustomerRequest />}
+          />
+          <Route
+            path="mypage/mentoring-sessions"
+            element={<MentoringSessions />}
           />
           <Route path="mypage/messages" element={<Messages />} />
           <Route path="*" element={<Error />} />
