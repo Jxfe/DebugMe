@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../../Components/Button";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./event.css";
 
 const Event = () => {
@@ -9,7 +9,12 @@ const Event = () => {
 
   return (
     <main className="container">
-      <h4 className="title">{data[id].title}</h4>
+      <div className="event-nav">
+        <h4 className="title">{data[id].title}</h4>
+        <h4 className="title">
+          <Link to="/myevents">Back to MyEvents</Link>
+        </h4>
+      </div>
       <div>
         <div className="event-header">
           <span>[ Attending ]</span>
