@@ -37,6 +37,13 @@
   height: 120px;
   padding: 20px;
 }
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
 .button {
   border: none;
   border-radius: 8px;
