@@ -28,9 +28,12 @@ function SearchPost() {
       console.log(res);
       console.log(res.data);
       setSearchList(res.data);
+      
     } catch (e) {
       setSearchList([]);
       console.log(e);
+    } finally {
+      setshowReviewModal(true)
     }
   };
 
@@ -56,7 +59,7 @@ function SearchPost() {
           onChange={(e) => setKeyword(e.target.value)}
         />
       <Button className={"default-button"} content="SEARCH" onClickEvent={submitSearch} />
-      {searchList && (
+      {showReviewModal && (
         <Modal
           title="Search results"
           content={(<div>
