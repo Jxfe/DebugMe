@@ -9,7 +9,7 @@ const Event = () => {
 
   return (
     <main className="container">
-      <h4>{data[id].title}</h4>
+      <h4 className="title">{data[id].title}</h4>
       <div>
         <div className="event-header">
           <span>[ Attending ]</span>
