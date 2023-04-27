@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 function PremiumGuides() {
   return (
     <div>
-      <h3>Premium Guides</h3>
       <div class="container">
         <table>
           <thead>
@@ -48,6 +47,7 @@ function PremiumGuides() {
             </tr>
           </tbody>
         </table>
+        <Link to="/createguide" className="btn">Create A Premium Guide</Link>
       </div>
     </div>
   );
