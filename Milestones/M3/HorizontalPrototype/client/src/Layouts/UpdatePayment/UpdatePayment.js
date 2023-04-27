@@ -1,8 +1,13 @@
 import React from "react";
 import Button from "../../Components/Button";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 
 function UpdatePayment() {
+  const navigate = useNavigate();
+    const gotoSuccess = () => {
+    navigate("/success");
+  };
   return (
     <form className="credit-card">
       <div className="form-header">
@@ -51,8 +56,12 @@ function UpdatePayment() {
             <p>3 or 4 digits usually found <br /> on the signature strip</p>
           </div>
         </div>
-        <Button className="default-button" content="Submit" />
-      </div>
+        <Button 
+          className="default-button" 
+          onClickEvent={gotoSuccess}
+          content="Submit" 
+          />
+      </div>  
     </form>
   );
 }

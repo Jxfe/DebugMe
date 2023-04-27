@@ -1,8 +1,13 @@
 import React from "react";
 import "./style.css";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 
 function CreateGuide() {
+  const navigate = useNavigate();
+  const gotoPremiumGuide = () => {
+    navigate("/premiumguides");
+  };
   return (
     <div>
       <h3>Premium Guides</h3>
@@ -23,6 +28,7 @@ function CreateGuide() {
           <Button 
             className="default-button"
             content="Submit"
+            onClickEvent={gotoPremiumGuide}
             />
         </div>
       </form>
