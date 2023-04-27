@@ -24,11 +24,8 @@ function SignIn() {
         <div className="form-group">
           <input type="password" name="password" id="password" placeholder="Password" />
         </div>
-        <Link to="posts" >
-        <Button 
-          className="default-button"
-          content="Submit"
-          />
+        <Link to="/posts" >
+          <Button className="default-button" content="Submit"/>
         </Link>
         
       </form>

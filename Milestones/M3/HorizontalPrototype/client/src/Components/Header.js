@@ -83,7 +83,7 @@ function Header() {
                 </div>
               </div>
             </Popover>
-            <Link to="/signout">Sign Out</Link>
+            <Link to="/" onClick={() => alert("Successfully signed out!")}>Sign Out</Link>
           </>
         ) : (
           <>
