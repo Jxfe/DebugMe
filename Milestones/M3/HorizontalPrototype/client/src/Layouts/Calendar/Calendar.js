@@ -105,6 +105,9 @@ function Calendar() {
           </div>
             
           <div class="event-buttons">
+            <Link to="/createevent">
+              <Button className='btn' content='Add Event' />
+            </Link>
             <button class="event-button" onClick={()=>goToNState(4)}>
               <div class="event-date">May 10</div>
               <div class="event-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
@@ -119,7 +122,6 @@ function Calendar() {
             </button>
           </div>  
         </div>
-        <Link to="/createevent" className="btn">Create Event</Link>
     </div>
 );
     

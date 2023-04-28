@@ -47,7 +47,7 @@ function PremiumGuides() {
             </tr>
           </tbody>
         </table>
-        <Link to="/createguide" className="btn">Create A Premium Guide</Link>
+        <Link to="/createguide" className="create-btn">Create A Premium Guide</Link>
       </div>
     </div>
   );
