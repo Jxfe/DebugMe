@@ -56,11 +56,14 @@
 
 /*Buttons*/
 .create-btn {
-  width: 200px;
+  width: 210px;
   display: block;
   margin: 45px 75px 5px 5px;
   text-align: center;
+  white-space: nowrap;
   padding: 3px;
+  padding-right: 12px;
+  white-space: nowrap;
   font-size: 1rem;
   line-height: 1.5;
   color: #fff;
