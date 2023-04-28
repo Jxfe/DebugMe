@@ -38,6 +38,7 @@ jobs:
           clean: false
       - name: Run Python commands
         run: |
+          echo "${{ secrets.debugme }}" > api/.env
           pip install --upgrade pip
           python3 -m venv api/env
           source api/env/bin/activate
