@@ -33,7 +33,7 @@ function MentoringRequest() {
   const [showDeclineModal, setShowDeclineModal] = useState(false);
 
   const sendMessage = () => {
-    navigate("/mypage/messages");
+    navigate("/");
   };
 
   return (
