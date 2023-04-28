@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [14.x, 16.x, 18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -38,6 +38,7 @@ jobs:
           clean: false
       - name: Run Python commands
         run: |
+          echo "${{ secrets.debugme }}" > api/.env
           pip install --upgrade pip
           python3 -m venv api/env
           source api/env/bin/activate

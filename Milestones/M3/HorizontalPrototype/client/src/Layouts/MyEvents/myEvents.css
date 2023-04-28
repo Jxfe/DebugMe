@@ -36,5 +36,6 @@
 }
 
 .active {
-  background-color: lightskyblue;
+  background-color: var(--primary);
+  color: #fff;
 }
