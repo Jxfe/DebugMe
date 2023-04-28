@@ -5,10 +5,10 @@ import "./style.css";
 
 function MyPage() {
   return (
-    <div className='mypage-container'>
-      <div className='mypage-contents'>
-        <div className='mypage-nav'>
-          <h1>Your Links</h1>
+    <div className="mypage-container">
+      <div className="mypage-contents">
+        <div className="mypage-nav">
+          <h1>My Page</h1>
           <Link to="/updatepayment" className="mypage-nav-link">
             Financial Information
           </Link>
@@ -19,17 +19,17 @@ function MyPage() {
             Mentoring Session Requests
           </Link>
           <Link to="/mypage/mentoring-sessions" className="mypage-nav-link">
-            Your Mentoring Sessions
+            My Mentoring Sessions
           </Link>
           <Link to="/myevents" className="mypage-nav-link">
-            Your Events
+            My Events
           </Link>
           <Link to="/mypage/customer-requests" className="mypage-nav-link">
             Customer Requests
           </Link>
         </div>
 
-        <div className='mypage-personalinfo'>
+        <div className="mypage-personalinfo">
           <h1>Personal Information</h1>
           <div>
             <p className="personalinfo-field-head">Name</p>
@@ -43,7 +43,7 @@ function MyPage() {
             <p className="personalinfo-field-head">Subscription Plan</p>
             <p>Free</p>
           </div>
-        </div>        
+        </div>
       </div>
     </div>
   );
