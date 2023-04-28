@@ -33,7 +33,7 @@ function MentoringRequest() {
   const [showDeclineModal, setShowDeclineModal] = useState(false);
 
   const sendMessage = () => {
-    navigate("/mypage/messages");
+    navigate("/");
   };
 
   return (
@@ -78,8 +78,8 @@ function MentoringRequest() {
         {showAcceptModal && (
           <Modal
             title="New Mentoring"
-            content={`Start message to ${selectedMentoring.name}`}
-            buttonContent="SEND"
+            content={`Mentoring request with ${selectedMentoring.name} has been accepted`}
+            buttonContent="Go Back"
             buttonAction={sendMessage}
             showModal={showAcceptModal}
             closeModal={() => setShowAcceptModal(false)}
