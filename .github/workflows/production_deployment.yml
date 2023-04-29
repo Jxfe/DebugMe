@@ -5,6 +5,13 @@ on:
   # pull_request:
   #   branches: [ "master" ]
 
+env:
+  AWS_USERNAME: ${{ secrets.AWS_USERNAME }}
+  AWS_PASSWORD: ${{ secrets.AWS_PASSWORD }}
+  AWS_DB_HOSTNAME: ${{ secrets.AWS_DB_HOSTNAME }}
+  AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
 jobs:
   build:
     runs-on: self-hosted
@@ -39,11 +46,11 @@ jobs:
       - name: Run Python commands
         run: |
           touch api/.env
-          echo "${{ secrets.AWS_USERNAME }}" >> api/.env
-          echo "${{ secrets.AWS_PASSWORD }}" >> api/.env
-          echo "${{ secrets.AWS_DB_HOSTNAME }}" >> api/.env
-          echo "${{ secrets.AWS_DB_NAME }}" >> api/.env
-          echo "${{ secrets.SECRET_KEY }}" >> api/.env
+          echo env.AWS_USERNAME >> api/.env
+          echo env.AWS_PASSWORD >> api/.env
+          echo env.AWS_DB_HOSTNAME >> api/.env
+          echo env.AWS_DB_NAME >> api/.env
+          echo env.SECRET_KEY >> api/.env
           pip install --upgrade pip
           python3 -m venv api/env
           source api/env/bin/activate
