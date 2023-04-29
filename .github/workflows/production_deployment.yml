@@ -46,11 +46,11 @@ jobs:
       - name: Run Python commands
         run: |
           touch api/.env
-          export AWS_USERNAME=env.AWS_USERNAME
-          export AWS_PASSWORD=env.AWS_PASSWORD
-          export AWS_DB_HOSTNAME=env.AWS_DB_HOSTNAME
-          export AWS_DB_NAME=env.AWS_DB_NAME
-          export SECRET_KEY=env.SECRET_KEY
+          export AWS_USERNAME=${{ secrets.AWS_USERNAME }}
+          export AWS_PASSWORD=${{ secrets.AWS_PASSWORD }}
+          export AWS_DB_HOSTNAME=${{ secrets.AWS_DB_HOSTNAME }}
+          export AWS_DB_NAME=${{ secrets.AWS_DB_NAME }}
+          export SECRET_KEY=${{ secrets.SECRET_KEY }}
           echo $AWS_USERNAME >> api/.env
           echo $AWS_PASSWORD >> api/.env
           echo $AWS_DB_HOSTNAME >> api/.env
