@@ -27,7 +27,7 @@ jobs:
           cache-dependency-path: "./Milestones/M3/HorizontalPrototype/client/package-lock.json"
           clean: false
       - run: npm ci
-      - run: yarn build
+      - run: npm build":"dev
       - run: sudo systemctl stop nginx
       - run: sudo systemctl start nginx
 
