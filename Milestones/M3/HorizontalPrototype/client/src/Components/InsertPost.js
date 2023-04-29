@@ -3,7 +3,6 @@ import { useState } from "react";
 import "./style.css";
 import axios from "axios";
 import Button from "./Button";
-import { POST_URL } from "../utils/url";
 
 /**
  * className: default-button | disabled-button
@@ -20,10 +19,8 @@ function InsertPost() {
       return;
     }
 
-    console.log(post);
     try {
       const randomId = Math.floor(Math.random() * (10 - 1) + 1);
-      //const url = `${POST_URL}`;
       const url = "/api/posts";
       const body = {
         content: post,
@@ -41,14 +38,12 @@ function InsertPost() {
         }
       })
         .then((response) => {
-          console.log("got a response from post");
           if (response.data) {
             window.alert("Your post has ben successfuly created!");
             window.location.reload();
           }
         })
         .catch((err) => {
-          console.log("got an error from post");
           console.log(err);
         });
     } catch (e) {
@@ -58,7 +53,7 @@ function InsertPost() {
 
   return (
     <div className="App search-wrapper">
-    {/* <textarea
+      {/* <textarea
       className="input-box"
       name="post"
       type="text"
@@ -67,16 +62,20 @@ function InsertPost() {
       value={post}
       onChange={(e) => setPost(e.target.value)}
     /> */}
-    <input
-          className="input-box"
-          name="post"
-          type="text"
-          placeholder="Provide post title to be inserted into DB"
-          value={post}
-          onChange={(e) => setPost(e.target.value)}
-        />
-    <Button className={"default-button"} content="SUMBIT" onClickEvent={submitPost} />
-  </div>
+      <input
+        className="input-box"
+        name="post"
+        type="text"
+        placeholder="Provide post title to be inserted into DB"
+        value={post}
+        onChange={(e) => setPost(e.target.value)}
+      />
+      <Button
+        className={"default-button"}
+        content="SUMBIT"
+        onClickEvent={submitPost}
+      />
+    </div>
   );
 }
 

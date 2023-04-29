@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -45,7 +45,13 @@ jobs:
           clean: false
       - name: Run Python commands
         run: |
-          cp /home/ubuntu/.env api/.env
+          #cp /home/ubuntu/.env api/.env
+          touch api/.env
+          echo "AWS_USERNAME=$AWS_USERNAME" >> api/.env
+          echo "AWS_PASSWORD=$AWS_PASSWORD" >> api/.env
+          echo "AWS_DB_HOSTNAME=$AWS_DB_HOSTNAME" >> api/.env
+          echo "AWS_DB_NAME=$AWS_DB_NAME" >> api/.env
+          echo "SECRET_KEY=$SECRET_KEY" >> api/.env
           pip install --upgrade pip
           python3 -m venv api/env
           source api/env/bin/activate
@@ -53,39 +59,3 @@ jobs:
           deactivate
           sudo systemctl stop debugme
           sudo systemctl start debugme
-
-  # backend:
-  #   runs-on: self-hosted
-  #   defaults:
-  #     run:
-  #       working-directory: ./Milestones/M3/HorizontalPrototype/client
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Set up Python 3.10
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.10"
-  #     - name: Run Python commands
-  #       run: |
-  #         pip install --upgrade pip
-  #         python3 -m venv api/env
-  #         source api/env/bin/activate
-  #         pip3 install -r api/requirements.txt
-  #         deactivate
-  #         sudo systemctl stop debugme
-  #         sudo systemctl start debugme
-
-  # verticalPrototype:
-  #   name: Build
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: executing remote ssh commands using password
-  #     uses: appleboy/ssh-action@v0.1.10
-  #     with:
-  #       host: ${{ secrets.AWS_PROTOTYPES }}
-  #       username: ${{ secrets.USERNAME }}
-  #       password: ${{ secrets.PRIVATE_KEY }}
-  #       port: ${{ secrets.AWS_PORT }}
-  #       script: whoami
