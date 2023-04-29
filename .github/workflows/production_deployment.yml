@@ -46,11 +46,16 @@ jobs:
       - name: Run Python commands
         run: |
           touch api/.env
-          echo env.AWS_USERNAME >> api/.env
-          echo env.AWS_PASSWORD >> api/.env
-          echo env.AWS_DB_HOSTNAME >> api/.env
-          echo env.AWS_DB_NAME >> api/.env
-          echo env.SECRET_KEY >> api/.env
+          export AWS_USERNAME=env.AWS_USERNAME
+          export AWS_PASSWORD=env.AWS_PASSWORD
+          export AWS_DB_HOSTNAME=env.AWS_DB_HOSTNAME
+          export AWS_DB_NAME=env.AWS_DB_NAME
+          export SECRET_KEY=env.SECRET_KEY
+          echo $AWS_USERNAME >> api/.env
+          echo $AWS_PASSWORD >> api/.env
+          echo $AWS_DB_HOSTNAME >> api/.env
+          echo $AWS_DB_NAME >> api/.env
+          echo $SECRET_KEY >> api/.env
           pip install --upgrade pip
           python3 -m venv api/env
           source api/env/bin/activate
