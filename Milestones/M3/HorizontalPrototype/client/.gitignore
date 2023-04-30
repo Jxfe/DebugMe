@@ -215,6 +215,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# iCloud
+.icloud
+
 ### Node
 # dependencies
 /node_modules
