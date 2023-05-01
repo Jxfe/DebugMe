@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 
 function CreateGuide() {
@@ -22,14 +22,19 @@ function CreateGuide() {
         </div>
         <div>
           <label htmlFor="imageUpload">Upload an image:</label>
-          <input type="file" id="imageUpload" name="imageUpload" accept="image/*" />
+          <input
+            type="file"
+            id="imageUpload"
+            name="imageUpload"
+            accept="image/*"
+          />
         </div>
         <div>
-          <Button 
+          <Button
             className="default-button"
             content="Submit"
             onClickEvent={gotoPremiumGuide}
-            />
+          />
         </div>
       </form>
     </div>

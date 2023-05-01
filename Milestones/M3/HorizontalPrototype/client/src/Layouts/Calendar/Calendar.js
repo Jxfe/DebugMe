@@ -2,10 +2,7 @@ import React, { useState } from "react"; // Needed for AWS since it's using node
 import "./style.css";
 import Button from "../../Components/Button";
 
-import Main from "../Main/Main";
 import { Link } from "react-router-dom";
-
-function Test() {}
 
 function Calendar() {
   const [state, setState] = useState(0);

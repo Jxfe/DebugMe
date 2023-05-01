@@ -1,5 +1,4 @@
 import React, { useState } from "react"; // Needed for AWS since it's using node 16
-import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import "./style.css";
@@ -8,23 +7,23 @@ const requestsList = [
   {
     id: 1,
     name: "samuel",
-    requestedDate: "4-24",
+    requestedDate: "4-24"
   },
   {
     id: 2,
     name: "Jiji",
-    requestedDate: "3-28",
+    requestedDate: "3-28"
   },
   {
     id: 3,
     name: "Josh",
-    requestedDate: "3-24",
+    requestedDate: "3-24"
   },
   {
     id: 4,
     name: "Amy",
-    requestedDate: "3-21",
-  },
+    requestedDate: "3-21"
+  }
 ];
 function CustomerRequest() {
   const [selectedMentoring, setSelectedRequest] = useState(requestsList[0]);
@@ -52,7 +51,7 @@ function CustomerRequest() {
           {selectedMentoring && (
             <div className="mentoring-detail">
               <div>
-                {selectedMentoring.name} requested a refund request due to..... 
+                {selectedMentoring.name} requested a refund request due to.....
               </div>
               <div className="button-container">
                 <Button
@@ -72,7 +71,7 @@ function CustomerRequest() {
         {showAcceptModal && (
           <Modal
             title="Customer Service Request"
-            content={`You approved ${selectedMentoring.name}'s customer request` }
+            content={`You approved ${selectedMentoring.name}'s customer request`}
             buttonContent="CLOSE"
             buttonAction={() => setShowAcceptModal(false)}
             showModal={showAcceptModal}

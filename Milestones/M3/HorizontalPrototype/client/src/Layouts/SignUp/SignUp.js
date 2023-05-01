@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SignUpInput from "./SignUpInput";
 import "./style.css";
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
 const passwordRegex = /(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
 const DUMMY_ID = ["test01@gmail.com", "test02@gmail.com", "test03@gamil.com"];
 
@@ -142,13 +142,16 @@ function SignUp() {
         />
         <div className="checkbox-container">
           <input
-            style={{ width: "100px" }}
+            //style={{ width: "100px" }}
+            className="agreement-checkbox"
             type="checkbox"
             id="agreement"
             value={agreement}
             onChange={changeAgreement}
           />
-          <label htmlFor="agreement">I agree with the term.</label>
+          <label className="agreement-label" htmlFor="agreement">
+            I agree with the term.
+          </label>
         </div>
         <button
           disabled={
