@@ -13,12 +13,13 @@ class Posts(Resource):
         engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 
         with engine.connect() as connection:
-          if search:
-              result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
-          else:
-              result = connection.execute(text('SELECT * FROM Post'))
+            if search:
+                result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
+            else:
+                result = connection.execute(text('SELECT * FROM Post'))
+            rows = result.fetchall()
+            connection.close()
 
-        rows = result.fetchall()
         posts = []
         for row in rows:
             posts.append({
