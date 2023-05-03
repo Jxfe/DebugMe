@@ -9,15 +9,10 @@ const EventInfoTwo = ({ formData, setFormData }) => {
   useEffect(() => {
     if (!file) return;
 
-    let tmp = [];
-    for (let i = 0; i < file.length; i++) {
-      tmp.push(URL.createObjectURL(file[i]));
-    }
-    const objectUrls = tmp;
-    setPreviewImage(objectUrls);
+    setPreviewImage(URL.createObjectURL(file));
 
     return () => {
-      URL.revokeObjectURL(objectUrls);
+      URL.revokeObjectURL(previewImage);
     };
   }, [file]);
 
@@ -26,24 +21,12 @@ const EventInfoTwo = ({ formData, setFormData }) => {
       <div className="event-form2">
         <img
           className="form-image"
-          src={previewImage ? previewImage : ""}
           alt="Event Flyer"
           width="100"
           height="100"
         />
         <div className="image-btns">
-          <input
-            className="form-image-input"
-            type="file"
-            accept="image/jpg, image/jpeg, image/png"
-            onChange={(event) => {
-              console.log(event.target.files[0]);
-              console.log(event.target.files);
-              if (event.target.files && event.target.files.length > 0) {
-                setFile(event.target.files);
-              }
-            }}
-          />
+          <input className="form-image-input" type="file" />
           <Button content="delete" />
         </div>
       </div>
