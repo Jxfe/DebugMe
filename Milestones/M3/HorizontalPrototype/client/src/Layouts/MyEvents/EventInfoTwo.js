@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../Components/Button";
 import Switch from "../../Components/Switch";
 
 const EventInfoTwo = ({ formData, setFormData }) => {
+  const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    if (!previewImage) return;
+  }, [previewImage]);
   return (
     <div>
       <div className="event-form2">
