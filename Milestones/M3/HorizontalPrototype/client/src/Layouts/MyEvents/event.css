@@ -37,6 +37,9 @@
 
 .event-nav {
   display: flex;
-  justify-content: space-evenly;
-  height: 20px;
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  justify-content: space-between;
+  height: 40px;
 }

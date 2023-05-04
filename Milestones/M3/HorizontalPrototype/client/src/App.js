@@ -26,6 +26,7 @@ import CreateEvent from "./Layouts/MyEvents/CreateEvent";
 import Event from "./Layouts/MyEvents/Event";
 import CreateGuide from "./Layouts/CreateGuide/CreateGuide";
 import Success from "./Layouts/UpdatePayment/Success";
+import EventMessages from "./Layouts/MyEvents/EventMessages";
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
           <Route path="createevent" element={<CreateEvent />} />
           <Route path="event/:id" element={<Event />} />
           <Route path="mypage" exact element={<MyPage />} />
-          <Route path = "success" element={<Success />} />
+          <Route path="success" element={<Success />} />
           <Route
             path="mypage/mentoring-requests"
             element={<MentoringRequest />}
@@ -66,6 +67,7 @@ function App() {
           <Route path="*" element={<Error />} />
           <Route path="updatepayment" element={<UpdatePayment />} />
           <Route path="CreateGuide" element={<CreateGuide />} />
+          <Route path="myevents/eventmessages" element={<EventMessages />} />
         </Routes>
       </div>
       <Footer />
