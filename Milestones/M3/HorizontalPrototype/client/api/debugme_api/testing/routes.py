@@ -1,6 +1,6 @@
 from flask import request, flash, jsonify, Blueprint, render_template
 from debugme_api.config import Config
-from debugme_api import db
+from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text
 
 tests = Blueprint('tests', __name__)
@@ -41,3 +41,19 @@ def get_posts():
         })
 
     return jsonify(posts)
+
+@tests.route('/api/posts', methods=['POST'])
+def create_post():
+    #id = request.form['id']
+    content = request.form['content']
+    user_id = request.form['user_id']
+    forum_id = request.form['forum_id']
+
+
+    engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+
+    with engine.connect() as connection:
+        connection.execute(text('INSERT INTO Post (content, user_id, forum_id) VALUES (\'%s\', \'%s\', \'%s\')' %(content, user_id, forum_id)))
+        connection.commit()
+
+    return jsonify({"status": "success", "message": "User created successfully"}), 201
