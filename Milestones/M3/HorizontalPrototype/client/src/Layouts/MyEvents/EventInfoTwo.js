@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useRef } from "react";
 import Button from "../../Components/Button";
 import Switch from "../../Components/Switch";
 
 const EventInfoTwo = ({ formData, setFormData }) => {
+  const inputRef = useRef();
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -21,6 +23,11 @@ const EventInfoTwo = ({ formData, setFormData }) => {
     };
   }, [file]);
 
+  const deleteImage = () => {
+    setPreviewImage(null);
+    inputRef.current.value = "";
+  };
+
   return (
     <div>
       <div className="event-form2">
@@ -33,6 +40,7 @@ const EventInfoTwo = ({ formData, setFormData }) => {
         />
         <div className="image-btns">
           <input
+            ref={inputRef}
             className="form-image-input"
             type="file"
             accept="image/jpg, image/jpeg, image/png"
@@ -44,7 +52,7 @@ const EventInfoTwo = ({ formData, setFormData }) => {
               }
             }}
           />
-          <Button content="delete" />
+          <Button content="Delete Image" onClickEvent={deleteImage} />
         </div>
       </div>
       <div className="members-only-block">
