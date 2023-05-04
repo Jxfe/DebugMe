@@ -10,8 +10,9 @@ function Button({
   className,
   onClickEvent,
   content,
+  id,
   isDisabled = false,
-  width = "120px",
+  width = "120px"
 }) {
   return (
     <button
@@ -19,6 +20,7 @@ function Button({
       style={{ width: width }}
       onClick={onClickEvent}
       disabled={isDisabled}
+      id={id}
     >
       {content}
     </button>
