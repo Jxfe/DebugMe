@@ -8,10 +8,10 @@ function Upgrade() {
         TO ACCESS THE PREMIUM GUIDE YOU HAVE TO UPGRADE TO THE PREMIUM
         SUBSCRIPTION PLAN
       </h4>
-      <a href="/successpage" class="btn2">
+      <a href="/premiumguides" class="btn2">
         Upgrade
       </a>
-      <a href="/premiumguides" class="cancel-btn">
+      <a href="/" class="cancel-btn">
         Cancel
       </a>
     </div>

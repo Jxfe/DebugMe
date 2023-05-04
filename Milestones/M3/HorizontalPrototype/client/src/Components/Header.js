@@ -35,8 +35,8 @@ function Header() {
           Posts
         </Link>
         <Link
-          to="/premiumguides"
-          className={pathname.includes("premiumguides") ? "highlight" : null}
+          to="/upgradepage"
+          className={pathname.includes("upgradepage") ? "highlight" : null}
         >
           Premium Guides
         </Link>

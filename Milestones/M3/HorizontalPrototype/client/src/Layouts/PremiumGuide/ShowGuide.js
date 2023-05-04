@@ -10,9 +10,6 @@ function ShowGuide() {
     <>
       <div className="guide-container">
         <div className="sidenav">
-          <Link to="#">About</Link>
-          <Link to="#">Message</Link>
-          <Link to="#">Contact</Link>
           <Link to="#" onClick={() => setShowSuccessModal(true)}>
             Book mentoring
           </Link>
