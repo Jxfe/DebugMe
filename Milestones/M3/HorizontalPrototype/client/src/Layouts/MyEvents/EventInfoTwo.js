@@ -18,7 +18,7 @@ const EventInfoTwo = ({ formData, setFormData }) => {
     const objectUrls = tmp;
     setPreviewImage(objectUrls);
     setDeleteBtnEnabled(false);
-    //inputRef.current.value = formData.imageName;
+    inputRef.current.files = formData.image;
 
     return () => {
       URL.revokeObjectURL(objectUrls);
