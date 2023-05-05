@@ -2,11 +2,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .header-wrapper {
   border-bottom: 1px solid var(--gray);
+}
+
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .link-wrapper {
@@ -30,7 +36,12 @@
 .logo {
   text-decoration: none;
   color: var(--primary);
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.img-logo {
+  width: 80px;
+  height: 80px;
 }
 
 .footer-wrapper {
