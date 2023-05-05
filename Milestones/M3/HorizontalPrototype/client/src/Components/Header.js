@@ -19,8 +19,10 @@ function Header() {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const navigatePage = (page) => {
+    navigate(`/mypage/${page}`);
+    setAnchorEl(null);
+  };
 
   return (
     <header className="wrapper header-wrapper">
@@ -60,13 +62,15 @@ function Header() {
             <Badge badgeContent={2} color="primary" className="header-badge">
               <MailIcon
                 color="action"
-                aria-describedby={id}
+                aria-describedby={
+                  anchorEl !== null ? "simple-popover" : undefined
+                }
                 onClick={handleClick}
               />
             </Badge>
             <Popover
-              id={id}
-              open={open}
+              id={anchorEl !== null ? "simple-popover" : undefined}
+              open={anchorEl !== null}
               anchorEl={anchorEl}
               onClose={handleClose}
               anchorOrigin={{
@@ -75,15 +79,17 @@ function Header() {
               }}
             >
               <div className="popover-container">
-                <div onClick={() => navigate("/mypage/mentoring-requests")}>
+                <div onClick={() => navigatePage("mentoring-requests")}>
                   You have a new montoring request.
                 </div>
-                <div onClick={() => navigate("/mypage/messages")}>
+                <div onClick={() => navigatePage("messages")}>
                   You have a new message.
                 </div>
               </div>
             </Popover>
-            <Link to="/" onClick={() => alert("Successfully signed out!")}>Sign Out</Link>
+            <Link to="/" onClick={() => alert("Successfully signed out!")}>
+              Sign Out
+            </Link>
           </>
         ) : (
           <>

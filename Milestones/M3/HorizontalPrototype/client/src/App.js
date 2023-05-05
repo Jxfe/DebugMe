@@ -27,6 +27,7 @@ import Event from "./Layouts/MyEvents/Event";
 import CreateGuide from "./Layouts/CreateGuide/CreateGuide";
 import Success from "./Layouts/UpdatePayment/Success";
 import EventMessages from "./Layouts/MyEvents/EventMessages";
+import Policy from "./Layouts/Policy/Error";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
             element={<MentoringSessions />}
           />
           <Route path="mypage/messages" element={<Messages />} />
+          <Route path="policy" element={<Policy />} />
           <Route path="*" element={<Error />} />
           <Route path="updatepayment" element={<UpdatePayment />} />
           <Route path="CreateGuide" element={<CreateGuide />} />
