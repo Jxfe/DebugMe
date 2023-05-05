@@ -1,11 +1,12 @@
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import React, { useState, useEffect } from "react"; // Needed for AWS since it's using node 16
 import { useNavigate } from "react-router-dom";
 import SignUpInput from "./SignUpInput";
+import axios from "axios";
 import "./style.css";
 
 const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
 const passwordRegex = /(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
-const DUMMY_ID = ["test01@gmail.com", "test02@gmail.com", "test03@gamil.com"];
+//const DUMMY_ID = ["test01@gmail.com", "test02@gmail.com", "test03@gamil.com"];
 
 function SignUp() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function SignUp() {
   const [isValidname, setIsValidName] = useState(false);
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
+  const [canUseEmail, setCanUseEmail] = useState(false);
   const [emailWarning, setEmailWarning] = useState("");
   const [password, setPassword] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(false);
@@ -20,13 +22,31 @@ function SignUp() {
   const [isValidPasswordConfirm, setIsValidPasswordConfirm] = useState(false);
   const [agreement, setAgreement] = useState(false);
 
-  // it should be API call in a real application.
-  const duplicateEmailCheck = (email) => {
-    for (let id of DUMMY_ID) {
-      if (email === id) return false;
-    }
-    return true;
-  };
+  useEffect(() => {
+    axios({
+      method: "post",
+      url: "/api/checkEmailDuplicate",
+      data: {
+        email: email
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then((response) => {
+        if (Object.keys(response.data).length === 0) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .then((result) => {
+        setCanUseEmail(() => result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [email]);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -41,7 +61,6 @@ function SignUp() {
       return;
     }
 
-    const canUseEmail = duplicateEmailCheck(email);
     if (!canUseEmail) {
       setEmailWarning("This email has been already used.");
       alert("This email has been already used.");

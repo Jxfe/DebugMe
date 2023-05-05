@@ -4,7 +4,7 @@ from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text
 from ..models.Post import Post, PostSchema
 
-posts = Blueprint('tests', __name__)
+posts = Blueprint('posts', __name__)
 
 @posts.route('/api/posts', methods=['GET'])
 def get_posts():
