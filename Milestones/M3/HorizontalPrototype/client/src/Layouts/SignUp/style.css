@@ -30,6 +30,7 @@
   height: 40px;
   border: 1px solid var(--darkgray);
   border-radius: 8px;
+  font-size: var(--smallfont);
 }
 
 .warning {
@@ -72,4 +73,8 @@
   vertical-align: bottom;
   position: relative;
   top: -1px;
+}
+
+#text-deco {
+  text-decoration: underline;
 }
