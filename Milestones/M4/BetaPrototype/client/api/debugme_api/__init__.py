@@ -14,11 +14,13 @@ def create_app(config_name):
 
     #### Register subdirectory blueprints in app
     from debugme_api.posts.routes import posts
-    #app.register_blueprint(posts)
+    from debugme_api.registration.routes import registration
+    app.register_blueprint(posts)
+    app.register_blueprint(registration)
 
     #### Register subdirectory resource in app
-    from debugme_api.posts.Posts import Posts
-    api.add_resource(Posts, '/api/posts')
-    api.init_app(app)    # This line must come after adding api resources.
+    #from debugme_api.posts.Posts import Posts
+    #api.add_resource(Posts, '/api/posts')
+    #api.init_app(app)    # This line must come after adding api resources.
 
     return app
