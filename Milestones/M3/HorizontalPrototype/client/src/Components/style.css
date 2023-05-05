@@ -2,17 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-  
+  padding: 0 20px;
 }
 
 .header-wrapper {
   border-bottom: 1px solid var(--gray);
 }
 
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .link-wrapper {
   gap: 20px;
-  
 }
 
 .link-wrapper > a {
@@ -32,17 +36,21 @@
 .logo {
   text-decoration: none;
   color: var(--primary);
+  padding-bottom: 10px;
+}
+
+.img-logo {
+  width: 80px;
+  height: 80px;
 }
 
 .footer-wrapper {
   background-color: var(--lightgray);
   height: 120px;
   padding: 20px;
-}
-
-.footer-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 40px;
 }
 

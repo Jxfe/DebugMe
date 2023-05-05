@@ -1,17 +1,14 @@
 .homepage-container {
-    width: 900px;
+    width: 60vw;
     min-height: 575px;
-    background-color: var(--lightgray);
-    padding: 20px;
     margin: 0 auto;
-    border: 1px solid var(--black);
-    border-radius: 10px;
   }
 
 .hero {
-    width: 850px;
+    width: 100%;
     margin: 0 auto;
-    /* background-color: aqua; */
+    background-color: #e7e4e7;
+    padding: 25px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -19,26 +16,22 @@
 
 .hero-left {
     width: 50%;
-    height: 400px;
-    /* background-color: bisque; */
+    height: 300px;
 }
 
 .hero-img {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 300px;
     border-radius: 10px;
-    box-shadow: 0px 0px 6px 6px rgba(0, 0, 0, 0.2);
     margin: auto;
     display: block;
 }
 
 .hero-right {
     width: 45%;
-    height: 400px;
+    height: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    /* background-color: aquamarine; */
 }
 
 .hero-buttons {
@@ -49,11 +42,10 @@
 }
 
 .insert-search {
-    width: 850px;
+    width: 100%;
     height: 150px;
     margin: 25px auto;
     padding: 20px;
-    /* background-color: beige; */
     border: 1px solid var(--black);
     border-radius: 10px;
     display: flex;
@@ -63,9 +55,34 @@
 
 .insert {
     width: 45%;
-    /* background-color: aqua; */
 }
 .search {
     width: 45%;
-    /* background-color: aqua; */
+}
+
+.services-container {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.service-card {
+    width: 30%;
+    height: 350px;
+    border: 1px solid var(--black);
+    padding: 0 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.service-description {
+    line-height: 25px;
+    height: 125px;
 }

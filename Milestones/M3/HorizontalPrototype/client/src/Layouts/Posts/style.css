@@ -10,7 +10,7 @@
 
 /* Post */
 .post-container {
-    width: 1500px;
+    width: 75vw;
     min-height: 670px;
     background-color: var(--lightgray);
     padding: 20px;
