@@ -30,6 +30,7 @@
   height: 40px;
   border: 1px solid var(--darkgray);
   border-radius: 8px;
+  font-size: var(--smallfont);
 }
 
 .warning {
@@ -57,5 +58,23 @@
 
 .checkbox-container {
   display: flex;
-  align-items: center;
+}
+
+.agreement-label {
+  padding-left: 15px;
+  height: 17px;
+}
+
+.agreement-checkbox {
+  width: 15px;
+  height: 17px;
+  padding: 0;
+  margin: 0;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+}
+
+#text-deco {
+  text-decoration: underline;
 }

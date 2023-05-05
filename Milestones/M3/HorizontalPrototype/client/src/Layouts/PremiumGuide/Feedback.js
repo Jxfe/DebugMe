@@ -9,7 +9,7 @@ function SubmitFeedback() {
   return (
     <>
       <div class="feedback-container">
-        <h2>Please, leave an honest feedback about the premium guide!</h2>
+        <h2 className="fdbck">Please, leave an honest feedback about the premium guide!</h2>
         <textarea>Write something here ...</textarea>
         <div class="star-wrapper">
           <a href="#" class="fas fa-star s1 checked"></a>

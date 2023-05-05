@@ -1,12 +1,19 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import { useEffect, useRef } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "./createEvent.css";
 
 const EventInfoOne = ({ formData, setFormData }) => {
+  const titleRef = useRef();
+
+  useEffect(() => {
+    titleRef.current.focus();
+  }, []);
   return (
     <div className="event-form1">
       <input
+        ref={titleRef}
         type="text"
         id="title"
         placeholder="Event Title"

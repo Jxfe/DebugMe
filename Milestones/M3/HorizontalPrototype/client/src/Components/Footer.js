@@ -9,12 +9,24 @@ function Footer() {
     <footer className="footer-wrapper">
       <div>© 2023 DEGUBME, Inc.</div>
       <div className="footer-content">
-        <div>Terms</div>
-        <div>Privacy</div>
-        <div>Security</div>
-        <div>Status</div>
-        <div>About</div>
-        <div>Career</div>
+        <a href="/policy" target="_blank">
+          Terms
+        </a>
+        <a href="/policy" target="_blank">
+          Privacy
+        </a>
+        <a href="/policy" target="_blank">
+          Security
+        </a>
+        <a href="/policy" target="_blank">
+          Status
+        </a>
+        <a href="/policy" target="_blank">
+          About
+        </a>
+        <a href="/policy" target="_blank">
+          Career
+        </a>
       </div>
     </footer>
   );

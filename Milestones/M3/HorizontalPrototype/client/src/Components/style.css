@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  
 }
 
 .header-wrapper {
@@ -12,7 +11,6 @@
 
 .link-wrapper {
   gap: 20px;
-  
 }
 
 .link-wrapper > a {
@@ -32,6 +30,7 @@
 .logo {
   text-decoration: none;
   color: var(--primary);
+  margin-bottom: 10px;
 }
 
 .footer-wrapper {

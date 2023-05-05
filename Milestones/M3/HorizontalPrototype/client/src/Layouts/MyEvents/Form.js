@@ -16,6 +16,7 @@ function Form() {
     location: "",
     date: "",
     image: "",
+    imageName: "",
     membersOnly: false
   });
 

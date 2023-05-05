@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SignUpInput from "./SignUpInput";
 import "./style.css";
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
 const passwordRegex = /(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
 const DUMMY_ID = ["test01@gmail.com", "test02@gmail.com", "test03@gamil.com"];
 
@@ -122,7 +122,7 @@ function SignUp() {
           changeValue={changeEmail}
           isValidValue={isValidEmail}
           warning={emailWarning}
-          placeholder={"Email"}
+          placeholder={"Email ex)xxx@xxx.com"}
         />
         <SignUpInput
           name="password"
@@ -130,7 +130,9 @@ function SignUp() {
           changeValue={changePassword}
           isValidValue={isValidPassword}
           warning="Password needs to contain at least one uppercase letter, one digit, one special character, and have a minimum length of 8 characters."
-          placeholder={"Password"}
+          placeholder={
+            "At least one uppercase letter, one digit, one special character, and a minimum length of 8 characters."
+          }
         />
         <SignUpInput
           name="password-confirm"
@@ -138,17 +140,24 @@ function SignUp() {
           changeValue={changePasswordConfirm}
           isValidValue={isValidPasswordConfirm}
           warning="password and password confirm must be same."
-          placeholder={"Confirm Password"}
+          placeholder={"password and password confirm must be same."}
         />
         <div className="checkbox-container">
           <input
-            style={{ width: "100px" }}
+            //style={{ width: "100px" }}
+            className="agreement-checkbox"
             type="checkbox"
             id="agreement"
             value={agreement}
             onChange={changeAgreement}
           />
-          <label htmlFor="agreement">I agree with the term.</label>
+          <label className="agreement-label" htmlFor="agreement">
+            I agree with this{" "}
+            <a href="/policy" target="_blank" id="text-deco">
+              term
+            </a>
+            .
+          </label>
         </div>
         <button
           disabled={
