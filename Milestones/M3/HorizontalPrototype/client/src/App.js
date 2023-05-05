@@ -27,7 +27,7 @@ import Event from "./Layouts/MyEvents/Event";
 import CreateGuide from "./Layouts/CreateGuide/CreateGuide";
 import Success from "./Layouts/UpdatePayment/Success";
 import EventMessages from "./Layouts/MyEvents/EventMessages";
-import Policy from "./Layouts/Policy/Error";
+import Policy from "./Layouts/Policy/Policy";
 
 function App() {
   return (

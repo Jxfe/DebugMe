@@ -45,13 +45,13 @@ jobs:
           clean: false
       - name: Run Python commands
         run: |
-          #cp /home/ubuntu/.env api/.env
-          touch api/.env
-          echo "AWS_USERNAME=$AWS_USERNAME" >> api/.env
-          echo "AWS_PASSWORD=$AWS_PASSWORD" >> api/.env
-          echo "AWS_DB_HOSTNAME=$AWS_DB_HOSTNAME" >> api/.env
-          echo "AWS_DB_NAME=$AWS_DB_NAME" >> api/.env
-          echo "SECRET_KEY=$SECRET_KEY" >> api/.env
+          cp /home/ubuntu/.env api/.env
+          # touch api/.env
+          # echo "AWS_USERNAME=$AWS_USERNAME" >> api/.env
+          # echo "AWS_PASSWORD=$AWS_PASSWORD" >> api/.env
+          # echo "AWS_DB_HOSTNAME=$AWS_DB_HOSTNAME" >> api/.env
+          # echo "AWS_DB_NAME=$AWS_DB_NAME" >> api/.env
+          # echo "SECRET_KEY=$SECRET_KEY" >> api/.env
           pip install --upgrade pip
           python3 -m venv api/env
           source api/env/bin/activate

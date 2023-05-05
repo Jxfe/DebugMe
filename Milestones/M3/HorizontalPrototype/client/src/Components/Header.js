@@ -26,29 +26,32 @@ function Header() {
 
   return (
     <header className="wrapper header-wrapper">
-      <Link className="logo" to="/">
-        DEBUGME
-      </Link>
-      <nav className="wrapper link-wrapper">
-        <Link
-          to="/posts"
-          className={pathname.includes("posts") ? "highlight" : null}
-        >
-          Posts
+      <div className="nav-wrapper">
+        <Link className="logo" to="/">
+          <img src="/logo.png" className="img-logo" />
         </Link>
-        <Link
-          to="/upgradepage"
-          className={pathname.includes("upgradepage") ? "highlight" : null}
-        >
-          Premium Guides
-        </Link>
-        <Link
-          to="/calendar"
-          className={pathname.includes("calendar") ? "highlight" : null}
-        >
-          Calendar
-        </Link>
-      </nav>
+        <nav className="wrapper link-wrapper">
+          <Link
+            to="/posts"
+            className={pathname.includes("posts") ? "highlight" : null}
+          >
+            Posts
+          </Link>
+          <Link
+            to="/upgradepage"
+            className={pathname.includes("upgradepage") ? "highlight" : null}
+          >
+            Premium Guides
+          </Link>
+          <Link
+            to="/calendar"
+            className={pathname.includes("calendar") ? "highlight" : null}
+          >
+            Calendar
+          </Link>
+        </nav>
+      </div>
+
       <nav className="wrapper link-wrapper">
         <div>Hello, Jose!</div>
         {isSignIn ? (
