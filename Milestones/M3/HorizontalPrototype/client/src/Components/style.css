@@ -37,11 +37,9 @@
   background-color: var(--lightgray);
   height: 120px;
   padding: 20px;
-}
-
-.footer-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 40px;
 }
 
