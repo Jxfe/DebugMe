@@ -6,7 +6,6 @@ import "./style.css";
 
 const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
 const passwordRegex = /(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
-//const DUMMY_ID = ["test01@gmail.com", "test02@gmail.com", "test03@gamil.com"];
 
 function SignUp() {
   const navigate = useNavigate();
@@ -68,8 +67,27 @@ function SignUp() {
       return;
     }
 
-    alert("successfuly registered!");
-    navigate("/");
+    axios({
+      method: "post",
+      url: "/api/register",
+      data: {
+        name: name,
+        email: email,
+        password: password
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then((response) => {
+        if (response) {
+          alert("successfuly registered!");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const changeName = (e) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../../Components/Button";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./event.css";
 
 const Event = () => {
@@ -19,7 +19,7 @@ const Event = () => {
   };
 
   const removeAttendee = (e) => {
-    const tmp = attendees.splice(e.target.id, 1);
+    attendees.splice(e.target.id, 1);
     setAttendees([...attendees]);
   };
 
