@@ -32,7 +32,7 @@ def login():
 
     return jsonify({'error': 'Wrong Credentials'}), 401
 
-@authorization.route('/whoami', methods=['POST'])
+@authorization.route('/whoami', methods=['GET'])
 @jwt_required()
 def whoami():
     user_schema = UserSchema()
@@ -41,7 +41,11 @@ def whoami():
 
     return user_schema.jsonify(user), 200
 
-@authorization.route('/refresh', methods=['GET', 'POST'])
-def refresh():
-    pass
+@authorization.route('/refresh', methods=['GET'])
+@jwt_required(refresh=True)
+def refresh_token():
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity)
+
+    return jsonify({"access_token":access_token}), 200
 
