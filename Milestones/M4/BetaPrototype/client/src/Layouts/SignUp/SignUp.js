@@ -38,14 +38,9 @@ function SignUp() {
       }
     })
       .then((response) => {
-        if (Object.keys(response.data).length === 0) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .then((result) => {
-        setCanUseEmail(() => result);
+        response.data.status === "success"
+          ? setCanUseEmail(true)
+          : setCanUseEmail(false);
       })
       .catch((err) => {
         console.log(err);
@@ -197,7 +192,6 @@ function SignUp() {
         />
         <div className="checkbox-container">
           <input
-            //style={{ width: "100px" }}
             className="agreement-checkbox"
             type="checkbox"
             id="agreement"

@@ -1,7 +1,8 @@
 from flask import request, jsonify, Blueprint
+from werkzeug.security import generate_password_hash
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
-from werkzeug.security import generate_password_hash
+
 
 registration = Blueprint('register', __name__)
 
@@ -24,7 +25,13 @@ def register():
 def check_email_duplicate():
     email = request.form.get('email', False)
 
-    result = db.session.query(User).filter(User.email==email).first()
-    user_schema = UserSchema()
+    query = db.session.query(User).filter(User.email==email).first()
 
-    return user_schema.jsonify(result)
+    if query:
+        result = "fail"
+    else:
+        result = "success"
+
+    response = {'status': result}
+
+    return jsonify(response)
