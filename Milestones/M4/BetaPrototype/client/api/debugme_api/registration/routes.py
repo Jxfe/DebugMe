@@ -3,7 +3,6 @@ from werkzeug.security import generate_password_hash
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
 
-
 registration = Blueprint('register', __name__)
 
 @registration.route('/api/register', methods=['POST'])

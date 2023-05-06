@@ -67,6 +67,7 @@ function SignUp() {
       return;
     }
 
+    // Register User
     axios({
       method: "post",
       url: "/api/register",
