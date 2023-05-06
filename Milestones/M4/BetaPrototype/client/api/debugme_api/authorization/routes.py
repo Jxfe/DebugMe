@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
 
@@ -28,13 +28,18 @@ def login():
                     'access_token': access_token,
                     'refresh_token': refresh_token
                 }
-            })
+            }), 200
 
     return jsonify({'error': 'Wrong Credentials'}), 401
 
-@authorization.route('/whoami', methods=['GET', 'POST'])
+@authorization.route('/whoami', methods=['POST'])
+@jwt_required()
 def whoami():
-    pass
+    user_schema = UserSchema()
+    user_id = get_jwt_identity()
+    user = db.session.query(User).filter(User.id==user_id).first()
+
+    return user_schema.jsonify(user), 200
 
 @authorization.route('/refresh', methods=['GET', 'POST'])
 def refresh():
