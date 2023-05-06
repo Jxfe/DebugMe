@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from debugme_api.config import app_config
-from debugme_api.debugme_toolkit import db, api, ma
+from debugme_api.debugme_toolkit import db, api, ma, jwt
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -9,12 +9,15 @@ def create_app(config_name):
 
     CORS(app, resources={r"/*": {"origins": "*"}})
 
-    db.init_app(app)
-    ma.init_app(app)    # Marshmallow init must come after db init
+    db.init_app(app)    # init SQLAlchemy DB
+    ma.init_app(app)    # init Marshmallow. Note: must come after db init
+    jwt.init_app(app)   # init JSON Web Token Manager.
 
     #### Register subdirectory blueprints in app
     from debugme_api.posts.routes import posts
     from debugme_api.registration.routes import registration
+    from debugme_api.authorization.routes import authorization
+    app.register_blueprint(authorization)
     app.register_blueprint(registration)
     app.register_blueprint(posts)
 

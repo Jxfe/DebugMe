@@ -7,9 +7,10 @@ class Config:
     """Add credentials here. Note: you must have a .env file on this directory, with the
     desired values.
     """
-    SECRET_KEY=os.environ.get('SECRET_KEY')
+    # JSON Web Token secret key
+    JWT_SECRET_KEY=os.environ.get('SECRET_KEY')
 
-    # Add AWS settings
+    # AWS Database settings
     AWS_USERNAME=os.environ.get('AWS_USERNAME')
     AWS_PASSWORD=os.environ.get('AWS_PASSWORD')
     AWS_DB_HOSTNAME=os.environ.get('AWS_DB_HOSTNAME')
