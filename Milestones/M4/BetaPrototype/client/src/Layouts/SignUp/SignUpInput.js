@@ -1,7 +1,14 @@
 import React from "react";
 import "./style.css";
 
-function Input({ name, value, changeValue, isValidValue, warning, placeholder }) {
+function Input({
+  name,
+  value,
+  changeValue,
+  isValidValue,
+  warning,
+  placeholder
+}) {
   return (
     <div className="input-container">
       <label className="input-label" htmlFor={name}>
@@ -9,6 +16,7 @@ function Input({ name, value, changeValue, isValidValue, warning, placeholder })
       </label>
       <input
         className="input-box"
+        autoComplete="off"
         type={
           name === "password" || name === "password-confirm"
             ? "password"
