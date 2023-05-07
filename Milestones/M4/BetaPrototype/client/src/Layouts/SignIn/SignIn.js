@@ -5,6 +5,7 @@ import Button from "../../Components/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "../../utils/commonFuntions";
+import { customAxios } from "../../utils/customAxios";
 
 function SignIn() {
   const [username, setUsername] = useState("");
@@ -47,15 +48,12 @@ function SignIn() {
       }
     })
       .then(() => {
-        axios({
+        customAxios({
           method: "get",
           url: "/api/whoami",
           data: {
             email: email,
             password: password
-          },
-          headers: {
-            "X-CSRF-TOKEN": getCookie("csrf_access_token")
           }
         }).then((response) => {
           console.log(response.data);
