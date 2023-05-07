@@ -12,3 +12,10 @@ export const getLocalStorage = (key) => {
 export const deleteLocalStorage = (key) => {
   localStorage.removeItem(key);
 };
+
+// This function retrieves the CSRF token from the cookie (If user is logged in)
+export const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+};
