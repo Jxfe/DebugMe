@@ -77,7 +77,7 @@ def logout():
     unset_jwt_cookies(response)
     return response, 200
 
-@authorization.get('/refresh')
+@authorization.route('/refresh', methods=['POST'])
 @jwt_required(refresh=True)
 def refresh_user_token():
     identity = get_jwt_identity()
