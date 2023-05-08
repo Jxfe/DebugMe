@@ -7,6 +7,8 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
 
+ROLES = {"basic": 0, "premium": 1, "mentor": 2, "admin": 3}
+
 authorization = Blueprint("authorization", __name__, url_prefix="/api")
 
 # @authorization.after_request
@@ -39,11 +41,26 @@ def login():
         if is_password_correct:
             access_token = create_access_token(identity=user.id)
             refresh_token = create_refresh_token(identity=user.id)
+
+            roles = []
+            if user.userRank is not None:
+                if user.userRank == 3:
+                    roles.append(ROLES['admin'])
+                elif user.userRank == 2:
+                    roles.append(ROLES['basic'])
+                    roles.append(ROLES['mentor'])
+                elif user.userRank == 1:
+                    roles.append(ROLES['basic'])
+                    roles.append(ROLES['premium'])
+                elif user.userRank == 0:
+                    roles.append(ROLES['basic'])
+
             response = jsonify({
                 "user": {
                     'username': user.name,
                     'email': user.email,
                     'userRank': user.userRank,
+                    'roles': roles,
                     'access_token': access_token
                 }})
 

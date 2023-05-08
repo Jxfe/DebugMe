@@ -13,4 +13,19 @@ const RequireAuth = () => {
   );
 };
 
+// For use if we decide to implement roles.
+/*
+const RequireAuth = ({ allowedRoles }) => {
+  const { auth } = useAuth();
+
+  return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
+    <Outlet />
+  ) : auth?.username ? (
+    <Navigate to="/unauthorized" state={{ from: location }} replace />
+  ) : (
+    <Navigate to="/signin" state={{ from: location }} replace />
+  );
+};
+*/
+
 export default RequireAuth;

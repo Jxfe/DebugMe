@@ -42,7 +42,8 @@ function SignIn() {
       .then((response) => {
         const accessToken = response.data.access_token;
         const userRank = response.data.userRank;
-        setAuth({ username, email, password, userRank, accessToken });
+        const roles = response.data.roles;
+        setAuth({ username, email, password, userRank, roles, accessToken });
 
         setUsername("");
         setEmail("");

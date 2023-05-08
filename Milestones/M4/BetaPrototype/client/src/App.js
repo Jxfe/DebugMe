@@ -44,6 +44,7 @@ function App() {
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* Basic User Routes (Protected)*/}
+        {/* <Route element={<RequireAuth allowedRoles={[0]}/>}> */}
         <Route element={<RequireAuth />}>
           <Route path="calendar" element={<Calendar />} />
           <Route path="posts" element={<Posts />} />
@@ -78,8 +79,20 @@ function App() {
         </Route>
 
         {/* Premium User Routes (Protected)*/}
+        {/* <Route element={<RequireAuth allowedRoles={[0, 1]}/>}>
+
+        </Route> */}
+
+        {/* Mentor  Routes (Protected)*/}
+        {/* <Route element={<RequireAuth allowedRoles={[0, 2]}/>}>
+
+        </Route> */}
 
         {/* Admin Routes (Protected)*/}
+        {/* <Route
+          element={<RequireAuth allowedRoles={[3]} />}
+        >
+        </Route> */}
 
         {/* Catch All Routes */}
         <Route path="*" element={<Error />} />
