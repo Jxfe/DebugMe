@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./style.css";
 import Button from "../../Components/Button";
 import axios from "axios";
-import AuthContext from "../../Context/AuthProvider";
+import useAuth from "../../Hooks/useAuth";
 
 function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const inputRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     inputRef.current.focus();
@@ -24,9 +26,6 @@ function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Email: ", email);
-    console.log("Password: ", password);
 
     // Login logic here
     axios({
@@ -41,7 +40,6 @@ function SignIn() {
       }
     })
       .then((response) => {
-        console.log(response.data);
         const accessToken = response.data.access_token;
         const userRank = response.data.userRank;
         setAuth({ username, email, password, userRank, accessToken });
@@ -49,7 +47,7 @@ function SignIn() {
         setUsername("");
         setEmail("");
         setPassword("");
-        navigate("/mypage");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         if (!error.response) {
@@ -106,7 +104,8 @@ function SignIn() {
         <Button className="default-button" content="Sign In" />
       </form>
       <div className="signup-link">
-        Don't have an account? <Link to="/signup">Sign up</Link>
+        <span className="need-acct-span">Don't have an account?</span>{" "}
+        <Link to="/signup">Sign up</Link>
       </div>
     </div>
   );

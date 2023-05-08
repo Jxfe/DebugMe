@@ -41,7 +41,7 @@ def login():
             refresh_token = create_refresh_token(identity=user.id)
             response = jsonify({
                 "user": {
-                    'name': user.name,
+                    'username': user.name,
                     'email': user.email,
                     'userRank': user.userRank,
                     'access_token': access_token
