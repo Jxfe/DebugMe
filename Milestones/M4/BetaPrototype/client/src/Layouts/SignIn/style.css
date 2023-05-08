@@ -1,45 +1,58 @@
 .SignIn {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  input {
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-  }
-  .default-button {
-    margin: 0 auto;
-  }
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 
-  .signup-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  
-  .signup-link a {
-    color: --primary;
-  }
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.default-button {
+  margin: 0 auto;
+}
+
+.signup-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.signup-link a {
+  color: --primary;
+}
+
+.error {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}

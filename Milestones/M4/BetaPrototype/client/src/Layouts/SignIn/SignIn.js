@@ -1,38 +1,31 @@
-import React, { useState, useEffect, useRef, Component } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
 import Button from "../../Components/Button";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import { getCookie } from "../../utils/commonFuntions";
-import { customAxios } from "../../utils/customAxios";
+import AuthContext from "../../Context/AuthProvider";
 
 function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const { setAuth } = useContext(AuthContext);
   const inputRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
+  useEffect(() => {
+    setErrorMsg("");
+  }, [username, password]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Username:", username);
-    console.log("Email: ");
+    console.log("Email: ", email);
     console.log("Password: ", password);
 
     // Login logic here
@@ -47,27 +40,35 @@ function SignIn() {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
-      .then(() => {
-        customAxios({
-          method: "get",
-          url: "/api/whoami",
-          data: {
-            email: email,
-            password: password
-          }
-        }).then((response) => {
-          console.log(response.data);
-        });
+      .then((response) => {
+        console.log(response.data);
+        const accessToken = response.data.access_token;
+        const userRank = response.data.userRank;
+        setAuth({ username, email, password, userRank, accessToken });
+
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        navigate("/mypage");
       })
       .catch((error) => {
-        console.log(error);
+        if (!error.response) {
+          setErrorMsg("No Server Response");
+        } else if (error.response.status === 400) {
+          setErrorMsg(error.response.data.message);
+        } else if (error.response.status === 401) {
+          setErrorMsg(error.response.data.message);
+        } else {
+          setErrorMsg("Login Failed");
+        }
       });
   };
 
   return (
     <div className="SignIn">
+      <p className={errorMsg ? "error" : "offscreen"}>{errorMsg}</p>
       <h2>Sign In</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             ref={inputRef}
@@ -75,7 +76,9 @@ function SignIn() {
             name="username"
             id="username"
             placeholder="Username"
-            onChange={updateUsername}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
         </div>
         <div className="form-group">
@@ -84,7 +87,9 @@ function SignIn() {
             name="email"
             id="email"
             placeholder="Email"
-            onChange={updateEmail}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className="form-group">
@@ -93,20 +98,15 @@ function SignIn() {
             name="password"
             id="password"
             placeholder="Password"
-            onChange={updatePassword}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
-        <Button
-          className="default-button"
-          content="Submit"
-          onClickEvent={handleSubmit}
-        />
-        {/* <Link to="/premiumguides">
-          <Button className="default-button" content="Submit" />
-        </Link> */}
+        <Button className="default-button" content="Sign In" />
       </form>
       <div className="signup-link">
-        Don't have an account? <a href="./signup">Sign up</a>
+        Don't have an account? <Link to="/signup">Sign up</Link>
       </div>
     </div>
   );
