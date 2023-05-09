@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import Textare from "../../Components/Textarea";
-import "./style.css";
+import "./mypage.css";
 
 const mentoringLists = [
   {
@@ -37,12 +37,12 @@ function MentoringSessions() {
     <div>
       <h1>Your Mentoring Sessions</h1>
       <div className="chatting-layout">
-        <div className="mentoring-list">
+        <div className="mypage-mentoring-list">
           {mentoringLists.map((each) => {
             return (
               <div
                 key={each.id}
-                className="request-name"
+                className="mypage-request-name"
                 onClick={() => setSelectedSession(each)}
               >
                 {each.name}
@@ -54,8 +54,17 @@ function MentoringSessions() {
           {selectedMentoring && (
             <div className="mentoring-detail">
               <div>
-                Details of your Mentoring Session with {selectedMentoring.name}<br />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Euismod nisi porta lorem mollis aliquam ut. Netus et malesuada fames ac turpis egestas. Scelerisque in dictum non consectetur. Amet consectetur adipiscing elit pellentesque habitant morbi tristique. Eget nullam non nisi est sit amet facilisis magna etiam. </p>
+                Details of your Mentoring Session with {selectedMentoring.name}
+                <br />
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Euismod nisi porta lorem mollis aliquam ut. Netus et malesuada
+                  fames ac turpis egestas. Scelerisque in dictum non
+                  consectetur. Amet consectetur adipiscing elit pellentesque
+                  habitant morbi tristique. Eget nullam non nisi est sit amet
+                  facilisis magna etiam.{" "}
+                </p>
               </div>
               <div className="button-container">
                 <Button
@@ -75,18 +84,18 @@ function MentoringSessions() {
         {showReviewModal && (
           <Modal
             title={`How was your Mentoring Session with ${selectedMentoring.name}?`}
-            content={(
-            <div>
+            content={
+              <div>
                 <Textare />
                 <div class="star-wrapper-session">
-                    <a href="#" class="fas fa-star s1 checked"></a>
-                    <a href="#" class="fas fa-star s2"></a>
-                    <a href="#" class="fas fa-star s3"></a>
-                    <a href="#" class="fas fa-star s4"></a>
-                    <a href="#" class="fas fa-star s5"></a>
+                  <a href="#" class="fas fa-star s1 checked"></a>
+                  <a href="#" class="fas fa-star s2"></a>
+                  <a href="#" class="fas fa-star s3"></a>
+                  <a href="#" class="fas fa-star s4"></a>
+                  <a href="#" class="fas fa-star s5"></a>
                 </div>
-            </div>
-            )}
+              </div>
+            }
             buttonContent="SUBMIT"
             buttonAction={() => setshowReviewModal(false)}
             showModal={showReviewModal}
@@ -96,11 +105,11 @@ function MentoringSessions() {
         {showRefundModal && (
           <Modal
             title="What is the reason for your refund request?"
-            content={(
-                <div>
-                    <Textare />
-                </div>
-                )}
+            content={
+              <div>
+                <Textare />
+              </div>
+            }
             buttonContent="SUBMIT"
             buttonAction={() => setshowRefundModal(false)}
             showModal={showRefundModal}

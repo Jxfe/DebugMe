@@ -81,41 +81,42 @@
 }
 
 /* My Page */
+
 .mypage-container {
-    width: 1000px;
-    min-height: 600px;
-    background-color: var(--lightgray);
-    padding: 20px;
-    margin: 0 auto;
-    box-shadow: 0px 0px 6px 6px rgba(0, 0, 0, 0.2);
-  }
+  width: 1000px;
+  min-height: 600px;
+  background-color: var(--lightgray);
+  padding: 20px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 6px 6px rgba(0, 0, 0, 0.2);
+}
 
 .mypage-contents {
-    min-height: 550px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
+  min-height: 550px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .mypage-nav {
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid;
-    padding-right: 10px;
-    width: 25%;
-  }
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid;
+  padding-right: 10px;
+  width: 25%;
+}
 
 .mypage-nav-link {
   margin: 10px 0;
 }
-  
+
 .mypage-personalinfo {
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-    width: 70%;
-  }
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  width: 70%;
+}
 
 .personalinfo-field-head {
   font-weight: bold;

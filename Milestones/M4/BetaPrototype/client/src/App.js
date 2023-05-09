@@ -28,6 +28,7 @@ import CreateGuide from "./Layouts/CreateGuide/CreateGuide";
 import Success from "./Layouts/UpdatePayment/Success";
 import EventMessages from "./Layouts/MyEvents/EventMessages";
 import Policy from "./Layouts/Policy/Policy";
+import Profile from "./Layouts/MyPage/Profile";
 
 function App() {
   return (
@@ -50,24 +51,18 @@ function App() {
           <Route path="myevents" element={<MyEvents />} />
           <Route path="createevent" element={<CreateEvent />} />
           <Route path="event/:id" element={<Event />} />
-          <Route path="mypage" exact element={<MyPage />} />
           <Route path="success" element={<Success />} />
-          <Route
-            path="mypage/mentoring-requests"
-            element={<MentoringRequest />}
-          />
-          <Route
-            path="mypage/customer-requests"
-            element={<CustomerRequest />}
-          />
-          <Route
-            path="mypage/mentoring-sessions"
-            element={<MentoringSessions />}
-          />
-          <Route path="mypage/messages" element={<Messages />} />
+          <Route path="mypage" exact element={<MyPage />}>
+            <Route path="updatepayment" element={<UpdatePayment />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="mentoring-requests" element={<MentoringRequest />} />
+            <Route path="customer-requests" element={<CustomerRequest />} />
+            <Route path="mentoring-sessions" element={<MentoringSessions />} />
+            <Route path="messages" element={<Messages />} />
+          </Route>
           <Route path="policy" element={<Policy />} />
           <Route path="*" element={<Error />} />
-          <Route path="updatepayment" element={<UpdatePayment />} />
+
           <Route path="CreateGuide" element={<CreateGuide />} />
           <Route path="myevents/eventmessages" element={<EventMessages />} />
         </Routes>

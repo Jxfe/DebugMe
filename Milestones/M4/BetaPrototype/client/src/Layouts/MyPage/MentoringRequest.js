@@ -2,7 +2,7 @@ import React, { useState } from "react"; // Needed for AWS since it's using node
 import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
-import "./style.css";
+import "./mypage.css";
 
 const mentoringLists = [
   {
@@ -40,12 +40,12 @@ function MentoringRequest() {
     <div>
       <h1>Mentoring Request</h1>
       <div className="chatting-layout">
-        <div className="mentoring-list">
+        <div className="mypage-mentoring-list">
           {mentoringLists.map((each) => {
             return (
               <div
                 key={each.id}
-                className="request-name"
+                className="mypage-request-name"
                 onClick={() => setSelectedMentoring(each)}
               >
                 {each.name}

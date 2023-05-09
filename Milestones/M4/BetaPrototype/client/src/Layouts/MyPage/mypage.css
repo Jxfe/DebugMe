@@ -4,12 +4,14 @@
   gap: 40px;
 }
 
-.mentoring-list {
+.mypage-mentoring-list {
+  max-width: 200px;
   background-color: var(--lightgray);
-  padding: 20px;
+  padding: 20px 20px 20px 0;
   flex: 1;
   border-radius: 4px;
   min-height: 60vh;
+  border-right: 2px solid var(--gray);
 }
 
 .chatting-box {
@@ -20,17 +22,16 @@
   min-height: 60vh;
 }
 
-.request-name {
+.mypage-request-name {
+  font-size: var(--defaultfont);
   padding: 10px;
   margin-bottom: 10px;
-  font-size: var(--largefont);
   cursor: pointer;
   border-bottom: 1px solid var(--darkgray);
 }
 
 .mentoring-detail {
   padding: 20px;
-  font-size: var(--largefont);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -81,45 +82,48 @@
 }
 
 /* My Page */
-.mypage-container {
-    width: 1000px;
-    min-height: 600px;
-    background-color: var(--lightgray);
-    padding: 20px;
-    margin: 0 auto;
-    box-shadow: 0px 0px 6px 6px rgba(0, 0, 0, 0.2);
-  }
+.mypage-layout {
+  min-height: 600px;
+  background-color: var(--lightgray);
+  padding: 20px;
+  margin: 0 auto;
+}
 
-.mypage-contents {
-    min-height: 550px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-.mypage-nav {
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid;
-    padding-right: 10px;
-    width: 25%;
-  }
+.mypage-content {
+  min-height: 550px;
+  display: flex;
+  flex-direction: row;
+}
+
+.mypage-navbar {
+  max-width: 240px;
+  margin: 10px 20px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--gray);
+  padding-right: 20px;
+}
+
+.header-wrapper {
+  border-bottom: 1px solid var(--gray);
+}
 
 .mypage-nav-link {
-  margin: 10px 0;
+  margin: 10px 20px 10px 10px;
+  text-decoration: none;
+  color: var(--black);
+  padding-bottom: 10px;
 }
-  
+
 .mypage-personalinfo {
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-    width: 70%;
-  }
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  width: 70%;
+}
 
 .personalinfo-field-head {
   font-weight: bold;
-  font-size: var(--largefont);
   margin-bottom: 0;
 }
 
@@ -130,4 +134,8 @@
   text-decoration: none;
   transition: all 0.5s;
   margin: 4px;
+}
+
+.mypage-profile {
+  margin-top: 40px;
 }
