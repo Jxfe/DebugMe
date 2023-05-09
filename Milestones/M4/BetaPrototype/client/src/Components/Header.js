@@ -5,13 +5,12 @@ import Popover from "@mui/material/Popover";
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import useAuth from "../Hooks/useAuth";
-import { customAxios } from "../utils/customAxios";
 import useLogout from "../Hooks/useLogout";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const { pathname } = useLocation();
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const logout = useLogout();
 
@@ -35,18 +34,6 @@ function Header() {
 
   const signout = async () => {
     await logout();
-
-    // customAxios({
-    //   method: "post",
-    //   url: "/api/logout"
-    // })
-    //   .then(() => {
-    //     setAuth({});
-    //     alert("Successfully signed out!");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   return (
