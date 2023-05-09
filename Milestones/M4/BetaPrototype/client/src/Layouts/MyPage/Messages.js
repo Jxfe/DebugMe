@@ -1,7 +1,7 @@
 import React, { useState } from "react"; // Needed for AWS since it's using node 16
 import Button from "../../Components/Button";
 import Textare from "../../Components/Textarea";
-import "./style.css";
+import "./mypage.css";
 
 const mentoringLists = [
   {
@@ -55,12 +55,12 @@ function Messages() {
     <div>
       <h1>Messages</h1>
       <div className="chatting-layout">
-        <div className="mentoring-list">
+        <div className="mypage-mentoring-list">
           {mentoringLists.map((each) => {
             return (
               <div
                 key={each.id}
-                className="request-name"
+                className="mypage-request-name"
                 onClick={() => setSelectedMentoring(each)}
               >
                 {each.name}

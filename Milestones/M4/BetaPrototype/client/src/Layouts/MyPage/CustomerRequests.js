@@ -1,29 +1,29 @@
 import React, { useState } from "react"; // Needed for AWS since it's using node 16
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
-import "./style.css";
+import "./mypage.css";
 
 const requestsList = [
   {
     id: 1,
     name: "samuel",
-    requestedDate: "4-24"
+    requestedDate: "4-24",
   },
   {
     id: 2,
     name: "Jiji",
-    requestedDate: "3-28"
+    requestedDate: "3-28",
   },
   {
     id: 3,
     name: "Josh",
-    requestedDate: "3-24"
+    requestedDate: "3-24",
   },
   {
     id: 4,
     name: "Amy",
-    requestedDate: "3-21"
-  }
+    requestedDate: "3-21",
+  },
 ];
 function CustomerRequest() {
   const [selectedMentoring, setSelectedRequest] = useState(requestsList[0]);
@@ -34,12 +34,12 @@ function CustomerRequest() {
     <div>
       <h1>Customer Requests</h1>
       <div className="chatting-layout">
-        <div className="mentoring-list">
+        <div className="mypage-mentoring-list">
           {requestsList.map((each) => {
             return (
               <div
                 key={each.id}
-                className="request-name"
+                className="mypage-request-name"
                 onClick={() => setSelectedRequest(each)}
               >
                 {each.name}

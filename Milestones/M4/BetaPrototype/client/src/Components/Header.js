@@ -57,7 +57,7 @@ function Header() {
         {isSignIn ? (
           <>
             <Link
-              to="/mypage"
+              to="/mypage/profile"
               className={pathname.includes("mypage") ? "highlight" : null}
             >
               My Page
