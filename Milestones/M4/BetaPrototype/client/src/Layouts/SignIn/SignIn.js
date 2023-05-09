@@ -10,7 +10,7 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
   const inputRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +19,10 @@ function SignIn() {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   useEffect(() => {
     setErrorMsg("");
@@ -40,10 +44,11 @@ function SignIn() {
       }
     })
       .then((response) => {
-        const accessToken = response.data.access_token;
-        const userRank = response.data.userRank;
-        const roles = response.data.roles;
-        setAuth({ username, email, password, userRank, roles, accessToken });
+        const accessToken = response.data.user.access_token;
+        const userRank = response.data.user.userRank;
+        const roles = response.data.user.roles;
+
+        setAuth({ username, email, userRank, roles, accessToken });
 
         setUsername("");
         setEmail("");
@@ -61,6 +66,10 @@ function SignIn() {
           setErrorMsg("Login Failed");
         }
       });
+  };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
   };
 
   return (
@@ -101,6 +110,15 @@ function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+        </div>
+        <div className="persist-container">
+          <input
+            type="checkbox"
+            id="persist"
+            onChange={togglePersist}
+            checked={persist}
+          />
+          <label htmlFor="persist">Remember me</label>
         </div>
         <Button className="default-button" content="Sign In" />
       </form>

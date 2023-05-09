@@ -1,5 +1,6 @@
 import React from "react";
 import { customAxios } from "../utils/customAxios";
+import axios from "axios";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
@@ -8,10 +9,22 @@ const useRefreshToken = () => {
   const refresh = async () => {
     const response = await customAxios({
       method: "post",
-      url: "/refresh"
+      url: "/api/refresh"
     });
-    setAuth(prev => {...prev, accessToken: response.data.access_token})
-    return response.data.access_token
+
+    const whoami = await customAxios({
+      method: "get",
+      url: "/api/whoami"
+    });
+
+    const username = whoami.data.username;
+    const email = whoami.data.email;
+    const userRank = whoami.data.userRank;
+    const roles = whoami.data.roles;
+    const accessToken = response.data.access_token;
+    setAuth({ username, email, userRank, roles, accessToken });
+
+    return response.data.access_token;
   };
 
   return refresh;

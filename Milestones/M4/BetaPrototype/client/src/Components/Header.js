@@ -6,13 +6,14 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import useAuth from "../Hooks/useAuth";
 import { customAxios } from "../utils/customAxios";
+import useLogout from "../Hooks/useLogout";
 
 function Header() {
+  const [anchorEl, setAnchorEl] = useState(null);
   const { pathname } = useLocation();
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-  //const [isSignIn, setIsSignIn] = useState(true);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const logout = useLogout();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,18 +33,20 @@ function Header() {
     return name.charAt(0).toUpperCase() + lowerCase.slice(1);
   };
 
-  const signout = () => {
-    customAxios({
-      method: "post",
-      url: "/api/logout"
-    })
-      .then(() => {
-        setAuth({});
-        alert("Successfully signed out!");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const signout = async () => {
+    await logout();
+
+    // customAxios({
+    //   method: "post",
+    //   url: "/api/logout"
+    // })
+    //   .then(() => {
+    //     setAuth({});
+    //     alert("Successfully signed out!");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
