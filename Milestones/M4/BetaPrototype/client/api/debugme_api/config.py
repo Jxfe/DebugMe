@@ -15,7 +15,7 @@ class Config:
     JWT_SECRET_KEY=SECRET_KEY
     JWT_TOKEN_LOCATION=['cookies']
     JWT_COOKIE_SECURE=False
-    JWT_ACCESS_TOKEN_EXPIRES=timedelta(minutes=1)
+    JWT_ACCESS_TOKEN_EXPIRES=timedelta(minutes=15)
     JWT_REFRESH_TOKEN_EXPIRES=timedelta(days=1)
 
     # AWS Database settings

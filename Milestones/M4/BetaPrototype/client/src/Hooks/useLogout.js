@@ -2,15 +2,16 @@ import { customAxios } from "../utils/customAxios";
 import useAuth from "./useAuth";
 
 const useLogout = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, setPersist } = useAuth();
 
   const logout = async () => {
     setAuth({});
+    // setPersist(false);
+    // localStorage.setItem("persist", false);
     try {
       const response = await customAxios({
         method: "post",
-        url: "/api/logout",
-        withCredentials: true
+        url: "/api/logout"
       });
     } catch (err) {
       console.error(err);
