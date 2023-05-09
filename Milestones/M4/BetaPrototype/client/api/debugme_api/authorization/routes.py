@@ -7,6 +7,8 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
 
+ROLES = {"basic": 0, "premium": 1, "mentor": 2, "admin": 3}
+
 authorization = Blueprint("authorization", __name__, url_prefix="/api")
 
 # @authorization.after_request
@@ -39,15 +41,18 @@ def login():
         if is_password_correct:
             access_token = create_access_token(identity=user.id)
             refresh_token = create_refresh_token(identity=user.id)
+
+            roles = get_roles(user.userRank)
+
             response = jsonify({
                 "user": {
-                    'name': user.name,
+                    'username': user.name,
                     'email': user.email,
                     'userRank': user.userRank,
+                    'roles': roles,
                     'access_token': access_token
                 }})
 
-            #set_access_cookies(response, access_token)
             set_refresh_cookies(response, refresh_token)
             return response, 200
 
@@ -60,7 +65,7 @@ def logout():
     unset_jwt_cookies(response)
     return response, 200
 
-@authorization.get('/refresh')
+@authorization.route('/refresh', methods=['POST'])
 @jwt_required(refresh=True)
 def refresh_user_token():
     identity = get_jwt_identity()
@@ -71,12 +76,29 @@ def refresh_user_token():
     return response, 200
 
 @authorization.route('/whoami', methods=['GET'])
-@jwt_required()
+@jwt_required(refresh=True)
 def whoami():
     user_schema = UserSchema()
     user_id = get_jwt_identity()
     user = db.session.query(User).filter(User.id==user_id).first()
 
-    response = user_schema.jsonify(user)
+    response = jsonify({'username': user.name, 'email': user.email, 'userRank': user.userRank, 'roles': get_roles(user.userRank)})
 
     return response, 200
+
+def get_roles(userRank):
+    roles = []
+
+    if userRank is not None:
+        if userRank == 3:
+            roles.append(ROLES['admin'])
+        elif userRank == 2:
+            roles.append(ROLES['basic'])
+            roles.append(ROLES['mentor'])
+        elif userRank == 1:
+            roles.append(ROLES['basic'])
+            roles.append(ROLES['premium'])
+        elif userRank == 0:
+            roles.append(ROLES['basic'])
+
+    return roles

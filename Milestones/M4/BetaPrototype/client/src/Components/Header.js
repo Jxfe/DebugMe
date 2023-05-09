@@ -4,12 +4,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
+import useAuth from "../Hooks/useAuth";
+import useLogout from "../Hooks/useLogout";
 
 function Header() {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [isSignIn, setIsSignIn] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const { pathname } = useLocation();
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+  const logout = useLogout();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +25,15 @@ function Header() {
   const navigatePage = (page) => {
     navigate(`/mypage/${page}`);
     setAnchorEl(null);
+  };
+
+  const capitalizeName = (name) => {
+    const lowerCase = name.toLowerCase();
+    return name.charAt(0).toUpperCase() + lowerCase.slice(1);
+  };
+
+  const signout = async () => {
+    await logout();
   };
 
   return (
@@ -53,8 +65,10 @@ function Header() {
       </div>
 
       <nav className="wrapper link-wrapper">
-        <div>Hello, Jose!</div>
-        {isSignIn ? (
+        <div>
+          {auth?.username ? `Hello, ${capitalizeName(auth?.username)}!` : ""}
+        </div>
+        {auth?.username ? (
           <>
             <Link
               to="/mypage/profile"
@@ -78,7 +92,7 @@ function Header() {
               onClose={handleClose}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left",
+                horizontal: "left"
               }}
             >
               <div className="popover-container">
@@ -90,7 +104,7 @@ function Header() {
                 </div>
               </div>
             </Popover>
-            <Link to="/" onClick={() => alert("Successfully signed out!")}>
+            <Link to="/" onClick={signout}>
               Sign Out
             </Link>
           </>
