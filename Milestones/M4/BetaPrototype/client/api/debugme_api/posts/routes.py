@@ -1,6 +1,7 @@
-from flask import request, flash, jsonify, Blueprint, render_template
+from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
+from debugme_api.models.Reply import Reply, ReplySchema
 from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text
 from ..models.Post import Post, PostSchema
@@ -55,3 +56,18 @@ def create_post():
     db.session.commit()
 
     return postSchema.jsonify(newPost)
+
+@posts.route('/api/comments', methods=['POST'])
+@jwt_required(refresh=True)
+def get_comments():
+    post_id = request.form['post_id']
+
+    replies = db.session.query(Reply).filter(Reply.post_id==post_id)
+
+    response = []
+    replySchema = ReplySchema()
+    for reply in replies:
+        response.append(replySchema.dump(reply))
+
+    return jsonify(response), 200
+
