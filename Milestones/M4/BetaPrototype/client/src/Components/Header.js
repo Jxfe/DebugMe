@@ -28,8 +28,16 @@ function Header() {
   };
 
   const capitalizeName = (name) => {
-    const lowerCase = name.toLowerCase();
-    return name.charAt(0).toUpperCase() + lowerCase.slice(1);
+    const words = name.split(" ");
+
+    let str = "";
+    for (let i = 0; i < words.length; i++) {
+      let lower = words[i].toLowerCase();
+      let first = words[i].charAt(0);
+      str += first + lower;
+    }
+
+    return words.join(" ");
   };
 
   const signout = async () => {
@@ -66,9 +74,9 @@ function Header() {
 
       <nav className="wrapper link-wrapper">
         <div>
-          {auth?.username ? `Hello, ${capitalizeName(auth?.username)}!` : ""}
+          {auth?.accessToken ? `Hello, ${capitalizeName(auth?.username)}!` : ""}
         </div>
-        {auth?.username ? (
+        {auth?.accessToken ? (
           <>
             <Link
               to="/mypage/profile"

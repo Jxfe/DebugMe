@@ -11,19 +11,19 @@ ROLES = {"basic": 0, "premium": 1, "mentor": 2, "admin": 3}
 
 authorization = Blueprint("authorization", __name__, url_prefix="/api")
 
-# @authorization.after_request
-# def refresh_expiring_jwts(response):
-#     try:
-#         exp_timestamp = get_jwt()["exp"]
-#         now = datetime.now(timezone.utc)
-#         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
-#         if target_timestamp > exp_timestamp:
-#             access_token = create_access_token(identity=get_jwt_identity())
-#             set_access_cookies(response, access_token)
-#         return response
-#     except (RuntimeError, KeyError):
-#         # Case where there is not a valid JWT. Just return the original response
-#         return response
+@authorization.after_request
+def refresh_expiring_jwts(response):
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            set_access_cookies(response, access_token)
+        return response
+    except (RuntimeError, KeyError):
+        # Case where there is not a valid JWT. Just return the original response
+        return response
 
 @authorization.route('/login', methods=['POST'])
 def login():
@@ -39,19 +39,21 @@ def login():
         is_password_correct = check_password_hash(user.password, password)
 
         if is_password_correct:
-            access_token = create_access_token(identity=user.id)
-            refresh_token = create_refresh_token(identity=user.id)
-
             roles = get_roles(user.userRank)
 
-            response = jsonify({
-                "user": {
+            additional_claims = {
+                    'id': user.id,
                     'username': user.name,
                     'email': user.email,
                     'userRank': user.userRank,
-                    'roles': roles,
-                    'access_token': access_token
-                }})
+                    'roles': roles
+                }
+
+            access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
+            refresh_token = create_refresh_token(identity=user.id, additional_claims=additional_claims)
+
+            additional_claims.update({'access_token': access_token})
+            response = jsonify({"user": additional_claims})
 
             set_refresh_cookies(response, refresh_token)
             return response, 200

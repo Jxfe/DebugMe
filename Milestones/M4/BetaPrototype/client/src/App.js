@@ -47,8 +47,7 @@ function App() {
 
         {/* Basic User Routes (Protected)*/}
         <Route element={<PersistLogin />}>
-          {/* <Route element={<RequireAuth allowedRoles={[0]}/>}> */}
-          <Route element={<RequireAuth />}>
+          <Route element={<RequireAuth allowedRoles={[0]} />}>
             <Route path="calendar" element={<Calendar />} />
             <Route path="posts" element={<Posts />} />
             <Route path="posts/post" element={<Post />} />

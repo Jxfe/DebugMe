@@ -1,12 +1,10 @@
 import React from "react";
 import { customAxios } from "../utils/customAxios";
-import useCustomAxios from "./useCustomAxios";
 import axios from "axios";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();
-  //  const customAxios = useCustomAxios();
 
   const refresh = async () => {
     const response = await customAxios({
