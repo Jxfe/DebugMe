@@ -7,13 +7,14 @@ class User(db.Model):
     name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    userRank = db.Column(db.String(255), nullable=True)
+    userRank = db.Column(db.Integer, nullable=True, default=0)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, password, userRank=0):
         self.name = name
         self.email = email
         self.password = password
+        self.userRank = userRank
 
 class UserSchema(ma.Schema):
     class Meta:
