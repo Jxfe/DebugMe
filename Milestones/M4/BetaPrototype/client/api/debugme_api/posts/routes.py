@@ -21,15 +21,15 @@ def get_posts():
             result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
         else:
             result = connection.execute(text('SELECT * FROM Post'))
-        rows = result.fetchall()
+        posts = result.fetchall()
         connection.close()
 
-    posts = []
+    response = []
     postSchema = PostSchema()
-    for row in rows:
-        posts.append(postSchema.dump(row))
+    for post in posts:
+        response.append(postSchema.dump(post))
 
-    return jsonify(posts), 200
+    return jsonify(response), 200
 
 @posts.route('/api/posts', methods=['POST'])
 @jwt_required(refresh=True)
@@ -45,12 +45,15 @@ def create_post():
     else:
         is_premium = False
 
-    newPost = Post(title, content, user_id, image_path, is_premium)
     postSchema = PostSchema()
+    newPost = Post(title, content, user_id, image_path, is_premium)
+
     db.session.add(newPost)
     db.session.commit()
 
-    return postSchema.jsonify(newPost), 201
+    response = postSchema.dump(newPost)
+
+    return jsonify(response), 201
 
 @posts.route('/api/comments', methods=['POST'])
 @jwt_required(refresh=True)
@@ -66,3 +69,20 @@ def get_comments():
 
     return jsonify(response), 200
 
+@posts.route('/api/addcomment', methods=['POST'])
+@jwt_required(refresh=True)
+def add_comment():
+    post_id = request.form['post_id']
+    user_id = request.form['user_id']
+    content = request.form['content']
+    image_path = request.form['image_path']
+
+    replySchema = ReplySchema()
+    newReply = Reply(content, user_id, post_id, image_path)
+
+    db.session.add(newReply)
+    db.session.commit()
+
+    response = replySchema.dump(newReply)
+
+    return jsonify(response), 201
