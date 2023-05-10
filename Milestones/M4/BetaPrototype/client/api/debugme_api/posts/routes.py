@@ -17,24 +17,19 @@ def get_posts():
     engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 
     with engine.connect() as connection:
-      if search:
-          result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
-      else:
-          result = connection.execute(text('SELECT * FROM Post'))
+        if search:
+            result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
+        else:
+            result = connection.execute(text('SELECT * FROM Post'))
+        rows = result.fetchall()
+        connection.close()
 
-    rows = result.fetchall()
     posts = []
+    postSchema = PostSchema()
     for row in rows:
-        posts.append({
-            "id": row[0],
-            "content": row[1],
-            "user_id": row[2],
-            "forum_id": row[3],
-            "created_at": row[4],
-            "updated_at": row[5]
-        })
+        posts.append(postSchema.dump(row))
 
-    return jsonify(posts)
+    return jsonify(posts), 200
 
 @posts.route('/api/posts', methods=['POST'])
 @jwt_required(refresh=True)
@@ -55,7 +50,7 @@ def create_post():
     db.session.add(newPost)
     db.session.commit()
 
-    return postSchema.jsonify(newPost)
+    return postSchema.jsonify(newPost), 201
 
 @posts.route('/api/comments', methods=['POST'])
 @jwt_required(refresh=True)
