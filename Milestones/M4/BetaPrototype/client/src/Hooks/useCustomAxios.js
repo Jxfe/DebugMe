@@ -8,14 +8,14 @@ const useCustomAxios = () => {
   const { auth } = useAuth();
 
   useEffect(() => {
-
     const requestIntercept = customAxios.interceptors.request.use(
-      config => {
-        if(!config.headers["Authorization"]){
+      (config) => {
+        if (!config.headers["Authorization"]) {
           config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
         }
         return config;
-      }, (error) => Promise.reject(error);
+      },
+      (error) => Promise.reject(error)
     );
 
     const responseIntercept = customAxios.interceptors.response.use(
@@ -33,9 +33,9 @@ const useCustomAxios = () => {
     );
 
     return () => {
-      customAxios.interceptors.request.eject(requestIntercept)
-      customAxios.interceptors.response.eject(responseIntercept)
-    }
+      customAxios.interceptors.request.eject(requestIntercept);
+      customAxios.interceptors.response.eject(responseIntercept);
+    };
   }, [auth, refresh]);
 
   return customAxios;
