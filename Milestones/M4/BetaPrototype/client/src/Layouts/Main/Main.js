@@ -1,7 +1,5 @@
 import React from "react"; // Needed for AWS since it's using node 16
 import Button from "../../Components/Button";
-import InsertPost from "../../Components/InsertPost";
-import SearchPost from "../../Components/SearchPost";
 import { Link } from "react-router-dom";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HandshakeIcon from '@mui/icons-material/Handshake';
@@ -49,25 +47,6 @@ function Main() {
             <Button className={"default-button"} content={"Learn More"} />
           </Link>
         </div>
-
-        <div className="service-card">
-          <h1>Organize</h1>
-          <CalendarMonthIcon fontSize="large"/>
-          <p className="service-description"> Use our Calendar to find out about events created by our community to help you prepare for your internship.</p>
-          <Link to="calendar">
-            <Button className={"default-button"} content={"Learn More"} />
-          </Link>
-        </div>
-      </div>
-
-      <div className="insert-search">
-        <div className="insert">
-          <InsertPost />
-        </div>
-        <div className="search">
-          <SearchPost />
-        </div>
-        
       </div>
     </div>
   );
