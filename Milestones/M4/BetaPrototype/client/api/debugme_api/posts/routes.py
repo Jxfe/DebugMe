@@ -6,6 +6,8 @@ from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text
 from ..models.Post import Post, PostSchema
 
+POST_TABLE_CODES = {"post": 0, "guide": 1}
+
 posts = Blueprint('posts', __name__)
 
 @posts.route('/api/posts', methods=['GET'])
@@ -28,6 +30,17 @@ def get_posts():
     postSchema = PostSchema()
     for post in posts:
         response.append(postSchema.dump(post))
+
+    return jsonify(response), 200
+
+@posts.route('/api/getpost', methods=['GET'])
+@jwt_required(refresh=True)
+def get_post():
+    post_id = request.args.get('id', 0)
+    postSchema = PostSchema()
+
+    post = Post.query.get(post_id)
+    response = postSchema.dump(post)
 
     return jsonify(response), 200
 
