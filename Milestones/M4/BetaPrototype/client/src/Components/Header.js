@@ -55,7 +55,7 @@ function Header() {
             to="/posts"
             className={pathname.includes("posts") ? "highlight" : null}
           >
-            Posts
+            Forum
           </Link>
           <Link
             to="/upgradepage"
@@ -63,12 +63,12 @@ function Header() {
           >
             Premium Guides
           </Link>
-          <Link
+          {/* <Link
             to="/calendar"
             className={pathname.includes("calendar") ? "highlight" : null}
           >
             Calendar
-          </Link>
+          </Link> */}
         </nav>
       </div>
 

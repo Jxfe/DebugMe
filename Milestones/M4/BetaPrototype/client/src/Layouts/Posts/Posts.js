@@ -1,13 +1,56 @@
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import React, { useState, useEffect } from "react"; 
+import { Link } from 'react-router-dom'
+
+import { customAxios } from "../../utils/customAxios";
 import PostDescription from "../../Components/PostDescription";
 import CreatePost from "../../Components/CreatePost";
 import Button from "../../Components/Button";
-import { Link } from "react-router-dom";
 
 import "./style.css";
 
 function Posts() {
   const [isCreateShowing, setCreateShowing] = useState(false);
+  const [postList, setPostList] = useState([])
+  const [keyword, setKeyword] = useState("");
+  
+  useEffect(() => {
+    getPostList();
+  }, []);
+
+  const submitSearch = async (e) => {
+    e.preventDefault();
+    if (keyword === "") {
+      alert("Please provide a search parameter");
+      return;
+    }
+
+    try {
+      const url = `/api/posts?search=${keyword}`;
+      const res = await customAxios(url);
+      setPostList(res.data);
+    } catch (e) {
+      setPostList([]);
+    } 
+  };
+
+  const getPostList = () => {
+    customAxios(`/api/posts?search= `).then((res) => {
+      setPostList(res.data);
+    })
+  }
+
+  const renderPostList = () => {
+    return postList.map((item) => {
+      return (
+        <Link to={`/posts/${item.id}`}>
+          <PostDescription
+          title={item.title}
+          author={item.user_id}
+          />
+        </Link>
+      );
+    });
+  }
 
   function showCreate() {
     setCreateShowing(true);
@@ -16,51 +59,59 @@ function Posts() {
     setCreateShowing(false);
   }
 
-  var body = (
+  return (
     <div className="forum-container">
-      <CreatePost showing={isCreateShowing} onClose={hideCreate} />
+      
+      <h1>Connect with your peers through our Forum</h1>
+      <p>Get started by creating a new Post, or join a discussion by leaving a comment!</p>
 
-      <Link to="post">
-        <PostDescription id="1" title="Jay's first post!" author="Jay" />
-      </Link>
+      <div className="post-create-search">
+        <div className="post-search">
+          <input
+          className="input-box"
+          name="keyword"
+          type="text"
+          placeholder="Search for a Post"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          />
+          <div className="post-search-buttons">
+            <Button
+            className={"default-button"}
+            content="SEARCH"
+            onClickEvent={submitSearch}
+            />
+            <Button
+            className={"outline-button"}
+            content="RESET"
+            onClickEvent={getPostList}
+            />
+          </div>
+        </div>
+        <div>
+          <Button
+          className="default-button"
+          content="Create New Post"
+          onClickEvent={showCreate}
+          />
+        </div>
+      </div>
+      
+      <div className="forum-headers">
+        <p>Post Title</p>
+        <p>Author</p>
+      </div>
 
-      <Link to="post">
-        <PostDescription
-          id="2"
-          title="How to ace an Amazon SWE interview"
-          author="Molly"
-        />
-      </Link>
-      <Link to="post">
-        <PostDescription
-          id="3"
-          title="Best strategies to solve LeetCode questions"
-          author="Mike"
-        />
-      </Link>
-      <Link to="post">
-        <PostDescription
-          id="4"
-          title="Here's how I turned my internship into a full-tme offer"
-          author="Amanda"
-        />
-      </Link>
-      <Link to="post">
-        <PostDescription
-          id="5"
-          title="Important things to consider when writing your resume"
-          author="Jay"
-        />
-      </Link>
+      <div>
+      {isCreateShowing && (
+      <CreatePost onClose={hideCreate} />
+      )}
+      </div>
 
-      <Button
-        className="default-button"
-        content="New Post"
-        onClickEvent={showCreate}
-      />
+      <div>{renderPostList()}</div>
+
     </div>
   );
-  return body;
 }
 
 export default Posts;
