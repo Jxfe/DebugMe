@@ -82,10 +82,10 @@ def get_comments():
 @posts.route('/api/addcomment', methods=['POST'])
 @jwt_required(refresh=True)
 def add_comment():
-    post_id = request.form['post_id']
-    user_id = request.form['user_id']
-    content = request.form['content']
-    image_path = request.form['image_path']
+    user_id = get_jwt_identity()
+    post_id = request.form.get('post_id', '')
+    content = request.form.get('content', '')
+    image_path = request.form.get('image_path', '')
 
     replySchema = ReplySchema()
     newReply = Reply(content, user_id, post_id, image_path)
