@@ -101,3 +101,28 @@ def add_comment():
     response = replySchema.dump(newReply)
 
     return jsonify(response), 201
+
+@posts.route('/api/guides', methods=['GET'])
+@jwt_required(refresh=True)
+def get_guides():
+    input = request.args.get('search', '')
+    search = "'%" + input + "%'"
+
+    engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+
+    with engine.connect() as connection:
+        if search:
+            #result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
+            result = connection.execute(text('SELECT * FROM Post WHERE (content LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['guide']) + ');'))
+        else:
+            #result = connection.execute(text('SELECT * FROM Post'))
+            result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['guide']) + ';'))
+        posts = result.fetchall()
+        connection.close()
+
+    response = []
+    postSchema = PostSchema()
+    for post in posts:
+        response.append(postSchema.dump(post))
+
+    return jsonify(response), 200
