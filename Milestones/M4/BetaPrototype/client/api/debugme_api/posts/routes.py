@@ -21,7 +21,7 @@ def get_posts():
     with engine.connect() as connection:
         if search:
             #result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
-            result = connection.execute(text('SELECT * FROM Post WHERE (content LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['post']) + ');'))
+            result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['post']) + ');'))
         else:
             #result = connection.execute(text('SELECT * FROM Post'))
             result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['post']) + ';'))
@@ -108,7 +108,7 @@ def get_guides():
     with engine.connect() as connection:
         if search:
             #result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
-            result = connection.execute(text('SELECT * FROM Post WHERE (content LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['guide']) + ');'))
+            result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['guide']) + ');'))
         else:
             #result = connection.execute(text('SELECT * FROM Post'))
             result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['guide']) + ';'))
