@@ -49,16 +49,11 @@ def get_post():
 @posts.route('/api/posts', methods=['POST'])
 @jwt_required(refresh=True)
 def create_post():
-    title = request.form['title']
-    content = request.form['content']
+    title = request.form.get('title', '')
+    content = request.form.get('content', '')
     user_id = get_jwt_identity()
-    image_path = request.form['image_path']
-    is_premium_str = request.form['is_premium']
-
-    if is_premium_str == 'true':
-        is_premium = True
-    else:
-        is_premium = False
+    image_path = request.form.get('image_path', '')
+    is_premium = POST_TABLE_CODES['post']
 
     postSchema = PostSchema()
     newPost = Post(title, content, user_id, image_path, is_premium)
@@ -126,3 +121,22 @@ def get_guides():
         response.append(postSchema.dump(post))
 
     return jsonify(response), 200
+
+@posts.route('/api/guides', methods=['POST'])
+@jwt_required(refresh=True)
+def create_guide():
+    title = request.form.get('title', '')
+    content = request.form.get('content', '')
+    user_id = get_jwt_identity()
+    image_path = request.form.get('image_path', '')
+    is_premium = POST_TABLE_CODES['guide']
+
+    postSchema = PostSchema()
+    newPost = Post(title, content, user_id, image_path, is_premium)
+
+    db.session.add(newPost)
+    db.session.commit()
+
+    response = postSchema.dump(newPost)
+
+    return jsonify(response), 201
