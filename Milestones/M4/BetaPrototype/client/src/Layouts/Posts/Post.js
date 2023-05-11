@@ -1,35 +1,99 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import Button from '../../Components/Button';
+import { Link, useParams } from "react-router-dom";
+
+import { customAxios } from "../../utils/customAxios";
+
 import "./style.css";
-import { Link } from "react-router-dom";
 
 function Post() {
-  return (
-    <div className='post-container'>
-      <div className='post-contents'>
-          <div className='contents-left'>
-              <div className='post-body'>
-                  <h1>Post Title</h1>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec dui nunc mattis enim ut tellus elementum. Luctus accumsan tortor posuere ac ut. Turpis in eu mi bibendum neque. Vulputate odio ut enim blandit volutpat maecenas. Nunc sed augue lacus viverra vitae congue eu consequat ac. Interdum varius sit amet mattis. Erat pellentesque adipiscing commodo elit. Euismod nisi porta lorem mollis aliquam ut. Nulla aliquet porttitor lacus luctus accumsan tortor posuere ac. Consequat ac felis donec et odio pellentesque. Elit duis tristique sollicitudin nibh sit amet commodo. Ultricies tristique nulla aliquet enim tortor at. Tempor orci dapibus ultrices in. In eu mi bibendum neque egestas congue quisque. Vestibulum rhoncus est pellentesque elit ullamcorper dignissim. Leo vel orci porta non pulvinar neque laoreet suspendisse. Nullam non nisi est sit amet facilisis magna etiam. Blandit aliquam etiam erat velit scelerisque.</p>
-              </div>
-              
-              <div className='post-comments'>
-                <h1>Comments</h1>
-                <textarea className='comment-input' placeholder='Leave a comment'></textarea>
-                <Button content="Comment" onClickEvent={() => {alert("Comment submitted")}}/>
-              </div>    
-          </div>
+  const [postContents, setPostContents] = useState({});
+  const [postComments, setPostComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const { id } = useParams();
 
-          <div className='contents-right'>
-              <div>
-                  <h2>Author</h2>
-                  <p>Author Name</p>
-                  <Link to="/mypage/messages" >
-                    <Button className={"default-button"} content="Message"/> 
-                  </Link>
-              </div>
-          </div>        
-      </div>
+  useEffect(() => {
+    getPostContents();
+    getPostComments();
+  }, []);
+
+  const getPostContents = () => {
+    const url = `/api/getpost?id=${id}`;
+    customAxios(url).then((res) => {
+      setPostContents(res.data);
+    })
+  }
+
+  const getPostComments = () => {
+    customAxios({
+      method:"post",
+      url:"/api/comments",
+      data: {
+        post_id : id
+      },
+      headers:{
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then((res) => {
+      setPostComments(res.data);
+    })
+  }
+
+  const renderComments = () => {
+    return postComments.map((item) => {
+      return (
+        <div className='comment-container'>
+          <p className='comment-author'>{item.user_id}</p>
+          <p className='comment-content'>{item.content}</p>
+        </div> 
+      );
+    });
+  };
+
+  const handleSubmit = () => {
+    customAxios({
+      method: "post",
+      url: "/api/addcomment",
+      data: {
+        post_id : id,
+        content : newComment,
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+  }
+  
+  return (
+    <div className='post-display-container'>
+        <div className='post-left'>
+            <div className="post-header">
+              <h1>{postContents.title}</h1>
+              <p>Author: {postContents.user_id}</p>
+            </div>
+            <p>{postContents.content}</p>
+        </div>
+
+        <div className='post-right'>
+          <div className='post-comments-container'>
+            {renderComments()}
+          </div>  
+          <div className="new-comment-container">
+            <form onSubmit={handleSubmit}>
+              <textarea className="new-comment-textarea"
+                type="text"
+                name="newComment"
+                id="newComment"
+                placeholder="Leave a new comment"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                required
+              />
+              <Button className="default-button" content="Submit" />
+            </form>
+          </div>
+        </div>
+              
     </div>
   )
 }

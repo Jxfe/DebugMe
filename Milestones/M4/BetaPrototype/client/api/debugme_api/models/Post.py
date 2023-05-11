@@ -21,4 +21,4 @@ class Post(db.Model):
 
 class PostSchema(ma.Schema):
     class Meta:
-        fields = ('title', 'content', 'user_id', 'image_path', 'is_premium')
+        fields = ('id', 'title', 'content', 'user_id', 'image_path', 'is_premium')

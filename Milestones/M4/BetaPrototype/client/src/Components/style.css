@@ -169,42 +169,35 @@
 /* Create Post */
 .post-popup-container {
   position: fixed;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--white);
   z-index: 50;
-  width: 800px;
-  height: 500px;
+  width: 50vw;
+  height: 600px;
   border: 1px solid var(--black);
   border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
 }
 
 .create-post-info {
-  margin: 15px;
-  width: 70%;
+  margin: 0 auto;
+  height: 90%;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid;
-  padding-right: 10px;
 }
 
-.create-post-utils {
+.new-post-form {
+  width: 90%;
+}
+
+.form-buttons {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 5px;
-  width: 25%;
-  height: 95%;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.input-box {
-  padding: 8px;
-  border: 1px solid var(--darkgray);
-  background-color: var(--lightgray);
-  border-radius: 8px;
-  width: calc(100% - 20px);
+.new-post-body {
+  height: 300px;
 }

@@ -50,7 +50,7 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[0]} />}>
             <Route path="calendar" element={<Calendar />} />
             <Route path="posts" element={<Posts />} />
-            <Route path="posts/post" element={<Post />} />
+            <Route path="posts/:id" element={<Post />} />
             <Route path="premiumguides" element={<PremiumGuide />} />
             <Route path="upgradepage" element={<UpgradePage />} />
             <Route path="successpage" element={<SuccessPage />} />
