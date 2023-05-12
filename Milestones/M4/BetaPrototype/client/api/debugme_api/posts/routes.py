@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from debugme_api.models.Reply import Reply, ReplySchema
 from ..debugme_toolkit import db
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, and_
 from ..models.Post import Post, PostSchema, PostRepliesSchema
 
 POST_TABLE_CODES = {"post": 0, "guide": 1}
@@ -14,22 +14,21 @@ posts = Blueprint('posts', __name__)
 @jwt_required(refresh=True)
 def get_posts():
     input = request.args.get('search', '')
-    search = "'%" + input + "%'"
 
-    engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
-
-    with engine.connect() as connection:
-        if search:
+    if input != '':
+        engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+        with engine.connect() as connection:
+            search = "'%" + input + "%'"
             result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['post']) + ');'))
-        else:
-            result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['post']) + ';'))
-        posts = result.fetchall()
-        connection.close()
+            posts = result.fetchall()
+            connection.close()
+    else:
+        posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['post'])
 
     response = []
-    postSchema = PostSchema()
+    postRepliesSchema = PostRepliesSchema()
     for post in posts:
-        response.append(postSchema.dump(post))
+        response.append(postRepliesSchema.dump(post))
 
     return jsonify(response), 200
 

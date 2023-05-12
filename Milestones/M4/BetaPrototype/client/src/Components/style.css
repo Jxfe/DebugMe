@@ -201,3 +201,7 @@
 .new-post-body {
   height: 300px;
 }
+
+.post-date {
+  margin-left: 10px;
+}

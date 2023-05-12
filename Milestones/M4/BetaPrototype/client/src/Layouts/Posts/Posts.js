@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react"; 
-import { Link } from 'react-router-dom'
-
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
 import PostDescription from "../../Components/PostDescription";
 import CreatePost from "../../Components/CreatePost";
 import Button from "../../Components/Button";
-
 import "./style.css";
 
 function Posts() {
   const [isCreateShowing, setCreateShowing] = useState(false);
-  const [postList, setPostList] = useState([])
+  const [postList, setPostList] = useState([]);
   const [keyword, setKeyword] = useState("");
-  
+  const searchInput = useRef();
+
   useEffect(() => {
     getPostList();
+    searchInput.current.focus();
   }, []);
 
   const submitSearch = async (e) => {
@@ -30,27 +30,31 @@ function Posts() {
       setPostList(res.data);
     } catch (e) {
       setPostList([]);
-    } 
+    }
+    searchInput.current.focus();
   };
 
   const getPostList = () => {
-    customAxios(`/api/posts?search= `).then((res) => {
+    setKeyword("");
+    searchInput.current.focus();
+    customAxios(`/api/posts?search=`).then((res) => {
       setPostList(res.data);
-    })
-  }
+    });
+  };
 
   const renderPostList = () => {
-    return postList.map((item) => {
+    return postList.map((item, index) => {
       return (
-        <Link to={`/posts/${item.id}`}>
+        <Link key={index} id={index} to={`/posts/${item.id}`}>
           <PostDescription
-          title={item.title}
-          author={item.user_id}
+            title={item?.title}
+            author={item?.author?.name}
+            date={item?.created_at}
           />
         </Link>
       );
     });
-  }
+  };
 
   function showCreate() {
     setCreateShowing(true);
@@ -61,55 +65,53 @@ function Posts() {
 
   return (
     <div className="forum-container">
-      
       <h1>Connect with your peers through our Forum</h1>
-      <p>Get started by creating a new Post, or join a discussion by leaving a comment!</p>
+      <p>
+        Get started by creating a new Post, or join a discussion by leaving a
+        comment!
+      </p>
 
       <div className="post-create-search">
         <div className="post-search">
           <input
-          className="input-box"
-          name="keyword"
-          type="text"
-          placeholder="Search for a Post"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+            className="input-box"
+            ref={searchInput}
+            name="keyword"
+            type="text"
+            placeholder="Search for a Post"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
           />
           <div className="post-search-buttons">
             <Button
-            className={"default-button"}
-            content="SEARCH"
-            onClickEvent={submitSearch}
+              className={"default-button"}
+              content="SEARCH"
+              onClickEvent={submitSearch}
             />
             <Button
-            className={"outline-button"}
-            content="RESET"
-            onClickEvent={getPostList}
+              className={"outline-button"}
+              content="RESET"
+              onClickEvent={getPostList}
             />
           </div>
         </div>
         <div>
           <Button
-          className="default-button"
-          content="Create New Post"
-          onClickEvent={showCreate}
+            className="default-button"
+            content="Create New Post"
+            onClickEvent={showCreate}
           />
         </div>
       </div>
-      
+
       <div className="forum-headers">
         <p>Post Title</p>
         <p>Author</p>
       </div>
 
-      <div>
-      {isCreateShowing && (
-      <CreatePost onClose={hideCreate} />
-      )}
-      </div>
+      <div>{isCreateShowing && <CreatePost onClose={hideCreate} />}</div>
 
       <div>{renderPostList()}</div>
-
     </div>
   );
 }
