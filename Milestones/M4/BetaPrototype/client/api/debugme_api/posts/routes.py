@@ -37,10 +37,11 @@ def get_posts():
 @jwt_required(refresh=True)
 def get_post():
     post_id = request.args.get('id', 0)
-    postSchema = PostSchema()
 
     post = Post.query.get(post_id)
-    response = postSchema.dump(post)
+    postReplySchema = PostRepliesSchema()
+
+    response = postReplySchema.dump(post)
 
     return jsonify(response), 200
 
@@ -136,15 +137,3 @@ def create_guide():
     response = postSchema.dump(newPost)
 
     return jsonify(response), 201
-
-@posts.route('/api/getposttest', methods=['GET'])
-@jwt_required(refresh=True)
-def get_post_test():
-    post_id = request.args.get('id', 0)
-
-    post = Post.query.get(post_id)
-    postReplySchema = PostRepliesSchema()
-
-    response = postReplySchema.dump(post)
-
-    return jsonify(response), 200
