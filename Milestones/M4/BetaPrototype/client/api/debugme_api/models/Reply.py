@@ -1,4 +1,5 @@
 import datetime
+from debugme_api.models.User import User, UserSchema
 from debugme_api.debugme_toolkit import db, ma
 
 class Reply(db.Model):
@@ -11,8 +12,7 @@ class Reply(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
-    user = db.relationship("User", foreign_keys=[user_id])
-    post = db.relationship("Post", foreign_keys=[post_id])
+    author = db.relationship("User", lazy="joined", viewonly=True)
 
     def __init__(self, content, user_id, post_id, image_path=None):
         self.content = content
@@ -23,3 +23,8 @@ class Reply(db.Model):
 class ReplySchema(ma.Schema):
     class Meta:
         fields = ('id', 'content', 'image_path', 'user_id', 'post_id', 'created_at', 'updated_at')
+
+class ReplyUserSchema(ma.SQLAlchemyAutoSchema):
+    author = ma.Nested(UserSchema)
+    class Meta:
+        model = Reply

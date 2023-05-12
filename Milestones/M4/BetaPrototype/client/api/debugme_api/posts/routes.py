@@ -4,7 +4,7 @@ from debugme_api.config import Config
 from debugme_api.models.Reply import Reply, ReplySchema
 from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text
-from ..models.Post import Post, PostSchema
+from ..models.Post import Post, PostSchema, PostRepliesSchema
 
 POST_TABLE_CODES = {"post": 0, "guide": 1}
 
@@ -20,10 +20,8 @@ def get_posts():
 
     with engine.connect() as connection:
         if search:
-            #result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
             result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['post']) + ');'))
         else:
-            #result = connection.execute(text('SELECT * FROM Post'))
             result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['post']) + ';'))
         posts = result.fetchall()
         connection.close()
@@ -107,10 +105,8 @@ def get_guides():
 
     with engine.connect() as connection:
         if search:
-            #result = connection.execute(text('SELECT * FROM Post WHERE content LIKE ' + search))
             result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['guide']) + ');'))
         else:
-            #result = connection.execute(text('SELECT * FROM Post'))
             result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['guide']) + ';'))
         posts = result.fetchall()
         connection.close()
@@ -140,3 +136,15 @@ def create_guide():
     response = postSchema.dump(newPost)
 
     return jsonify(response), 201
+
+@posts.route('/api/getposttest', methods=['GET'])
+@jwt_required(refresh=True)
+def get_post_test():
+    post_id = request.args.get('id', 0)
+
+    post = Post.query.get(post_id)
+    postReplySchema = PostRepliesSchema()
+
+    response = postReplySchema.dump(post)
+
+    return jsonify(response), 200
