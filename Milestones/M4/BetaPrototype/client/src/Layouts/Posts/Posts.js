@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import { customAxios } from "../../utils/customAxios";
 import PostDescription from "../../Components/PostDescription";
 import CreatePost from "../../Components/CreatePost";
@@ -49,7 +50,7 @@ function Posts() {
           <PostDescription
             title={item?.title}
             author={item?.author?.name}
-            date={item?.created_at}
+            date={moment(item?.created_at).fromNow()}
           />
         </Link>
       );

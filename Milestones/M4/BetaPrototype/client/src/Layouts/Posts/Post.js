@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import moment from "moment";
 import Button from "../../Components/Button";
 import { Link, useParams } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
@@ -25,7 +26,7 @@ function Post() {
       return (
         <div key={index} id={index} className="comment-container">
           <p className="comment-author">{item.author?.name}</p>
-          <p>{item?.created_at}</p>
+          <p>{moment(item?.created_at).fromNow()}</p>
           <p className="comment-content">{item?.content}</p>
         </div>
       );
@@ -53,7 +54,7 @@ function Post() {
           <h1>{postContents?.title}</h1>
           <p>Author: {postContents?.author?.name}</p>
         </div>
-        <p>{postContents?.created_at}</p>
+        <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p>
         <p>{postContents?.content}</p>
       </div>
 
