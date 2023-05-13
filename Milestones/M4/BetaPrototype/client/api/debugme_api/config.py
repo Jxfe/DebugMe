@@ -11,6 +11,10 @@ class Config:
     # Debugme Secret Key
     SECRET_KEY=os.environ.get('SECRET_KEY')
 
+    # Flask Botox (boto3) settings
+    BOTOX_SERVICES=["s3", "ses", "sqs"]
+    REGION='us-west-2'
+
     # JSON Web Token settings
     JWT_SECRET_KEY=SECRET_KEY
     JWT_TOKEN_LOCATION=['cookies']
@@ -23,6 +27,11 @@ class Config:
     AWS_PASSWORD=os.environ.get('AWS_PASSWORD')
     AWS_DB_HOSTNAME=os.environ.get('AWS_DB_HOSTNAME')
     AWS_DB_NAME=os.environ.get('AWS_DB_NAME')
+
+    # AWS Bucket settings
+    AWS_ACCESS_KEY=os.environ.get('AWS_ACCESS_KEY')
+    AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    BUCKET_NAME=os.environ.get('BUCKET_NAME')
 
 class ProductionConfig(Config):
     """Production Credentials go here, like production DB settings

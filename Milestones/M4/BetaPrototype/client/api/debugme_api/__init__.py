@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from debugme_api.config import app_config
-from debugme_api.debugme_toolkit import db, api, ma, jwt
+from debugme_api.debugme_toolkit import db, api, ma, jwt, botox
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -9,9 +9,10 @@ def create_app(config_name):
 
     CORS(app, resources={r"/*": {"origins": "*"}})
 
-    db.init_app(app)    # init SQLAlchemy DB
-    ma.init_app(app)    # init Marshmallow. Note: must come after db init
-    jwt.init_app(app)   # init JSON Web Token Manager.
+    db.init_app(app)     # init SQLAlchemy DB
+    ma.init_app(app)     # init Marshmallow. Note: must come after db init
+    jwt.init_app(app)    # init JSON Web Token Manager.
+    botox.init_app(app)  # init Flask-Botox (boto3)
 
     #### Register subdirectory blueprints in app
     from debugme_api.posts.routes import posts
