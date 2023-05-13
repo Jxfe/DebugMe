@@ -101,6 +101,10 @@
   border-radius: 8px;
 }
 
+.message-textarea {
+  height: 120px;
+}
+
 .highlight {
   border-bottom: 2px solid var(--primary);
 }
