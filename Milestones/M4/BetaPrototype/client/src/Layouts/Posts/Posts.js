@@ -19,11 +19,6 @@ function Posts() {
 
   useEffect(() => {
     getPostList();
-    // getPostList().then((response) => {
-    //   setPostList(response.data);
-    // });
-    // setKeyword("");
-    // searchInput.current.focus();
   }, []);
 
   const currentPostList = useMemo(() => {
@@ -31,7 +26,7 @@ function Posts() {
     const lastPageIndex = firstPageIndex + ITEMS_PER_PAGE;
 
     return postList?.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, postList]);
 
   const submitSearch = async (e) => {
     e.preventDefault();
@@ -58,44 +53,8 @@ function Posts() {
     searchInput.current.focus();
   };
 
-  // const getPostList = async () => {
-  //   const response = await customAxios(`/api/posts?search=`);
-  //   return response;
-  // };
-
-  // const renderPostList = () => {
-  // return postList.map((item, index) => {
-  //   return (
-  //     <Link key={index} id={index} to={`/posts/${item.id}`}>
-  //       <PostDescription
-  //         title={item?.title}
-  //         author={item?.author?.name}
-  //         date={moment(item?.created_at).fromNow()}
-  //       />
-  //     </Link>
-  //   );
-  // });
-  // };
-
   const renderPostList = () => {
     return currentPostList?.map((item, index) => {
-      return (
-        <Link key={index} id={index} to={`/posts/${item.id}`}>
-          <PostDescription
-            title={item?.title}
-            author={item?.author?.name}
-            date={moment.utc(item?.created_at).fromNow()}
-          />
-        </Link>
-      );
-    });
-  };
-
-  const onLoadPostRender = () => {
-    const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const lastPageIndex = firstPageIndex + ITEMS_PER_PAGE;
-
-    return postList?.slice(firstPageIndex, lastPageIndex).map((item, index) => {
       return (
         <Link key={index} id={index} to={`/posts/${item.id}`}>
           <PostDescription
@@ -170,9 +129,7 @@ function Posts() {
         )}
       </div>
 
-      <div name="post-items">
-        {currentPostList.length === 0 ? onLoadPostRender() : renderPostList()}
-      </div>
+      <div name="post-items">{renderPostList()}</div>
       <Pagination
         className="pagination-bar"
         currentPage={currentPage}
