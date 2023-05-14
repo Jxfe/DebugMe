@@ -18,7 +18,7 @@ def get_posts():
     if input != '':
         search = "%" + input + "%"
 
-        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==0)).order_by(Post.created_at.desc())
+        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==POST_TABLE_CODES['post'])).order_by(Post.created_at.desc())
     else:
         posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['post']).order_by(Post.created_at.desc())
 
@@ -96,22 +96,30 @@ def add_comment():
 @jwt_required(refresh=True)
 def get_guides():
     input = request.args.get('search', '')
-    search = "'%" + input + "%'"
 
-    engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+    if input != '':
+        search = "%" + input + "%"
 
-    with engine.connect() as connection:
-        if search:
-            result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['guide']) + ');'))
-        else:
-            result = connection.execute(text('SELECT * FROM Post WHERE is_premium=' + str(POST_TABLE_CODES['guide']) + ';'))
-        posts = result.fetchall()
-        connection.close()
+        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==POST_TABLE_CODES['guide'])).order_by(Post.created_at.desc())
+    else:
+        posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['guide']).order_by(Post.created_at.desc())
 
     response = []
-    postSchema = PostSchema()
+    postRepliesSchema = PostRepliesSchema()
     for post in posts:
-        response.append(postSchema.dump(post))
+        response.append(postRepliesSchema.dump(post))
+
+    return jsonify(response), 200
+
+@posts.route('/api/getguide', methods=['GET'])
+@jwt_required(refresh=True)
+def get_guide():
+    post_id = request.args.get('id', 0)
+
+    post = Post.query.get(post_id)
+    postReplySchema = PostRepliesSchema()
+
+    response = postReplySchema.dump(post)
 
     return jsonify(response), 200
 
