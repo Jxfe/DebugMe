@@ -1,30 +1,59 @@
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import React, { useState } from "react";
+import { customAxios } from "../../utils/customAxios";
 import "./style.css";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 
 function SubmitFeedback() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [rating, setRating] = useState(0);
+
+  const handleFeedbackSubmit = async () => {
+    const data = {
+      message: feedback,
+      rating: rating,
+      userID: 1, // Need help getting userID
+      postID: 1, // Need help getting postID Also currently bugs with rating with the stars.
+    };
+
+    try {
+      const res = await customAxios({
+        method: "post",
+        url: "/api/feedback",
+        data,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      if (res.status === 201) {
+        setShowSuccessModal(true);
+      }
+    } catch (e) {
+      console.error('Failed to submit feedback', e);
+    }
+  };
 
   return (
     <>
       <div class="feedback-container">
         <h2 className="fdbck">Please, leave an honest feedback about the premium guide!</h2>
-        <textarea>Write something here ...</textarea>
+        <textarea value={feedback} onChange={e => setFeedback(e.target.value)}>Write something here ...</textarea>
         <div class="star-wrapper">
-          <a href="#" class="fas fa-star s1 checked"></a>
-          <a href="#" class="fas fa-star s2"></a>
-          <a href="#" class="fas fa-star s3"></a>
-          <a href="#" class="fas fa-star s4"></a>
-          <a href="#" class="fas fa-star s5"></a>
-        </div>{" "}
+          <a href="#" class="fas fa-star s1 checked" onClick={() => setRating(1)}></a>
+          <a href="#" class="fas fa-star s2" onClick={() => setRating(2)}></a>
+          <a href="#" class="fas fa-star s3" onClick={() => setRating(3)}></a>
+          <a href="#" class="fas fa-star s4" onClick={() => setRating(4)}></a>
+          <a href="#" class="fas fa-star s5" onClick={() => setRating(5)}></a> 
+        </div>
         <br />
         <br />
         <br />
         <br />
         <br />
         <Button
-          onClickEvent={() => setShowSuccessModal(true)}
+          onClickEvent={handleFeedbackSubmit}
           content="SUBMIT"
           className="default-button"
         />
