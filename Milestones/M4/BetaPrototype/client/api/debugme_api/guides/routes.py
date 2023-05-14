@@ -1,10 +1,8 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
-from debugme_api.models.Reply import Reply, ReplySchema
 from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text, and_
-from ..models.Post import Post, PostSchema, PostRepliesSchema
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
 
 guides = Blueprint('guides', __name__, url_prefix='/api')

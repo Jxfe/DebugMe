@@ -11,9 +11,7 @@ class Feedback(db.Model):
     postID = db.Column(db.Integer, db.ForeignKey('Premium.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    #user = db.relationship("User", foreign_keys=[userID])
-    #post = db.relationship("Post", foreign_keys=[postID])
-    user = db.relationship("User", lazy="joined", viewonly=True)
+    author = db.relationship("User", lazy="joined", viewonly=True)
 
     def __init__(self, userID, rating, message, guideID):
         self.userID = userID
