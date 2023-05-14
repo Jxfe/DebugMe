@@ -116,11 +116,6 @@ function Posts() {
         </div>
       </div>
 
-      {/* <div className="forum-headers">
-        <p>Post Title</p>
-        <p>Author</p>
-      </div> */}
-
       <div>
         {isCreateShowing && (
           <CreatePost
