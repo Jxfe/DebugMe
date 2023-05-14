@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { customAxios } from "../../utils/customAxios";
@@ -6,17 +6,38 @@ import PostDescription from "../../Components/PostDescription";
 import CreatePost from "../../Components/CreatePost";
 import Button from "../../Components/Button";
 import "./style.css";
+import Pagination from "../../Components/Pagination";
+
+const ITEMS_PER_PAGE = 3;
 
 function Posts() {
   const [isCreateShowing, setCreateShowing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [postList, setPostList] = useState([]);
   const [keyword, setKeyword] = useState("");
   const searchInput = useRef();
 
   useEffect(() => {
-    getPostList();
+    //getPostList();
+    async function getData() {
+      const request = await customAxios(`/api/posts?search=`);
+      setPostList(request.data);
+      return request;
+    }
+    getData();
+    setKeyword("");
+    searchInput.current.focus();
+
+    setCurrentPage(() => 1);
     searchInput.current.focus();
   }, []);
+
+  const currentPostList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const lastPageIndex = firstPageIndex + ITEMS_PER_PAGE;
+
+    return postList?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
 
   const submitSearch = async (e) => {
     e.preventDefault();
@@ -35,16 +56,30 @@ function Posts() {
     searchInput.current.focus();
   };
 
-  const getPostList = () => {
+  const getPostList = async () => {
+    await customAxios(`/api/posts?search=`).then((res) => {
+      setPostList(() => res.data);
+    });
     setKeyword("");
     searchInput.current.focus();
-    customAxios(`/api/posts?search=`).then((res) => {
-      setPostList(res.data);
-    });
   };
 
+  // const renderPostList = () => {
+  // return postList.map((item, index) => {
+  //   return (
+  //     <Link key={index} id={index} to={`/posts/${item.id}`}>
+  //       <PostDescription
+  //         title={item?.title}
+  //         author={item?.author?.name}
+  //         date={moment(item?.created_at).fromNow()}
+  //       />
+  //     </Link>
+  //   );
+  // });
+  // };
+
   const renderPostList = () => {
-    return postList.map((item, index) => {
+    return currentPostList?.map((item, index) => {
       return (
         <Link key={index} id={index} to={`/posts/${item.id}`}>
           <PostDescription
@@ -112,7 +147,16 @@ function Posts() {
 
       <div>{isCreateShowing && <CreatePost onClose={hideCreate} />}</div>
 
-      <div>{renderPostList()}</div>
+      <div name="post-items">
+        {postList?.length > 0 ? renderPostList() : null}
+      </div>
+      <Pagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={postList?.length}
+        pageSize={ITEMS_PER_PAGE}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }
