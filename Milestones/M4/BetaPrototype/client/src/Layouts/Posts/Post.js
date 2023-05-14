@@ -27,7 +27,7 @@ function Post() {
       return (
         <div key={index} id={index} className="comment-container">
           <p className="comment-author">{item.author?.name}</p>
-          <p>{moment(item?.created_at).fromNow()}</p>
+          <p>{moment.utc(item?.created_at).fromNow()}</p>
           <p className="comment-content">{item?.content}</p>
         </div>
       );
