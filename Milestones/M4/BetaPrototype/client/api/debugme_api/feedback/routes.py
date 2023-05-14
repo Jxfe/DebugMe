@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from ..debugme_toolkit import db
@@ -25,6 +25,7 @@ def get_feedback(postID):
 @feedback.route('/api/feedback', methods=['POST'])
 @jwt_required(refresh=True)
 def create_feedback():
+    #print(request.form)
     userID = get_jwt_identity()
     rating = request.form.get('rating', '')
     message = request.form.get('message', '')

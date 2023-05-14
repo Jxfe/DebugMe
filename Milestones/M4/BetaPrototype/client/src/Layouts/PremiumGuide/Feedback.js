@@ -18,6 +18,7 @@ function SubmitFeedback() {
     };
 
     try {
+      console.log(rating);
       const res = await customAxios({
         method: "post",
         url: "/api/feedback",
@@ -41,11 +42,11 @@ function SubmitFeedback() {
         <h2 className="fdbck">Please, leave an honest feedback about the premium guide!</h2>
         <textarea value={feedback} onChange={e => setFeedback(e.target.value)}>Write something here ...</textarea>
         <div class="star-wrapper">
-          <a href="#" class="fas fa-star s1 checked" onClick={() => setRating(1)}></a>
-          <a href="#" class="fas fa-star s2" onClick={() => setRating(2)}></a>
+          <a href="#" class="fas fa-star s1 checked" onClick={() => setRating(5)}></a>
+          <a href="#" class="fas fa-star s2" onClick={() => setRating(4)}></a>
           <a href="#" class="fas fa-star s3" onClick={() => setRating(3)}></a>
-          <a href="#" class="fas fa-star s4" onClick={() => setRating(4)}></a>
-          <a href="#" class="fas fa-star s5" onClick={() => setRating(5)}></a> 
+          <a href="#" class="fas fa-star s4" onClick={() => setRating(2)}></a>
+          <a href="#" class="fas fa-star s5" onClick={() => setRating(1)}></a> 
         </div>
         <br />
         <br />
