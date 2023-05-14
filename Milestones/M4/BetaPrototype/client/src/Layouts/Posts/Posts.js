@@ -18,19 +18,12 @@ function Posts() {
   const searchInput = useRef();
 
   useEffect(() => {
-    //getPostList();
-    async function getData() {
-      const request = await customAxios(`/api/posts?search=`);
-      setPostList(request.data);
-      return request;
-    }
-    getData();
-    setKeyword("");
-    searchInput.current.focus();
-
-    setCurrentPage(() => 1);
-    searchInput.current.focus();
+    getPostList();
   }, []);
+
+  useEffect(() => {
+    renderPostList();
+  }, [postList]);
 
   const currentPostList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -85,7 +78,7 @@ function Posts() {
           <PostDescription
             title={item?.title}
             author={item?.author?.name}
-            date={moment(item?.created_at).fromNow()}
+            date={moment.utc(item?.created_at).fromNow()}
           />
         </Link>
       );
@@ -145,10 +138,17 @@ function Posts() {
         <p>Author</p>
       </div>
 
-      <div>{isCreateShowing && <CreatePost onClose={hideCreate} />}</div>
+      <div>
+        {isCreateShowing && (
+          <CreatePost
+            onClose={hideCreate}
+            setCreateShowing={setCreateShowing}
+          />
+        )}
+      </div>
 
       <div name="post-items">
-        {postList?.length > 0 ? renderPostList() : null}
+        {currentPostList?.length > 0 ? renderPostList() : null}
       </div>
       <Pagination
         className="pagination-bar"

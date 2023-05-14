@@ -16,17 +16,9 @@ def get_posts():
     input = request.args.get('search', '')
 
     if input != '':
-        # engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
-        # with engine.connect() as connection:
-        #     search = "'%" + input + "%'"
-        #     result = connection.execute(text('SELECT * FROM Post WHERE (title LIKE ' + search + ' AND is_premium=' + str(POST_TABLE_CODES['post']) + ') ORDER BY Post.created_at DESC;'))
-        #     posts = result.fetchall()
-        #     connection.close()
         search = "%" + input + "%"
         print(search)
-        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==0))
-
-
+        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==0)).order_by(Post.created_at.desc())
     else:
         posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['post']).order_by(Post.created_at.desc())
 
