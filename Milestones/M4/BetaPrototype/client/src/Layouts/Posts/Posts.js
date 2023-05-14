@@ -61,6 +61,7 @@ function Posts() {
             title={item?.title}
             author={item?.author?.name}
             date={moment.utc(item?.created_at).fromNow()}
+            commentCount={item?.replies?.length}
           />
         </Link>
       );
@@ -115,10 +116,10 @@ function Posts() {
         </div>
       </div>
 
-      <div className="forum-headers">
+      {/* <div className="forum-headers">
         <p>Post Title</p>
         <p>Author</p>
-      </div>
+      </div> */}
 
       <div>
         {isCreateShowing && (
