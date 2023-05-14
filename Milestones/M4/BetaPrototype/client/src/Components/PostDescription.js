@@ -16,7 +16,7 @@ function PostDescription({ title, author, date, commentCount, onClickEvent }) {
           <span className="post-count">{commentCount}</span>
         </span>
         <span>
-          <span className="post-date">{date}</span>
+          <span>{date}</span>
         </span>
       </div>
     </div>
