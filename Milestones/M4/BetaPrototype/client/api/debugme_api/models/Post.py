@@ -9,7 +9,6 @@ class Post(db.Model):
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
     image_path = db.Column(db.String(255))
-    is_premium = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
@@ -26,7 +25,7 @@ class Post(db.Model):
 
 class PostSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'title', 'content', 'user_id', 'image_path', 'is_premium')
+        fields = ('id', 'title', 'content', 'user_id', 'image_path')
 
 class PostRepliesSchema(ma.SQLAlchemyAutoSchema):
     replies = ma.Nested(ReplyUserSchema, many=True)

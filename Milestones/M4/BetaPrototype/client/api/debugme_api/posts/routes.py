@@ -6,7 +6,7 @@ from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text, and_
 from ..models.Post import Post, PostSchema, PostRepliesSchema
 
-POST_TABLE_CODES = {"post": 0, "guide": 1}
+#POST_TABLE_CODES = {"post": 0, "guide": 1}
 
 posts = Blueprint('posts', __name__)
 
@@ -18,9 +18,9 @@ def get_posts():
     if input != '':
         search = "%" + input + "%"
 
-        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==POST_TABLE_CODES['post'])).order_by(Post.created_at.desc())
+        posts = Post.query.filter(Post.title.like(search)).order_by(Post.created_at.desc())
     else:
-        posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['post']).order_by(Post.created_at.desc())
+        posts = Post.query.order_by(Post.created_at.desc())
 
     response = []
     postRepliesSchema = PostRepliesSchema()
@@ -48,10 +48,9 @@ def create_post():
     content = request.form.get('content', '')
     user_id = get_jwt_identity()
     image_path = request.form.get('image_path', '')
-    is_premium = POST_TABLE_CODES['post']
 
     postSchema = PostSchema()
-    newPost = Post(title, content, user_id, image_path, is_premium)
+    newPost = Post(title, content, user_id, image_path)
 
     db.session.add(newPost)
     db.session.commit()
@@ -92,52 +91,52 @@ def add_comment():
 
     return jsonify(response), 201
 
-@posts.route('/api/guides', methods=['GET'])
-@jwt_required(refresh=True)
-def get_guides():
-    input = request.args.get('search', '')
+# @posts.route('/api/guides', methods=['GET'])
+# @jwt_required(refresh=True)
+# def get_guides():
+#     input = request.args.get('search', '')
 
-    if input != '':
-        search = "%" + input + "%"
+#     if input != '':
+#         search = "%" + input + "%"
 
-        posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==POST_TABLE_CODES['guide'])).order_by(Post.created_at.desc())
-    else:
-        posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['guide']).order_by(Post.created_at.desc())
+#         posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==POST_TABLE_CODES['guide'])).order_by(Post.created_at.desc())
+#     else:
+#         posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['guide']).order_by(Post.created_at.desc())
 
-    response = []
-    postRepliesSchema = PostRepliesSchema()
-    for post in posts:
-        response.append(postRepliesSchema.dump(post))
+#     response = []
+#     postRepliesSchema = PostRepliesSchema()
+#     for post in posts:
+#         response.append(postRepliesSchema.dump(post))
 
-    return jsonify(response), 200
+#     return jsonify(response), 200
 
-@posts.route('/api/getguide', methods=['GET'])
-@jwt_required(refresh=True)
-def get_guide():
-    post_id = request.args.get('id', 0)
+# @posts.route('/api/getguide', methods=['GET'])
+# @jwt_required(refresh=True)
+# def get_guide():
+#     post_id = request.args.get('id', 0)
 
-    post = Post.query.get(post_id)
-    postReplySchema = PostRepliesSchema()
+#     post = Post.query.get(post_id)
+#     postReplySchema = PostRepliesSchema()
 
-    response = postReplySchema.dump(post)
+#     response = postReplySchema.dump(post)
 
-    return jsonify(response), 200
+#     return jsonify(response), 200
 
-@posts.route('/api/guides', methods=['POST'])
-@jwt_required(refresh=True)
-def create_guide():
-    title = request.form.get('title', '')
-    content = request.form.get('content', '')
-    user_id = get_jwt_identity()
-    image_path = request.form.get('image_path', '')
-    is_premium = POST_TABLE_CODES['guide']
+# @posts.route('/api/guides', methods=['POST'])
+# @jwt_required(refresh=True)
+# def create_guide():
+#     title = request.form.get('title', '')
+#     content = request.form.get('content', '')
+#     user_id = get_jwt_identity()
+#     image_path = request.form.get('image_path', '')
+#     is_premium = POST_TABLE_CODES['guide']
 
-    postSchema = PostSchema()
-    newPost = Post(title, content, user_id, image_path, is_premium)
+#     postSchema = PostSchema()
+#     newPost = Post(title, content, user_id, image_path, is_premium)
 
-    db.session.add(newPost)
-    db.session.commit()
+#     db.session.add(newPost)
+#     db.session.commit()
 
-    response = postSchema.dump(newPost)
+#     response = postSchema.dump(newPost)
 
-    return jsonify(response), 201
+#     return jsonify(response), 201

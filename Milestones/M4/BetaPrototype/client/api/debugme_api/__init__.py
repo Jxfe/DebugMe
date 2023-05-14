@@ -21,11 +21,13 @@ def create_app(config_name):
     from debugme_api.authorization.routes import authorization
     from debugme_api.messages.routes import messages
     from debugme_api.feedback.routes import feedback
+    from debugme_api.guides.routes import guides
     app.register_blueprint(authorization)
     app.register_blueprint(registration)
     app.register_blueprint(posts)
     app.register_blueprint(messages)
     app.register_blueprint(feedback)
+    app.register_blueprint(guides)
 
     # Register subdirectory resource in app
     # from debugme_api.posts.Posts import Posts
