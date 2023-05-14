@@ -13,7 +13,6 @@ class Config:
 
     # Flask Botox (boto3) settings
     BOTOX_SERVICES=["s3", "ses", "sqs"]
-    REGION='us-west-2'
 
     # JSON Web Token settings
     JWT_SECRET_KEY=SECRET_KEY
@@ -29,8 +28,9 @@ class Config:
     AWS_DB_NAME=os.environ.get('AWS_DB_NAME')
 
     # AWS Bucket settings
-    AWS_ACCESS_KEY=os.environ.get('AWS_ACCESS_KEY')
+    AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_DEFAULT_REGION='us-west-2'
     BUCKET_NAME=os.environ.get('BUCKET_NAME')
 
 class ProductionConfig(Config):

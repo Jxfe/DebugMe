@@ -17,7 +17,7 @@ def get_posts():
 
     if input != '':
         search = "%" + input + "%"
-        print(search)
+
         posts = Post.query.filter(and_(Post.title.like(search), Post.is_premium==0)).order_by(Post.created_at.desc())
     else:
         posts = Post.query.filter(Post.is_premium==POST_TABLE_CODES['post']).order_by(Post.created_at.desc())
