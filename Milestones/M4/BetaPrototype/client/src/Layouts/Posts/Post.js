@@ -4,6 +4,7 @@ import Button from "../../Components/Button";
 import { Link, useParams } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
 import "./style.css";
+import LikeButton from "../../Components/LikeButton";
 
 function Post() {
   const [postContents, setPostContents] = useState({});
@@ -52,10 +53,16 @@ function Post() {
       <div className="post-left">
         <div className="post-header">
           <h1>{postContents?.title}</h1>
-          <p>Author: {postContents?.author?.name}</p>
+          <div>
+            <p>Author: {postContents?.author?.name}</p>
+            <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p>
+          </div>
         </div>
-        <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p>
+
         <p>{postContents?.content}</p>
+        <div className="likeBtn-container">
+          <LikeButton />
+        </div>
       </div>
 
       <div className="post-right">

@@ -59,6 +59,7 @@
   width: 60%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border-right: 1px solid;
   padding-right: 25px;
 }
@@ -120,4 +121,10 @@
 .post-count {
   margin-top: 0px;
   vertical-align: top;
+}
+
+.likeBtn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }

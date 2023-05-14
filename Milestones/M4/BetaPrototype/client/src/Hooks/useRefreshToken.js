@@ -1,6 +1,6 @@
 import React from "react";
 import { customAxios } from "../utils/customAxios";
-import axios from "axios";
+//import axios from "axios";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {

@@ -10,6 +10,8 @@ import classnames from "classnames";
 import { usePagination, DOTS } from "../Hooks/usePagination";
 import "./pagination.css";
 
+let dummyKey = 5000000000;
+
 const Pagination = (props) => {
   const {
     onPageChange,
@@ -45,6 +47,7 @@ const Pagination = (props) => {
       className={classnames("pagination-container", { [className]: className })}
     >
       <li
+        key={++dummyKey}
         className={classnames("pagination-item", {
           disabled: currentPage === 1
         })}
@@ -52,13 +55,18 @@ const Pagination = (props) => {
       >
         <div className="arrow left" />
       </li>
-      {paginationRange.map((pageNumber) => {
+      {paginationRange.map((pageNumber, index) => {
         if (pageNumber === DOTS) {
-          return <li className="pagination-item dots">&#8230;</li>;
+          return (
+            <li key={index} className="pagination-item dots">
+              &#8230;
+            </li>
+          );
         }
 
         return (
           <li
+            key={++dummyKey}
             className={classnames("pagination-item", {
               selected: pageNumber === currentPage
             })}
@@ -69,7 +77,7 @@ const Pagination = (props) => {
         );
       })}
       <li
-        key="3"
+        key={++dummyKey}
         className={classnames("pagination-item", {
           disabled: currentPage === lastPage
         })}
