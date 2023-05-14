@@ -5,10 +5,11 @@
  *
  */
 
-import React from "react";
+import React, { useState } from "react";
 import classnames from "classnames";
 import { usePagination, DOTS } from "../Hooks/usePagination";
 import "./pagination.css";
+
 const Pagination = (props) => {
   const {
     onPageChange,
@@ -25,7 +26,7 @@ const Pagination = (props) => {
     siblingCount,
     pageSize
   });
-
+  console.log("Current Page: ", currentPage);
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
   }
@@ -68,6 +69,7 @@ const Pagination = (props) => {
         );
       })}
       <li
+        key="3"
         className={classnames("pagination-item", {
           disabled: currentPage === lastPage
         })}

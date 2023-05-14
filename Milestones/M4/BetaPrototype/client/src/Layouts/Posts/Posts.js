@@ -8,7 +8,7 @@ import Button from "../../Components/Button";
 import "./style.css";
 import Pagination from "../../Components/Pagination";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 4;
 
 function Posts() {
   const [isCreateShowing, setCreateShowing] = useState(false);
@@ -19,11 +19,12 @@ function Posts() {
 
   useEffect(() => {
     getPostList();
+    // getPostList().then((response) => {
+    //   setPostList(response.data);
+    // });
+    // setKeyword("");
+    // searchInput.current.focus();
   }, []);
-
-  useEffect(() => {
-    renderPostList();
-  }, [postList]);
 
   const currentPostList = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -57,6 +58,11 @@ function Posts() {
     searchInput.current.focus();
   };
 
+  // const getPostList = async () => {
+  //   const response = await customAxios(`/api/posts?search=`);
+  //   return response;
+  // };
+
   // const renderPostList = () => {
   // return postList.map((item, index) => {
   //   return (
@@ -73,6 +79,23 @@ function Posts() {
 
   const renderPostList = () => {
     return currentPostList?.map((item, index) => {
+      return (
+        <Link key={index} id={index} to={`/posts/${item.id}`}>
+          <PostDescription
+            title={item?.title}
+            author={item?.author?.name}
+            date={moment.utc(item?.created_at).fromNow()}
+          />
+        </Link>
+      );
+    });
+  };
+
+  const onLoadPostRender = () => {
+    const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const lastPageIndex = firstPageIndex + ITEMS_PER_PAGE;
+
+    return postList?.slice(firstPageIndex, lastPageIndex).map((item, index) => {
       return (
         <Link key={index} id={index} to={`/posts/${item.id}`}>
           <PostDescription
@@ -148,7 +171,7 @@ function Posts() {
       </div>
 
       <div name="post-items">
-        {currentPostList?.length > 0 ? renderPostList() : null}
+        {currentPostList.length === 0 ? onLoadPostRender() : renderPostList()}
       </div>
       <Pagination
         className="pagination-bar"
