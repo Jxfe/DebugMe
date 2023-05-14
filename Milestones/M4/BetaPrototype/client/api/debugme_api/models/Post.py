@@ -16,12 +16,11 @@ class Post(db.Model):
     author = db.relationship("User", lazy="joined", viewonly=True)
     replies = db.relationship("Reply", lazy="joined",viewonly=True)
 
-    def __init__(self, title, content, user_id, image_path=None, is_premium=False):
+    def __init__(self, title, content, user_id, image_path=None):
         self.title = title
         self.content = content
         self.user_id = user_id
         self.image_path = image_path
-        self.is_premium = is_premium
 
 class PostSchema(ma.Schema):
     class Meta:

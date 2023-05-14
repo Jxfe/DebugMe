@@ -1,6 +1,6 @@
 import datetime
 from debugme_api.debugme_toolkit import db, ma
-from .Reply import ReplyUserSchema
+from .Feedback import FeedbackUserSchema
 from .User import UserSchema
 
 class Premium(db.Model):
@@ -15,7 +15,7 @@ class Premium(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
     author = db.relationship("User", lazy="joined", viewonly=True)
-    replies = db.relationship("Reply", lazy="joined",viewonly=True)
+    feedback = db.relationship("Feedback", lazy="joined", viewonly=True)
 
     def __init__(self, title, content, user_id, image_path=None, rating=None):
         self.title = title
@@ -27,3 +27,9 @@ class Premium(db.Model):
 class PremiumSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'content', 'user_id', 'image_path', 'rating')
+
+class GuideFeedbackSchema(ma.SQLAlchemyAutoSchema):
+    feedback = ma.Nested(FeedbackUserSchema, many=True)
+    author = ma.Nested(UserSchema)
+    class Meta:
+        model = Premium
