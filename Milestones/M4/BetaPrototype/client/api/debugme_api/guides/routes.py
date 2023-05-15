@@ -1,9 +1,10 @@
 from flask import request, jsonify, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
-from ..debugme_toolkit import db
+from ..debugme_toolkit import db, botox
 from sqlalchemy import create_engine, text, and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
+from werkzeug.utils import secure_filename
 
 guides = Blueprint('guides', __name__, url_prefix='/api')
 
@@ -44,7 +45,25 @@ def create_guide():
     title = request.form.get('title', '')
     content = request.form.get('content', '')
     user_id = get_jwt_identity()
-    image_path = request.form.get('image_path', '')
+
+
+    image = request.files.get('image_path')
+    if image:
+        filename = secure_filename(image.filename)
+        BUCKET_NAME = 'debugme'
+        s3_path = 'guides/'
+
+        # Creates an S3 client
+        s3 = botox.clients['s3']
+        s3.upload_fileobj(
+            Fileobj=image,
+            Bucket=BUCKET_NAME,
+            Key=s3_path + filename,
+            ExtraArgs={'ContentType': image.content_type}
+        )
+        image_path = s3_path + filename
+    else:
+        image_path = ''
 
     guideSchema = PremiumSchema()
     newGuide = Premium(title, content, user_id, image_path, rating=0.0)
