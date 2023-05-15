@@ -25,12 +25,19 @@ function PremiumGuides() {
     return guidesList?.map((item, index) => {
       return (
         <Link key={index} id={index} to={`/premiumguides/${item.id}`}>
-          <PostDescription
+          <GuideCard
+            id = {item?.id}
+            img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+            title={item?.title}
+            author={item?.author?.name}
+            rating = {2}
+          />
+          {/* <PostDescription
             title={item?.title}
             author={item?.author?.name}
             date={moment.utc(item?.created_at).fromNow()}
             commentCount={item?.rating}
-          />
+          /> */}
         </Link>
       );
     });
@@ -64,9 +71,9 @@ function PremiumGuides() {
           </div>
         </div>
 
-        <div>{renderGuidesList()}</div>
+        <div className="guides-container">{renderGuidesList()}</div>
 
-        <Link to="/showguide">
+        {/* <Link to="/showguide">
           <GuideCard id="1" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
           title="Hi there! Checkout our Guide"
           author="Jose Ortiza"
@@ -125,7 +132,7 @@ function PremiumGuides() {
           <GuideCard id="10" img="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI=" 
           title="Nail your coding interview" 
           author="Jose Ortiza" />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
