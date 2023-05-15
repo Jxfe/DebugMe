@@ -1,6 +1,7 @@
 import datetime
 from debugme_api.debugme_toolkit import db, ma
 from .Reply import ReplyUserSchema
+from .Likes import LikesUserSchema
 from .User import UserSchema
 
 class Post(db.Model):
@@ -15,6 +16,7 @@ class Post(db.Model):
 
     author = db.relationship("User", lazy="joined", viewonly=True)
     replies = db.relationship("Reply", lazy="joined",viewonly=True)
+    likes = db.relationship("Likes", lazy="joined",viewonly=True)
 
     def __init__(self, title, content, user_id, image_path=None):
         self.title = title
@@ -28,6 +30,7 @@ class PostSchema(ma.Schema):
 
 class PostRepliesSchema(ma.SQLAlchemyAutoSchema):
     replies = ma.Nested(ReplyUserSchema, many=True)
+    likes = ma.Nested(LikesUserSchema, many=True)
     author = ma.Nested(UserSchema)
     class Meta:
         model = Post
