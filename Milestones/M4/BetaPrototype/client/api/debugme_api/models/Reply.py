@@ -1,5 +1,5 @@
 import datetime
-from debugme_api.models.User import User, UserSchema
+from debugme_api.models.User import UserSchema
 from debugme_api.debugme_toolkit import db, ma
 
 class Reply(db.Model):
