@@ -79,14 +79,27 @@ def refresh_user_token():
 
 @authorization.route('/becomementor', methods=['PUT'])
 @jwt_required(refresh=True)
-def add_role():
+def become_mentor():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
     user.userRank = ROLES['mentor']
     db.session.commit()
 
-    response = {"message": "You are now a mentor!"}
+    response = {"message": "You are now a Mentor!"}
+
+    return jsonify(response), 200
+
+@authorization.route('/becomepremium', methods=['PUT'])
+@jwt_required(refresh=True)
+def become_premium():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    user.userRank = ROLES['premium']
+    db.session.commit()
+
+    response = {"message": "You are now a Premium user!"}
 
     return jsonify(response), 200
 
