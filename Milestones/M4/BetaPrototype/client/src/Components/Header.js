@@ -58,8 +58,8 @@ function Header() {
             Forum
           </Link>
           <Link
-            to="/upgradepage"
-            className={pathname.includes("upgradepage") ? "highlight" : null}
+            to="/premiumguides"
+            className={pathname.includes("premiumguides") ? "highlight" : null}
           >
             Premium Guides
           </Link>

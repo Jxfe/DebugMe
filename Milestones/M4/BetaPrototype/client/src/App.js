@@ -52,9 +52,9 @@ function App() {
             <Route path="posts" element={<Posts />} />
             <Route path="posts/:id" element={<Post />} />
             <Route path="premiumguides" element={<PremiumGuide />} />
+            <Route path="premiumguides/:id" element={<ShowGuide />} />
             <Route path="upgradepage" element={<UpgradePage />} />
             <Route path="successpage" element={<SuccessPage />} />
-            <Route path="showguide" element={<ShowGuide />} />
             <Route path="feedback" element={<Feedback />} />
             <Route path="mypage" element={<MyPage />} />
             <Route path="myevents" element={<MyEvents />} />
