@@ -32,7 +32,7 @@ def get_guide():
     guide_id = request.args.get('id', 0)
 
     guide = Premium.query.get(guide_id)
-    guideFeedbackSchema = guideFeedbackSchema()
+    guideFeedbackSchema = GuideFeedbackSchema()
 
     response = guideFeedbackSchema.dump(guide)
 

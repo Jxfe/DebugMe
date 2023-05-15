@@ -77,10 +77,36 @@ def refresh_user_token():
 
     return response, 200
 
+@authorization.route('/becomementor', methods=['PUT'])
+@jwt_required(refresh=True)
+def become_mentor():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    user.userRank = ROLES['mentor']
+    db.session.commit()
+
+    response = {"message": "You are now a Mentor!"}
+
+    return jsonify(response), 200
+
+@authorization.route('/becomepremium', methods=['PUT'])
+@jwt_required(refresh=True)
+def become_premium():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    user.userRank = ROLES['premium']
+    db.session.commit()
+
+    response = {"message": "You are now a Premium user!"}
+
+    return jsonify(response), 200
+
+
 @authorization.route('/whoami', methods=['GET'])
 @jwt_required(refresh=True)
 def whoami():
-    user_schema = UserSchema()
     user_id = get_jwt_identity()
     user = db.session.query(User).filter(User.id==user_id).first()
 

@@ -3,22 +3,44 @@ import moment from "moment";
 import Button from "../../Components/Button";
 import { Link, useParams } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
+import useAuth from "../../Hooks/useAuth";
 import "./style.css";
 import LikeButton from "../../Components/LikeButton";
 
 function Post() {
   const [postContents, setPostContents] = useState({});
   const [newComment, setNewComment] = useState("");
+  const [isLiked, setLiked] = useState(false);
+  const { auth } = useAuth();
   const { id } = useParams();
 
   useEffect(() => {
     getPostContents();
   }, []);
 
-  const getPostContents = () => {
+  useEffect(() => {
+    checkPostLike();
+  }, [postContents]);
+
+  const getPostContents = async () => {
     const url = `/api/getpost?id=${id}`;
-    customAxios(url).then((res) => {
-      setPostContents(res.data);
+    const response = await customAxios(url);
+    setPostContents(response?.data);
+  };
+
+  const updateLikeStatus = async (likeStatus) => {
+    let url = "";
+    likeStatus ? (url = "/api/dislikepost") : (url = "/api/likepost");
+
+    await customAxios({
+      method: "post",
+      url: url,
+      data: {
+        post_id: id
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
     });
   };
 
@@ -32,6 +54,17 @@ function Post() {
         </div>
       );
     });
+  };
+
+  const checkPostLike = () => {
+    const user = postContents?.likes?.filter(
+      (user) => user.author.email === auth?.email
+    );
+
+    if (user?.length > 0) {
+      setLiked(true);
+    }
+    return isLiked;
   };
 
   const handleSubmit = async () => {
@@ -61,7 +94,7 @@ function Post() {
 
         <p>{postContents?.content}</p>
         <div className="likeBtn-container">
-          <LikeButton />
+          <LikeButton isLiked={isLiked} callBack={updateLikeStatus} />
         </div>
       </div>
 

@@ -62,6 +62,7 @@ function Posts() {
             author={item?.author?.name}
             date={moment.utc(item?.created_at).fromNow()}
             commentCount={item?.replies?.length}
+            likes={item?.likes?.length}
           />
         </Link>
       );

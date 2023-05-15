@@ -5,6 +5,9 @@ from debugme_api.models.Reply import Reply, ReplySchema
 from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text, and_
 from ..models.Post import Post, PostSchema, PostRepliesSchema
+from ..models.Likes import Likes, LikesSchema
+
+LIKES_TABLE_CODES = {'post': 0, 'guide': 1}
 
 posts = Blueprint('posts', __name__, url_prefix='/api')
 
@@ -88,3 +91,45 @@ def add_comment():
     response = replySchema.dump(newReply)
 
     return jsonify(response), 201
+
+@posts.route('/likepost', methods=['POST'])
+@jwt_required(refresh=True)
+def like():
+    user_id = get_jwt_identity()
+    post_id = request.form.get('post_id', '')
+    is_premium = LIKES_TABLE_CODES['post']
+    likes_schema = LikesSchema()
+
+    like = Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).first()
+
+    if like:
+        response = "You've already liked this post."
+        return jsonify(response), 409
+    else:
+        new_like = Likes(post_id=post_id, user_id=user_id, is_premium=is_premium)
+
+        db.session.add(new_like)
+        db.session.commit()
+
+        response = likes_schema.dump(new_like)
+        return jsonify(response), 201
+
+@posts.route('/dislikepost', methods=['POST'])
+@jwt_required(refresh=True)
+def dislike():
+    user_id = get_jwt_identity()
+    post_id = request.form.get('post_id', '')
+    likes_schema = LikesSchema()
+
+    like = Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).first()
+
+    if like:
+        Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).delete(synchronize_session='fetch')
+        db.session.commit()
+
+        response = likes_schema.dump(like)
+        return jsonify(response), 200
+
+    else:
+        response = "You haven't liked this post yet."
+        return jsonify(response), 409

@@ -6,6 +6,7 @@ import "./style.css";
 
 import Button from "../../Components/Button";
 import PostDescription from "../../Components/PostDescription";
+import GuideCard from "../../Components/GuideCard";
 
 function PremiumGuides() {
   const [guidesList, setGuidesList] = useState([]);
@@ -66,153 +67,64 @@ function PremiumGuides() {
         <div>{renderGuidesList()}</div>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="1" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+          title="Hi there! Checkout our Guide"
+          author="Jose Ortiza"
+          />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1353816198/photo/mobile-display-with-logo-of-facebook-whatsapp-and-instagram-apps-in-hand-against-blurred-meta.jpg?s=1024x1024&w=is&k=20&c=RZuTpxq_4IQL7-um_vbLSo8MxY70MB_iHMIjVKBEghs="
-                alt="Forest"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to pass Meta internship interview?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="2" img="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI=" 
+          title="Nail your coding interview" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">Nail data structures and algorithms!</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="3" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38=" 
+          title="Hi there! Checkout our Guide" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="4" img="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI=" 
+          title="Nail your coding interview" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1353816198/photo/mobile-display-with-logo-of-facebook-whatsapp-and-instagram-apps-in-hand-against-blurred-meta.jpg?s=1024x1024&w=is&k=20&c=RZuTpxq_4IQL7-um_vbLSo8MxY70MB_iHMIjVKBEghs="
-                alt="Forest"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to pass Meta internship interview?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="5" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38=" 
+          title="Hi there! Checkout our Guide" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">Nail data structures and algorithms!</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="6" img="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI=" 
+          title="Nail your coding interview" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="7" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+          title="Hi there! Checkout our Guide" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1353816198/photo/mobile-display-with-logo-of-facebook-whatsapp-and-instagram-apps-in-hand-against-blurred-meta.jpg?s=1024x1024&w=is&k=20&c=RZuTpxq_4IQL7-um_vbLSo8MxY70MB_iHMIjVKBEghs="
-                alt="Forest"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to pass Meta internship interview?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="8" img="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI=" 
+          title="Nail your coding interview" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">Nail data structures and algorithms!</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="9" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38=" 
+          title="Hi there! Checkout our Guide" 
+          author="Jose Ortiza" />
         </Link>
 
         <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
+          <GuideCard id="10" img="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI=" 
+          title="Nail your coding interview" 
+          author="Jose Ortiza" />
         </Link>
       </div>
     </div>
