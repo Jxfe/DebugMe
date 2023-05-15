@@ -100,9 +100,9 @@ def like():
     is_premium = LIKES_TABLE_CODES['post']
     likes_schema = LikesSchema()
 
-    post = Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).first()
+    like = Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).first()
 
-    if post:
+    if like:
         response = "You've already liked this post."
         return jsonify(response), 409
     else:
@@ -113,3 +113,23 @@ def like():
 
         response = likes_schema.dump(new_like)
         return jsonify(response), 201
+
+@posts.route('/dislike', methods=['POST'])
+@jwt_required(refresh=True)
+def dislike():
+    user_id = get_jwt_identity()
+    post_id = request.form.get('post_id', '')
+    likes_schema = LikesSchema()
+
+    like = Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).first()
+
+    if like:
+        Likes.query.filter(and_(Likes.post_id==post_id, Likes.user_id==user_id)).delete(synchronize_session='fetch')
+        db.session.commit()
+
+        response = likes_schema.dump(like)
+        return jsonify(response), 200
+
+    else:
+        response = "You haven't liked this post yet."
+        return jsonify(response), 409
