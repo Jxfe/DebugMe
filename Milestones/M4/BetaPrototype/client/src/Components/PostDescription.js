@@ -1,8 +1,16 @@
-import React from "react";
-import CommentIcon from "@mui/icons-material/Comment"; // Needed for AWS since it's using node 16
+import React from "react"; // Needed for AWS since it's using node 16
+import CommentIcon from "@mui/icons-material/Comment";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import "./style.css";
 
-function PostDescription({ title, author, date, commentCount, onClickEvent }) {
+function PostDescription({
+  title,
+  author,
+  date,
+  commentCount,
+  likes,
+  onClickEvent
+}) {
   return (
     <div className="post-description" onClick={onClickEvent}>
       <div className="post-info">
@@ -12,6 +20,8 @@ function PostDescription({ title, author, date, commentCount, onClickEvent }) {
 
       <div className="post-stats">
         <span>
+          <ThumbUpIcon />
+          <span className="post-likes">{likes}</span>
           <CommentIcon />
           <span className="post-count">{commentCount}</span>
         </span>

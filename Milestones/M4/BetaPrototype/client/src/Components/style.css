@@ -209,3 +209,14 @@
 .post-date {
   margin-left: 10px;
 }
+
+.post-likes {
+  margin-right: 5px;
+  margin-left: 3px;
+  vertical-align: top;
+}
+
+.post-count {
+  margin-top: 0px;
+  vertical-align: top;
+}
