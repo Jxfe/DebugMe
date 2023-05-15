@@ -10,31 +10,22 @@ import LikeButton from "../../Components/LikeButton";
 function Post() {
   const [postContents, setPostContents] = useState({});
   const [newComment, setNewComment] = useState("");
-  const [isLoading, setLoading] = useState(null);
   const [isLiked, setLiked] = useState(false);
   const { auth } = useAuth();
   const { id } = useParams();
 
-  let likeBtnFlag = false;
-
   useEffect(() => {
-    setLoading(true);
     getPostContents();
-    setLoading(false);
   }, []);
 
   useEffect(() => {
     checkPostLike();
   }, [postContents]);
 
-  useEffect(() => {
-    likeBtnFlag = true;
-  }, [isLiked]);
-
   const getPostContents = async () => {
     const url = `/api/getpost?id=${id}`;
     const response = await customAxios(url);
-    setPostContents(response.data);
+    setPostContents(response?.data);
   };
 
   const renderComments = () => {
@@ -74,10 +65,6 @@ function Post() {
     });
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="post-display-container">
       <div className="post-left">
@@ -91,7 +78,7 @@ function Post() {
 
         <p>{postContents?.content}</p>
         <div className="likeBtn-container">
-          {isLoading ? "Loading..." : <LikeButton isLiked={isLiked} />}
+          <LikeButton isLiked={isLiked} />
         </div>
       </div>
 
