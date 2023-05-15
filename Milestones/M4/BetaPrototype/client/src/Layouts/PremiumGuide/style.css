@@ -399,7 +399,7 @@ a:active { text-decoration: none; }
   border: 1px solid #ccc;
   float: left;
   width: 200px;
-  min-height: 230px;
+  min-height: 250px;
   text-align: center;
   text-decoration: none;
   color: #000;
@@ -425,4 +425,13 @@ a:active { text-decoration: none; }
 .author {
   padding: 3px;
   font-family: 'Courier New', Courier, monospace;
+}
+
+.fa-star {
+  color: #ccc; /* Default color for empty stars */
+  cursor: pointer;
+}
+
+.fa-star.checked {
+  color: #ffc107; /* Bootstrap yellow color */
 }

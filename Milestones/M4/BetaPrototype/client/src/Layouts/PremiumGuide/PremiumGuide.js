@@ -13,7 +13,8 @@ function PremiumGuides() {
         <Link to="/showguide">
           <GuideCard id="1" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
           title="Hi there! Checkout our Guide"
-          author="Jose Ortiza" />
+          author="Jose Ortiza"
+          />
         </Link>
 
         <Link to="/showguide">
