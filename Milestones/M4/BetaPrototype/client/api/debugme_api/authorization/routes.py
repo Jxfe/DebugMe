@@ -77,10 +77,23 @@ def refresh_user_token():
 
     return response, 200
 
+@authorization.route('/becomementor', methods=['PUT'])
+@jwt_required(refresh=True)
+def add_role():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    user.userRank = ROLES['mentor']
+    db.session.commit()
+
+    response = {"message": "You are now a mentor!"}
+
+    return jsonify(response), 200
+
+
 @authorization.route('/whoami', methods=['GET'])
 @jwt_required(refresh=True)
 def whoami():
-    user_schema = UserSchema()
     user_id = get_jwt_identity()
     user = db.session.query(User).filter(User.id==user_id).first()
 
