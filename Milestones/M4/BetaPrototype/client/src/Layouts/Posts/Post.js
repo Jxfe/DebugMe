@@ -3,23 +3,38 @@ import moment from "moment";
 import Button from "../../Components/Button";
 import { Link, useParams } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
+import useAuth from "../../Hooks/useAuth";
 import "./style.css";
 import LikeButton from "../../Components/LikeButton";
 
 function Post() {
   const [postContents, setPostContents] = useState({});
   const [newComment, setNewComment] = useState("");
+  const [isLoading, setLoading] = useState(null);
+  const [isLiked, setLiked] = useState(false);
+  const { auth } = useAuth();
   const { id } = useParams();
 
+  let likeBtnFlag = false;
+
   useEffect(() => {
+    setLoading(true);
     getPostContents();
+    setLoading(false);
   }, []);
 
-  const getPostContents = () => {
+  useEffect(() => {
+    checkPostLike();
+  }, [postContents]);
+
+  useEffect(() => {
+    likeBtnFlag = true;
+  }, [isLiked]);
+
+  const getPostContents = async () => {
     const url = `/api/getpost?id=${id}`;
-    customAxios(url).then((res) => {
-      setPostContents(res.data);
-    });
+    const response = await customAxios(url);
+    setPostContents(response.data);
   };
 
   const renderComments = () => {
@@ -32,6 +47,17 @@ function Post() {
         </div>
       );
     });
+  };
+
+  const checkPostLike = () => {
+    const user = postContents?.likes?.filter(
+      (user) => user.author.email === auth?.email
+    );
+
+    if (user?.length > 0) {
+      setLiked(true);
+    }
+    return isLiked;
   };
 
   const handleSubmit = async () => {
@@ -48,6 +74,10 @@ function Post() {
     });
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="post-display-container">
       <div className="post-left">
@@ -61,7 +91,7 @@ function Post() {
 
         <p>{postContents?.content}</p>
         <div className="likeBtn-container">
-          <LikeButton />
+          {isLoading ? "Loading..." : <LikeButton isLiked={isLiked} />}
         </div>
       </div>
 

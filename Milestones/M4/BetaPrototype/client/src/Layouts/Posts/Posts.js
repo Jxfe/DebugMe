@@ -5,6 +5,7 @@ import { customAxios } from "../../utils/customAxios";
 import PostDescription from "../../Components/PostDescription";
 import CreatePost from "../../Components/CreatePost";
 import Button from "../../Components/Button";
+import useAuth from "../../Hooks/useAuth";
 import "./style.css";
 import Pagination from "../../Components/Pagination";
 
@@ -16,6 +17,7 @@ function Posts() {
   const [postList, setPostList] = useState([]);
   const [keyword, setKeyword] = useState("");
   const searchInput = useRef();
+  const { auth } = useAuth();
 
   useEffect(() => {
     getPostList();

@@ -3,7 +3,7 @@
  * https://www.upbeatcode.com/react/how-to-implement-a-like-button-in-react/
  */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "../resources/hand.svg";
 
@@ -11,9 +11,13 @@ import "./likeButton.scss";
 
 const particleList = Array.from(Array(10));
 
-const LikeButton = () => {
-  const [liked, setLiked] = useState(null);
+const LikeButton = ({ isLiked }) => {
+  const [liked, setLiked] = useState(isLiked);
   const [clicked, setClicked] = useState(false);
+
+  useEffect(() => {
+    setLiked(() => isLiked);
+  }, [isLiked]);
 
   return (
     <>
