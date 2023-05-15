@@ -2,8 +2,9 @@ from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from ..debugme_toolkit import db
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, func
 from ..models.Feedback import Feedback, FeedbackSchema
+from ..models.Premium import Premium
 
 feedback = Blueprint('feedback', __name__)
 
@@ -39,6 +40,15 @@ def create_feedback():
     db.session.add(newFeedback)
     db.session.commit()
 
+    updateGuideRating(guide_id=postID)
+
     response = feedbackSchema.dump(newFeedback)
 
     return jsonify(response), 201
+
+def updateGuideRating(guide_id):
+    guide = Premium.query.get(guide_id)
+    rating_avg = Feedback.query.with_entities(func.avg(Feedback.rating)).filter(Feedback.postID==guide_id).all()
+
+    guide.rating = rating_avg[0][0]
+    db.session.commit()
