@@ -28,6 +28,22 @@ function Post() {
     setPostContents(response?.data);
   };
 
+  const updateLikeStatus = async (likeStatus) => {
+    let url = "";
+    likeStatus ? (url = "/api/dislikepost") : (url = "/api/likepost");
+
+    await customAxios({
+      method: "post",
+      url: url,
+      data: {
+        post_id: id
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    });
+  };
+
   const renderComments = () => {
     return postContents?.replies?.map((item, index) => {
       return (
@@ -78,7 +94,7 @@ function Post() {
 
         <p>{postContents?.content}</p>
         <div className="likeBtn-container">
-          <LikeButton isLiked={isLiked} />
+          <LikeButton isLiked={isLiked} callBack={updateLikeStatus} />
         </div>
       </div>
 

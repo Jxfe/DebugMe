@@ -92,7 +92,7 @@ def add_comment():
 
     return jsonify(response), 201
 
-@posts.route('/addlike', methods=['POST'])
+@posts.route('/likepost', methods=['POST'])
 @jwt_required(refresh=True)
 def like():
     user_id = get_jwt_identity()
@@ -114,7 +114,7 @@ def like():
         response = likes_schema.dump(new_like)
         return jsonify(response), 201
 
-@posts.route('/dislike', methods=['POST'])
+@posts.route('/dislikepost', methods=['POST'])
 @jwt_required(refresh=True)
 def dislike():
     user_id = get_jwt_identity()

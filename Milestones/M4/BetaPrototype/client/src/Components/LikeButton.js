@@ -11,7 +11,7 @@ import "./likeButton.scss";
 
 const particleList = Array.from(Array(10));
 
-const LikeButton = ({ isLiked }) => {
+const LikeButton = ({ isLiked, callBack }) => {
   const [liked, setLiked] = useState(isLiked);
   const [clicked, setClicked] = useState(false);
 
@@ -23,6 +23,7 @@ const LikeButton = ({ isLiked }) => {
     <>
       <button
         onClick={() => {
+          callBack(liked);
           setLiked(!liked);
           setClicked(true);
         }}
