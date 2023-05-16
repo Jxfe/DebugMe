@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
+import useAuth from "../../Hooks/useAuth";
 
 import Modal from "../../Components/Modal";
 import Button from "../../Components/Button";
@@ -14,17 +15,18 @@ import "./showguide.css";
 function ShowGuide() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [rating, setRating] = useState(0);
+  const [isLiked, setLiked] = useState(false);
   const [guideContents, setGuideContents] = useState({});
   const { id } = useParams();
-
-  useEffect(() => {
-    console.log(rating);
-    giveFeedback();
-  }, [rating]);
+  const { auth } = useAuth();
 
   useEffect(() => {
     getGuideContents();
   }, []);
+
+  useEffect(() => {
+    checkGuideSaved();
+  }, [guideContents]);
 
   const handleFeedbackSubmit = async () => {
     const data = {
@@ -57,16 +59,42 @@ function ShowGuide() {
     });
   };
 
-  const giveFeedback = async () => {
+  const giveFeedback = async (newRating) => {
     await customAxios({
       method: "post",
       url: "/api/feedback",
-      data: { rating: rating, message: "", postID: id },
+      data: { rating: newRating, message: "", postID: id },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     });
     return;
+  };
+
+  const checkGuideSaved = () => {
+    const user = guideContents?.saves?.filter(
+      (user) => user?.author?.email === auth?.email
+    );
+
+    if (user?.length > 0) {
+      setLiked(true);
+    }
+  };
+
+  const updateSavedGuide = async (savedStatus) => {
+    let url = "";
+    savedStatus ? (url = "/api/removesavedguide") : (url = "/api/saveguide");
+
+    await customAxios({
+      method: "post",
+      url: url,
+      data: {
+        guide_id: id
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    });
   };
 
   return (
@@ -85,7 +113,7 @@ function ShowGuide() {
 
           <div className="nav-favorite">
             <p>Add to favorites</p>
-            <LikeButton />
+            <LikeButton isLiked={isLiked} callBack={updateSavedGuide} />
           </div>
 
           <div className="nav-rating">
@@ -96,37 +124,11 @@ function ShowGuide() {
                   size="large"
                   value={rating}
                   onChange={(event, newRating) => {
-                    //console.log(newRating);
+                    giveFeedback(newRating);
                     setRating(newRating);
                   }}
                 />
               </Stack>
-
-              {/* <a
-                href="#"
-                class="fas fa-star s1"
-                onClick={() => setRating(5)}
-              ></a>
-              <a
-                href="#"
-                class="fas fa-star s2"
-                onClick={() => setRating(4)}
-              ></a>
-              <a
-                href="#"
-                class="fas fa-star s3"
-                onClick={() => setRating(3)}
-              ></a>
-              <a
-                href="#"
-                class="fas fa-star s4"
-                onClick={() => setRating(2)}
-              ></a>
-              <a
-                href="#"
-                class="fas fa-star s5"
-                onClick={() => setRating(1)}
-              ></a> */}
             </div>
             <Button
               onClickEvent={handleFeedbackSubmit}
