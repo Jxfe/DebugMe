@@ -8,7 +8,7 @@ class MentoringSession(db.Model):
     mentee_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     mentor_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     status = db.Column(db.Integer, nullable=False, default=0)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     mentee = db.relationship("User", foreign_keys=[mentee_id])
     mentor = db.relationship("User", foreign_keys=[mentor_id])
