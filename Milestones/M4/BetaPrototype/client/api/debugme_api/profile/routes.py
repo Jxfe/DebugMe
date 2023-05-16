@@ -5,8 +5,8 @@ from debugme_api.config import Config
 from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text, or_, and_
 from debugme_api.models.Messages import Messages, MessagesSchema
-from debugme_api.models.Mentoring import MentoringSession, MentoringSessionSchema
-from debugme_api.models.Saved import Saved, SavedSchema
+from debugme_api.models.Mentoring import MentoringSession, MentoringSessionSchema, MentoringUserSessionSchema
+from debugme_api.models.Saved import Saved, SavedSchema, SavedUserSchema
 
 MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2}
 
@@ -28,15 +28,25 @@ def get_profile():
     saved = Saved.query.filter(Saved.user_id==user_id).order_by(Saved.created_at.desc())
 
     messagesSchema = MessagesSchema(many=True)
-    mentoringSessionSchema = MentoringSessionSchema(many=True)
-    savedSchema = SavedSchema(many=True)
+    # mentoringSessionSchema = MentoringSessionSchema(many=True)
+    # savedSchema = SavedSchema(many=True)
+    mentoringUserSessionSchema = MentoringUserSessionSchema(many=True)
+    savedUserSchema = SavedUserSchema(many=True)
+
+    # response = {
+    #     'messages': messagesSchema.dump(messages),
+    #     'mentorSessions': mentoringSessionSchema.dump(mentorSessions),
+    #     'menteeSessions': mentoringSessionSchema.dump(menteeSessions),
+    #     'mentoringRequests': mentoringSessionSchema.dump(mentoringRequests),
+    #     'saved': savedSchema.dump(saved)
+    # }
 
     response = {
         'messages': messagesSchema.dump(messages),
-        'mentorSessions': mentoringSessionSchema.dump(mentorSessions),
-        'menteeSessions': mentoringSessionSchema.dump(menteeSessions),
-        'mentoringRequests': mentoringSessionSchema.dump(mentoringRequests),
-        'saved': savedSchema.dump(saved)
+        'mentorSessions': mentoringUserSessionSchema.dump(mentorSessions),
+        'menteeSessions': mentoringUserSessionSchema.dump(menteeSessions),
+        'mentoringRequests': mentoringUserSessionSchema.dump(mentoringRequests),
+        'saved': savedUserSchema.dump(saved)
     }
 
     return jsonify(response), 200
