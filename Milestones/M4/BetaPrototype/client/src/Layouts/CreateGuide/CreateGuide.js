@@ -1,100 +1,76 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
-import { customAxios } from "../../utils/customAxios";
 import Button from "../../Components/Button";
+import { customAxios } from "../../utils/customAxios";
 
 function CreateGuide() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    customAxios({
-      method: "post",
-      url: "/api/guides",
-      data: {
-        title: title,
-        content: content
-      },
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    });
-  };
-
   const navigate = useNavigate();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState(null);
+  
   const gotoPremiumGuide = () => {
     navigate("/premiumguides");
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', description);
+    formData.append('image_path', image);
+
+    try {
+      const response = await customAxios({
+        method: 'POST',
+        url: '/api/guides',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 201) {
+        // Successfully created guide
+        gotoPremiumGuide();
+      }
+    } catch (error) {
+      console.error('Error creating guide:', error);
+    }
+  };
+
   return (
-    // <div>
-    //   <h3>Premium Guides</h3>
-    //   <form>
-    //     <div>
-    //       <label htmlFor="title">Title:</label>
-    //       <input type="text" id="title" name="title" />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="description">Description:</label>
-    //       <textarea id="description" name="description" rows="4" cols="50" />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="imageUpload">Upload an image:</label>
-    //       <input
-    //         type="file"
-    //         id="imageUpload"
-    //         name="imageUpload"
-    //         accept="image/*"
-    //       />
-    //     </div>
-    //     <div>
-    //       <Button
-    //         className="default-button"
-    //         content="Submit"
-    //         onClickEvent={gotoPremiumGuide}
-    //       />
-    //     </div>
-    //   </form>
-    // </div>
-    <div className="create-guide-container">
-      <div className="create-guide-info">
-        <h1>Write your new Guide</h1>
-        <form onSubmit={handleSubmit} className="new-post-form">
-          <input
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <textarea
-            className="new-guide-body"
-            type="text"
-            name="content"
-            id="content"
-            placeholder="Body"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
+    <div>
+      <h3>Premium Guides</h3>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="title">Title:</label>
+          <input type="text" id="title" name="title" value={title} onChange={e => setTitle(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="description">Description:</label>
+          <textarea id="description" name="description" rows="4" cols="50" value={description} onChange={e => setDescription(e.target.value)} />
+        </div>
+        <div>
           <label htmlFor="imageUpload">Upload an image:</label>
           <input
             type="file"
             id="imageUpload"
             name="imageUpload"
             accept="image/*"
+            onChange={e => setImage(e.target.files[0])}
           />
-          <div className="form-buttons">
-            <Button className="default-button" content="Submit" />
-            <Button content="Cancel" />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div>
+          <Button
+            className="default-button"
+            content="Submit"
+            onClickEvent={handleSubmit}
+          />
+        </div>
+      </form>
     </div>
   );
 }
