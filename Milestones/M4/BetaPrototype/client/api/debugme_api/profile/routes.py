@@ -3,10 +3,12 @@ from flask_restful import abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from ..debugme_toolkit import db
-from sqlalchemy import create_engine, text, or_
+from sqlalchemy import create_engine, text, or_, and_
 from debugme_api.models.Messages import Messages, MessagesSchema
 from debugme_api.models.Mentoring import MentoringSession, MentoringSessionSchema
 from debugme_api.models.Saved import Saved, SavedSchema
+
+MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2}
 
 profile = Blueprint('profile', __name__, url_prefix='/api')
 
@@ -21,6 +23,8 @@ def get_profile():
 
     menteeSessions = MentoringSession.query.filter(MentoringSession.mentee_id==user_id).order_by(MentoringSession.created_at.desc())
 
+    mentoringRequests = MentoringSession.query.filter(and_(MentoringSession.mentor_id==user_id, MentoringSession.status==MENTORING_TABLE_STATUS_CODES['request']))
+
     saved = Saved.query.filter(Saved.user_id==user_id).order_by(Saved.created_at.desc())
 
     messagesSchema = MessagesSchema(many=True)
@@ -31,6 +35,7 @@ def get_profile():
         'messages': messagesSchema.dump(messages),
         'mentorSessions': mentoringSessionSchema.dump(mentorSessions),
         'menteeSessions': mentoringSessionSchema.dump(menteeSessions),
+        'mentoringRequests': mentoringSessionSchema.dump(mentoringRequests),
         'saved': savedSchema.dump(saved)
     }
 
