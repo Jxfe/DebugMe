@@ -6,12 +6,13 @@
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "../resources/hand.svg";
+import PushPinIcon from "@mui/icons-material/PushPin";
 
 import "./likeButton.scss";
 
 const particleList = Array.from(Array(10));
 
-const LikeButton = ({ isLiked, callBack }) => {
+const LikeButton = ({ isLiked, content, icon, callBack }) => {
   const [liked, setLiked] = useState(isLiked);
   const [clicked, setClicked] = useState(false);
 
@@ -51,8 +52,8 @@ const LikeButton = ({ isLiked, callBack }) => {
           </div>
         )}
         <div className="like-button">
-          <Hand />
-          <span>Like</span>
+          {icon === "Pin" ? <PushPinIcon /> : <Hand />}
+          <span>{content ? content : "Like"}</span>
           <span className={cn("suffix", { liked })}>d</span>
         </div>
       </button>

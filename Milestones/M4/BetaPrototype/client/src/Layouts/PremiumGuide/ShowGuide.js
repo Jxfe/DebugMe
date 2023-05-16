@@ -113,7 +113,12 @@ function ShowGuide() {
 
           <div className="nav-favorite">
             <p>Add to favorites</p>
-            <LikeButton isLiked={isLiked} callBack={updateSavedGuide} />
+            <LikeButton
+              isLiked={isLiked}
+              content="Save"
+              icon="Pin"
+              callBack={updateSavedGuide}
+            />
           </div>
 
           <div className="nav-rating">

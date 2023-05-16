@@ -99,7 +99,8 @@ function Post() {
         <div className="post-header">
           <h1>{postContents?.title}</h1>
           <div>
-            <p>Author:  
+            <p>
+              Author:
               <Link to="#" onClick={showProfile}>
                 {postContents?.author?.name}
               </Link>
@@ -110,7 +111,12 @@ function Post() {
 
         <p>{postContents?.content}</p>
         <div className="likeBtn-container">
-          <LikeButton isLiked={isLiked} callBack={updateLikeStatus} />
+          <LikeButton
+            isLiked={isLiked}
+            content="Like"
+            icon="Hand"
+            callBack={updateLikeStatus}
+          />
         </div>
       </div>
 
@@ -132,9 +138,7 @@ function Post() {
           </form>
         </div>
       </div>
-      {profileShowing && (
-        <UserProfile onClose={hideProfile}/>
-      )}
+      {profileShowing && <UserProfile onClose={hideProfile} />}
     </div>
   );
 }
