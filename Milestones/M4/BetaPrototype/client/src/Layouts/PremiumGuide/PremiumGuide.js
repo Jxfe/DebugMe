@@ -7,13 +7,24 @@ import "./style.css";
 import Button from "../../Components/Button";
 import PostDescription from "../../Components/PostDescription";
 import GuideCard from "../../Components/GuideCard";
+import Pagination from "../../Components/Pagination";
+
+const ITEMS_PER_PAGE = 3;
 
 function PremiumGuides() {
   const [guidesList, setGuidesList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     getGuidesList();
   }, []);
+
+  const currentGuideList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const lastPageIndex = firstPageIndex + ITEMS_PER_PAGE;
+
+    return guidesList?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, guidesList]);
 
   const getGuidesList = async () => {
     await customAxios(`/api/guides?search=`).then((res) => {
@@ -22,7 +33,7 @@ function PremiumGuides() {
   };
 
   const renderGuidesList = () => {
-    return guidesList?.map((item, index) => {
+    return currentGuideList?.map((item, index) => {
       return (
         <Link key={index} id={index} to={`/premiumguides/${item.id}`}>
           <GuideCard
@@ -77,6 +88,13 @@ function PremiumGuides() {
         </div>
 
         <div className="guides-container">{renderGuidesList()}</div>
+        <Pagination
+          className="pagination-bar"
+          currentPage={currentPage}
+          totalCount={guidesList?.length}
+          pageSize={ITEMS_PER_PAGE}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
 
         {/* <Link to="/showguide">
           <GuideCard id="1" img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
