@@ -40,6 +40,53 @@ def request_mentoring():
 
     return jsonify(response), 201
 
+@mentoring.route('/acceptmentoring', methods=['PUT', 'POST'])
+@jwt_required(refresh=True)
+def accept_request():
+    mentor_id = get_jwt_identity()
+    mentoring_id = request.form.get('mentoring_id', None)
+
+    if mentoring_id is None:
+        abort(400, {'error': 'Missing mentoring session id'})
+
+    mentoring_session = MentoringSession.query.get(mentoring_id)
+
+    if mentoring_session is None:
+        abort(400, 'Mentoring session does not exist')
+
+    if mentor_id == mentoring_session.mentee_id:
+        abort(400, 'Only Mentors can approve mentoring sessions')
+
+    mentoring_session.status = MENTORING_TABLE_STATUS_CODES['accept']
+    db.session.commit()
+
+    response = {'message': 'Mentoring Session has been accepted'}
+
+    return jsonify(response), 200
+
+@mentoring.route('/rejectmentoring', methods=['PUT', 'POST'])
+@jwt_required(refresh=True)
+def reject_request():
+    mentor_id = get_jwt_identity()
+    mentoring_id = request.form.get('mentoring_id', None)
+
+    if mentoring_id is None:
+        abort(400, {'error': 'Missing mentoring session id'})
+
+    mentoring_session = MentoringSession.query.get(mentoring_id)
+
+    if mentoring_session is None:
+        abort(400, 'Mentoring session does not exist')
+
+    if mentor_id == mentoring_session.mentee_id:
+        abort(400, 'Only Mentors can approve mentoring sessions')
+
+    mentoring_session.status = MENTORING_TABLE_STATUS_CODES['reject']
+    db.session.commit()
+
+    response = {'message': 'Mentoring Session has been rejected'}
+
+    return jsonify(response), 200
 
 
 
