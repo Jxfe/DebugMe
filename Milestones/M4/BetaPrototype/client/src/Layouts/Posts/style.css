@@ -66,9 +66,9 @@
 
 .post-header {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* align-items: center; */
 }
 
 .post-right {
@@ -127,4 +127,8 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+}
+
+.author {
+  margin-right: 3px;
 }

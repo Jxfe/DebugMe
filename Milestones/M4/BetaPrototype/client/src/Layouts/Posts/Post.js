@@ -97,15 +97,25 @@ function Post() {
     <div className="post-display-container">
       <div className="post-left">
         <div className="post-header">
-          <h1>{postContents?.title}</h1>
           <div>
-            <p>
-              Author:
+            <h1>{postContents?.title}</h1>
+            <Link to="#" onClick={showProfile}>
+              {postContents?.author?.name}
+            </Link>
+            <br />
+            <span>
+              {`Date: ${moment(postContents?.created_at).format(
+                "MMM Do, YYYY"
+              )}`}
+            </span>
+          </div>
+          <div>
+            {/* <p>
               <Link to="#" onClick={showProfile}>
                 {postContents?.author?.name}
               </Link>
-            </p>
-            <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p>
+            </p> */}
+            {/* <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p> */}
           </div>
         </div>
 
