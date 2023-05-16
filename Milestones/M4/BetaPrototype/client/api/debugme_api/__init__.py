@@ -23,6 +23,7 @@ def create_app(config_name):
     from debugme_api.feedback.routes import feedback
     from debugme_api.guides.routes import guides
     from debugme_api.mentoring.routes import mentoring
+    from debugme_api.profile.routes import profile
 
     app.register_blueprint(authorization)
     app.register_blueprint(registration)
@@ -31,6 +32,7 @@ def create_app(config_name):
     app.register_blueprint(feedback)
     app.register_blueprint(guides)
     app.register_blueprint(mentoring)
+    app.register_blueprint(profile)
 
     # Register subdirectory resource in app
     # from debugme_api.posts.Posts import Posts

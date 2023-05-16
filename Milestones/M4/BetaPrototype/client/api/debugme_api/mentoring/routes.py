@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from ..debugme_toolkit import db
 from sqlalchemy import create_engine, text, and_
-from ..models.Mentoring import MentoringSession, MentoringSessionSchema
+from ..models.Mentoring import MentoringSession, MentoringSessionSchema, MentoringUserSessionSchema
 
 MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2}
 
@@ -88,5 +88,13 @@ def reject_request():
 
     return jsonify(response), 200
 
+@mentoring.route('/mentoringsessions', methods=["GET"])
+@jwt_required(refresh=True)
+def get_mentoring_sessions():
+    sessions = MentoringSession.query.order_by(MentoringSession.created_at.desc())
 
+    mentoringSessionSchema = MentoringUserSessionSchema(many=True)
+    response = mentoringSessionSchema.dump(sessions)
+
+    return jsonify(response), 200
 

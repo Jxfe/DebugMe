@@ -1,7 +1,6 @@
 import datetime
 from debugme_api.debugme_toolkit import db, ma
 
-
 class Messages(db.Model):
     __tablename__ = 'Messages'
     id = db.Column(db.Integer, primary_key=True)
