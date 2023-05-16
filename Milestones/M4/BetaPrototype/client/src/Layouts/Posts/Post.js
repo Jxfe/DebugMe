@@ -6,8 +6,11 @@ import { customAxios } from "../../utils/customAxios";
 import useAuth from "../../Hooks/useAuth";
 import "./style.css";
 import LikeButton from "../../Components/LikeButton";
+import UserProfile from "../../Components/UserProfile";
 
 function Post() {
+  const [profileShowing, setProfileShowing] = useState(false);
+  const [profileContents, setProfileContents] = useState({});
   const [postContents, setPostContents] = useState({});
   const [newComment, setNewComment] = useState("");
   const [isLiked, setLiked] = useState(false);
@@ -21,6 +24,15 @@ function Post() {
   useEffect(() => {
     checkPostLike();
   }, [postContents]);
+
+  function showProfile() {
+    // get user's profile details
+    // setProfileContents()
+    setProfileShowing(true);
+  }
+  function hideProfile() {
+    setProfileShowing(false);
+  }
 
   const getPostContents = async () => {
     const url = `/api/getpost?id=${id}`;
@@ -87,7 +99,11 @@ function Post() {
         <div className="post-header">
           <h1>{postContents?.title}</h1>
           <div>
-            <p>Author: {postContents?.author?.name}</p>
+            <p>Author:  
+              <Link to="#" onClick={showProfile}>
+                {postContents?.author?.name}
+              </Link>
+            </p>
             <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p>
           </div>
         </div>
@@ -116,6 +132,9 @@ function Post() {
           </form>
         </div>
       </div>
+      {profileShowing && (
+        <UserProfile onClose={hideProfile}/>
+      )}
     </div>
   );
 }

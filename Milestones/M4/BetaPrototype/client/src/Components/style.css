@@ -221,3 +221,48 @@
   margin-left: 3px;
   vertical-align: top;
 }
+
+
+/* User Profile Modal */
+.profile-container {
+  height: 275px;
+  width: 600px;
+  border: 1px solid black;
+  background-color: var(--lightgray);
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  padding: 25px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.picture-container {
+  width: 150px;
+}
+
+.profile-img {
+  height: 150px;
+  width: 150px;
+}
+
+.username-bio {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.username-bio h1 {
+  margin: 0;
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: row;
+}

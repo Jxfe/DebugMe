@@ -30,7 +30,7 @@ function PremiumGuides() {
             img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
             title={item?.title}
             author={item?.author?.name}
-            rating = {2}
+            rating = {item?.rating}
           />
           {/* <PostDescription
             title={item?.title}
