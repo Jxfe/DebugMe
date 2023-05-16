@@ -43,6 +43,7 @@ function Posts() {
       setPostList([]);
     }
     searchInput.current.focus();
+    setCurrentPage(() => 1);
   };
 
   const getPostList = async () => {

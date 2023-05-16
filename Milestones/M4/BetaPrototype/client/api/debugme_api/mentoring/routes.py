@@ -79,7 +79,7 @@ def reject_request():
         abort(400, 'Mentoring session does not exist')
 
     if mentor_id == mentoring_session.mentee_id:
-        abort(400, 'Only Mentors can approve mentoring sessions')
+        abort(400, 'Only Mentors can reject mentoring sessions')
 
     mentoring_session.status = MENTORING_TABLE_STATUS_CODES['reject']
     db.session.commit()
