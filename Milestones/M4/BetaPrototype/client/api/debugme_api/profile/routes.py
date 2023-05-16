@@ -28,18 +28,8 @@ def get_profile():
     saved = Saved.query.filter(Saved.user_id==user_id).order_by(Saved.created_at.desc())
 
     messagesSchema = MessagesSchema(many=True)
-    # mentoringSessionSchema = MentoringSessionSchema(many=True)
-    # savedSchema = SavedSchema(many=True)
     mentoringUserSessionSchema = MentoringUserSessionSchema(many=True)
     savedUserSchema = SavedUserSchema(many=True)
-
-    # response = {
-    #     'messages': messagesSchema.dump(messages),
-    #     'mentorSessions': mentoringSessionSchema.dump(mentorSessions),
-    #     'menteeSessions': mentoringSessionSchema.dump(menteeSessions),
-    #     'mentoringRequests': mentoringSessionSchema.dump(mentoringRequests),
-    #     'saved': savedSchema.dump(saved)
-    # }
 
     response = {
         'messages': messagesSchema.dump(messages),
