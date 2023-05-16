@@ -25,9 +25,15 @@ function Post() {
     checkPostLike();
   }, [postContents]);
 
-  function showProfile() {
-    // get user's profile details
-    // setProfileContents()
+  function showProfile(userID, profilePic, username, bio, onClose) {
+    setProfileContents({
+      userID: userID,
+      profilePic: profilePic,
+      username: username,
+      bio: bio,
+      onClose: onClose
+    });
+
     setProfileShowing(true);
   }
   function hideProfile() {
@@ -60,7 +66,22 @@ function Post() {
     return postContents?.replies?.map((item, index) => {
       return (
         <div key={index} id={index} className="comment-container">
-          <p className="comment-author">{item.author?.name}</p>
+          <p className="comment-author">
+            <Link
+              to="#"
+              onClick={() => {
+                showProfile(
+                  item?.author?.id,
+                  "",
+                  item?.author?.name,
+                  `${item?.author?.name}'s Bio goes here.`,
+                  hideProfile
+                );
+              }}
+            >
+              {item.author?.name}
+            </Link>
+          </p>
           <p>{moment.utc(item?.created_at).fromNow()}</p>
           <p className="comment-content">{item?.content}</p>
         </div>
@@ -99,7 +120,18 @@ function Post() {
         <div className="post-header">
           <div>
             <h1>{postContents?.title}</h1>
-            <Link to="#" onClick={showProfile}>
+            <Link
+              to="#"
+              onClick={() => {
+                showProfile(
+                  postContents?.author?.id,
+                  "",
+                  postContents?.author.name,
+                  `${postContents?.author?.name}'s Bio goes here.`,
+                  hideProfile
+                );
+              }}
+            >
               {postContents?.author?.name}
             </Link>
             <br />
@@ -108,14 +140,6 @@ function Post() {
                 "MMM Do, YYYY"
               )}`}
             </span>
-          </div>
-          <div>
-            {/* <p>
-              <Link to="#" onClick={showProfile}>
-                {postContents?.author?.name}
-              </Link>
-            </p> */}
-            {/* <p>{moment(postContents?.created_at).format("MMM Do, YYYY")}</p> */}
           </div>
         </div>
 
@@ -148,7 +172,7 @@ function Post() {
           </form>
         </div>
       </div>
-      {profileShowing && <UserProfile onClose={hideProfile} />}
+      {profileShowing && <UserProfile profileContents={profileContents} />}
     </div>
   );
 }

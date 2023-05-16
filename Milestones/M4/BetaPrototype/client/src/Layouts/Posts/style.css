@@ -132,3 +132,7 @@
 .author {
   margin-right: 3px;
 }
+
+p.comment-author:hover {
+  cursor: pointer;
+}
