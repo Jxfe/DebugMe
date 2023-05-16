@@ -2,7 +2,7 @@ from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from ..debugme_toolkit import db
-from sqlalchemy import create_engine, text, func
+from sqlalchemy import create_engine, text, func, and_
 from ..models.Feedback import Feedback, FeedbackSchema
 from ..models.Premium import Premium
 
@@ -34,6 +34,12 @@ def create_feedback():
 
     if not userID or not rating or not postID:
         abort(400, message='Invalid request')
+
+    feedback = Feedback.query.filter(and_(Feedback.postID==postID, Feedback.userID==userID)).first()
+
+    if feedback:
+        Feedback.query.filter(and_(Feedback.postID==postID, Feedback.userID==userID)).delete(synchronize_session='fetch')
+        db.session.commit()
 
     feedbackSchema = FeedbackSchema()
     newFeedback = Feedback(userID, rating, message, postID)

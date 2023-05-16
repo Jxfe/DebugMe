@@ -5,6 +5,9 @@ from ..debugme_toolkit import db, botox
 from sqlalchemy import create_engine, text, and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
 from werkzeug.utils import secure_filename
+from ..models.Saved import Saved, SavedSchema, SavedUserSchema
+
+SAVED_TABLE_CODES = {'post': 0, 'guide': 1}
 
 guides = Blueprint('guides', __name__, url_prefix='/api')
 
@@ -74,3 +77,45 @@ def create_guide():
     response = guideSchema.dump(newGuide)
 
     return jsonify(response), 201
+
+@guides.route('/saveguide', methods=['POST'])
+@jwt_required(refresh=True)
+def save_guide():
+    user_id = get_jwt_identity()
+    guide_id = request.form.get('guide_id', '')
+    is_premium = SAVED_TABLE_CODES['guide']
+    saved_schema = SavedSchema()
+
+    saved = Saved.query.filter(and_(Saved.post_id==guide_id, Saved.user_id==user_id)).first()
+
+    if saved:
+        response = "You've already saved this guide."
+        return jsonify(response), 409
+    else:
+        new_save = Saved(post_id=guide_id, user_id=user_id, is_premium=is_premium)
+
+        db.session.add(new_save)
+        db.session.commit()
+
+        response = saved_schema.dump(new_save)
+        return jsonify(response), 201
+
+@guides.route('/removesavedguide', methods=['POST'])
+@jwt_required(refresh=True)
+def remove_guide():
+    user_id = get_jwt_identity()
+    guide_id = request.form.get('guide_id', '')
+    saved_schema = SavedSchema()
+
+    save = Saved.query.filter(and_(Saved.post_id==guide_id, Saved.user_id==user_id)).first()
+
+    if save:
+        Saved.query.filter(and_(Saved.post_id==guide_id, Saved.user_id==user_id)).delete(synchronize_session='fetch')
+        db.session.commit()
+
+        response = saved_schema.dump(save)
+        return jsonify(response), 200
+
+    else:
+        response = "You haven't liked this post yet."
+        return jsonify(response), 409

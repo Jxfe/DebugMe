@@ -4,7 +4,7 @@ from debugme_api.models.User import UserSchema
 class Saved(db.Model):
     __tablename__ = 'Saved'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('Post.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('Premium.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     is_premium = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
