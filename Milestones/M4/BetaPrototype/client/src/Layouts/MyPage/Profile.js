@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { customAxios } from "../../utils/customAxios";
 import AuthContext from "../../Context/AuthProvider";
+import Button from "../../Components/Button";
 
 function Profile() {
   const { auth } = useContext(AuthContext);
@@ -45,7 +46,23 @@ function Profile() {
       <h1>Profile</h1>
       <div className="mypage-profile">
         <p className="personalinfo-field-head">Name</p>
-        <p>{profile.name}</p>
+        <div style={{ display: "flex", gap: "40px" }}>
+          <p>{profile.name}</p>
+          <Button
+            className="default-button"
+            content="Edit"
+          />
+        </div>
+      </div>
+      <div className="mypage-profile">
+        <p className="personalinfo-field-head">Bio</p>
+        <div style={{ display: "flex", gap: "40px" }}>
+          <p>{profile.name}</p>
+          <Button
+            className="default-button"
+            content="Edit"
+          />
+        </div>
       </div>
       <div>
         <p className="personalinfo-field-head">Email</p>
@@ -53,7 +70,17 @@ function Profile() {
       </div>
       <div>
         <p className="personalinfo-field-head">Subscription Plan</p>
-        <p>{profile.userRank}</p>
+        <div style={{ display: "flex", gap: "40px" }}>
+          <p>{profile.userRank}</p>
+          {
+            profile.userRank === 0 &&
+            <Button
+              width="200px"
+              className="default-button"
+              content="Upgrade to Premium"
+            />
+          }
+        </div>
       </div>
     </div>
   );
