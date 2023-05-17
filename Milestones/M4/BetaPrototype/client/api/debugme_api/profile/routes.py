@@ -1,12 +1,10 @@
-from flask import request, jsonify, Blueprint
-from flask_restful import abort
+from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from debugme_api.config import Config
 from ..debugme_toolkit import db
-from sqlalchemy import create_engine, text, or_, and_
+from sqlalchemy import or_, and_
 from debugme_api.models.Messages import Messages, MessagesSchema
-from debugme_api.models.Mentoring import MentoringSession, MentoringSessionSchema, MentoringUserSessionSchema
-from debugme_api.models.Saved import Saved, SavedSchema, SavedUserSchema
+from debugme_api.models.Mentoring import MentoringSession, MentoringUserSessionSchema
+from debugme_api.models.Saved import Saved, SavedUserSchema
 
 MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2}
 
