@@ -83,7 +83,15 @@ def become_mentor():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
-    user.userRank = ROLES['mentor']
+    if user.userRank == ROLES['mentor'] or user.userRank == ROLES['premium_mentor']:
+        abort(400, 'You are a Mentor already')
+
+    elif user.userRank == ROLES['basic']:
+        user.userRank = ROLES['mentor']
+
+    elif user.userRank == ROLES['premium']:
+        user.userRank = ROLES['premium_mentor']
+
     db.session.commit()
 
     response = {"message": "You are now a Mentor!"}
@@ -97,9 +105,9 @@ def become_premium():
     user = User.query.get(user_id)
 
     if user.userRank == ROLES['premium'] or user.userRank == ROLES['premium_mentor']:
-        abort(400, 'You are a Premium member already.')
+        abort(400, 'You are a Premium member already')
 
-    if user.userRank == ROLES['basic']:
+    elif user.userRank == ROLES['basic']:
         user.userRank = ROLES['premium']
 
     elif user.userRank == ROLES['mentor']:
