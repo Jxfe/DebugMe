@@ -4,7 +4,7 @@ import "./App.css";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Calendar from "./Layouts/Calendar/Calendar";
-import MentoringRequest from "./Layouts/MyPage/MentoringRequest";
+import SavedPremiumGuides from "./Layouts/MyPage/SavedPremiumGuides";
 import CustomerRequest from "./Layouts/MyPage/CustomerRequests";
 import MentoringSessions from "./Layouts/MyPage/MentoringSessions";
 import Messages from "./Layouts/MyPage/Messages";
@@ -67,7 +67,7 @@ function App() {
             <Route path="mypage" exact element={<MyPage />}>
               <Route path="updatepayment" element={<UpdatePayment />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="mentoring-requests" element={<MentoringRequest />} />
+              <Route path="saved-premium-guides" element={<SavedPremiumGuides />} />
               <Route path="customer-requests" element={<CustomerRequest />} />
               <Route
                 path="mentoring-sessions"
