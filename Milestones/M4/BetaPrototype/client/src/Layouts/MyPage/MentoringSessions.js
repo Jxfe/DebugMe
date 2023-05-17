@@ -33,8 +33,47 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      if (res.status === 201) {
+      if (res.status === 200) {
         setShowMessageModal(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const acceptMentoring = async (id) => {
+    try {
+      const res = await customAxios({
+        method: "post",
+        url: "/api/acceptmentoring",
+        data: { mentoring_id: id },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      if (res.status === 200) {
+        // data reload
+        window.location.reload();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const declineMentoring = async (id) => {
+    try {
+      const data = {};
+      const res = await customAxios({
+        method: "post",
+        url: "/api/rejectmentoring",
+        data: { mentoring_id: id },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      if (res.status === 201) {
+        // data reload
+        window.location.reload();
       }
     } catch (e) {
       console.log(e);
@@ -46,19 +85,25 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
       {
         mentoringRequests?.length > 0 &&
         <div className="mentor-container">
-          <h2>Your Mentoring Sessions</h2>
+          <h2>Mentoring Session Requests</h2>
           <p>Send a message to your Mentees to cordinate your meeting details!</p>
           <div>
             {
               mentoringRequests.map((item, idx) => {
                 return (
-                  <div className="mentor-box" key={item.mentor.email + idx}>
-                    <div>{`${item.mentor.email} (${item.mentor.name})`}</div>
+                  <div className="mentor-box" key={item.mentee.email + idx}>
+                    <div>{`${item.mentee.email} (${item.mentee.name})`}</div>
                     <Button
                       className="default-button"
-                      content="Message"
+                      content="Accept"
                       width="80px"
-                      onClickEvent={() => openMessageModal(item.mentor, item.mentee)}
+                      onClickEvent={() => acceptMentoring(item.id)}
+                    />
+                    <Button
+                      className="outline-button"
+                      content="Decline"
+                      width="80px"
+                      onClickEvent={() => declineMentoring(item.id)}
                     />
                   </div>
                 )
