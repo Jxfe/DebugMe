@@ -1,13 +1,13 @@
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
-from flask import Blueprint, request, jsonify
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Blueprint, request, jsonify, abort
+from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, set_access_cookies, unset_jwt_cookies, set_refresh_cookies
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
 
-ROLES = {"basic": 0, "premium": 1, "mentor": 2, "admin": 3}
+ROLES = {"basic": 0, "premium": 1, "mentor": 2, "premium_mentor": 3, "admin": 4}
 
 authorization = Blueprint("authorization", __name__, url_prefix="/api")
 
@@ -90,13 +90,21 @@ def become_mentor():
 
     return jsonify(response), 200
 
-@authorization.route('/becomepremium', methods=['PUT'])
+@authorization.route('/becomepremium', methods=['PUT', 'POST'])
 @jwt_required(refresh=True)
 def become_premium():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
-    user.userRank = ROLES['premium']
+    if user.userRank == ROLES['premium'] or user.userRank == ROLES['premium_mentor']:
+        abort(400, 'You are a Premium member already.')
+
+    if user.userRank == ROLES['basic']:
+        user.userRank = ROLES['premium']
+
+    elif user.userRank == ROLES['mentor']:
+        user.userRank = ROLES['premium_mentor']
+
     db.session.commit()
 
     response = {"message": "You are now a Premium user!"}
@@ -116,10 +124,13 @@ def whoami():
 
 def get_roles(userRank):
     roles = []
-
     if userRank is not None:
-        if userRank == 3:
+        if userRank == 4:
             roles.append(ROLES['admin'])
+        elif userRank == 3:
+            roles.append(ROLES['basic'])
+            roles.append(ROLES['premium'])
+            roles.append(ROLES['mentor'])
         elif userRank == 2:
             roles.append(ROLES['basic'])
             roles.append(ROLES['mentor'])
