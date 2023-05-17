@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, abort
 from debugme_api.config import Config
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..debugme_toolkit import db, botox
@@ -150,3 +150,32 @@ def remove_guide():
     else:
         response = "You haven't liked this post yet."
         return jsonify(response), 409
+
+
+@guides.route('/deleteguide', methods=['DELETE', 'POST'])
+@jwt_required(refresh=True)
+def delete_guide():
+    user_id = get_jwt_identity()
+    guide_id = request.form.get('id', None)
+
+    if guide_id is None:
+        abort(400, 'Missing id parameter')
+
+    elif guide_id == '':
+        abort(400, 'id parameter is blank')
+
+    guide = Premium.query.get(guide_id)
+
+    if guide is None:
+        abort(400, 'Guide does not exist')
+
+    elif guide.user_id != user_id:
+        abort(400, 'You can only delete guides you authored')
+
+    else:
+        db.session.delete(guide)
+        db.session.commit()
+
+    response = {"message": 'Guide has been successfully removed'}
+
+    return jsonify(response), 200
