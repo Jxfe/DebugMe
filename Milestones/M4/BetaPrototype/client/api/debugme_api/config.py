@@ -31,7 +31,7 @@ class Config:
     AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_DEFAULT_REGION='us-west-2'
-    BUCKET_NAME=os.environ.get('BUCKET_NAME')
+    AWS_BUCKET_NAME=os.environ.get('BUCKET_NAME')
 
 class ProductionConfig(Config):
     """Production Credentials go here, like production DB settings
