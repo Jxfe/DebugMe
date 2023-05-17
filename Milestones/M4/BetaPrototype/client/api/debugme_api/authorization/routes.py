@@ -133,18 +133,28 @@ def whoami():
 def get_roles(userRank):
     roles = []
     if userRank is not None:
+
+        ### Admin User
         if userRank == 4:
             roles.append(ROLES['admin'])
+
+        ### Premium Mentor
         elif userRank == 3:
             roles.append(ROLES['basic'])
             roles.append(ROLES['premium'])
             roles.append(ROLES['mentor'])
+
+        ### Mentor
         elif userRank == 2:
             roles.append(ROLES['basic'])
             roles.append(ROLES['mentor'])
+
+        ### Premium
         elif userRank == 1:
             roles.append(ROLES['basic'])
             roles.append(ROLES['premium'])
+
+        ### Basic
         elif userRank == 0:
             roles.append(ROLES['basic'])
 
