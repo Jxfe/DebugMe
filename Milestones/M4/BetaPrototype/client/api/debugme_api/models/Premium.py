@@ -1,7 +1,6 @@
 import datetime
 from debugme_api.debugme_toolkit import db, ma
 from .Feedback import FeedbackUserSchema
-from .Saved import SavedUserSchema
 from .User import UserSchema
 
 class Premium(db.Model):
@@ -17,9 +16,8 @@ class Premium(db.Model):
 
     author = db.relationship("User", lazy="joined", viewonly=True)
     feedback = db.relationship("Feedback", lazy="joined", viewonly=True)
-    saves = db.relationship("Saved", lazy="joined", viewonly=True)
 
-    def __init__(self, title, content, user_id, image_path=None, rating=None):
+    def __init__(self, title, content, user_id, image_path=None, rating=0):
         self.title = title
         self.content = content
         self.user_id = user_id
@@ -31,7 +29,6 @@ class PremiumSchema(ma.Schema):
         fields = ('id', 'title', 'content', 'user_id', 'image_path', 'rating')
 
 class GuideFeedbackSchema(ma.SQLAlchemyAutoSchema):
-    saves = ma.Nested(SavedUserSchema, many=True)
     feedback = ma.Nested(FeedbackUserSchema, many=True)
     author = ma.Nested(UserSchema)
     class Meta:
