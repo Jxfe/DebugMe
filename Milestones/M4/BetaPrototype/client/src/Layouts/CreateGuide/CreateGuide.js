@@ -17,14 +17,15 @@ function CreateGuide() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const maxSize = 6 * 1024 * 1024; // 6 MB in bytes
+    const validFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
   
-    // If file size is greater than the max size, alert the user and do not set the file
-    if (file.size > maxSize) {
-      alert('File size exceeds 6MB. Please select another image.');
+    // If file size is greater than the max size or file type is not valid, alert the user and do not set the file
+    if (file.size > maxSize || !validFileTypes.includes(file.type)) {
+      alert('File size exceeds 6MB or the file type is not supported. Please select another image.');
       return;
     }
   
-    // If file size is valid, set the file
+    // If file size and type are valid, set the file
     setImage(file);
   };
 
@@ -73,7 +74,7 @@ function CreateGuide() {
             type="file"
             id="imageUpload"
             name="imageUpload"
-            accept="image/*"
+            accept=".png, .jpg, .jpeg"
             onChange={handleImageChange}
           />
         </div>

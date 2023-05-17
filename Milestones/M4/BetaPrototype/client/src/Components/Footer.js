@@ -11,6 +11,9 @@ function Footer() {
       <a href="/policy" target="_blank">
         Terms
       </a>
+      <a href='/contact' target="_blank"> 
+        Contact 
+      </a>
     </footer>
   );
 }

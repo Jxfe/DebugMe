@@ -33,6 +33,7 @@ import Layout from "./Components/Layout";
 import Unauthorized from "./Components/Unauthorized";
 import RequireAuth from "./Components/RequireAuth";
 import PersistLogin from "./Components/PersistLogin";
+import ContactUs from "./Layouts/Contact/Contact";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="policy" element={<Policy />} />
+        <Route path="contact" element={<ContactUs />} />
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* Basic User Routes (Protected)*/}
