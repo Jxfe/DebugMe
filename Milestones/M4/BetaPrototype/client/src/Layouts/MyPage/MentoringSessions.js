@@ -1,122 +1,157 @@
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import React, { useEffect, useState } from "react"; // Needed for AWS since it's using node 16
 import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import Textare from "../../Components/Textarea";
 import "./mypage.css";
+import { customAxios } from "../../utils/customAxios";
 
-const mentoringLists = [
-  {
-    id: 1,
-    name: "Michael",
-    requestedDate: "4-24",
-  },
-  {
-    id: 2,
-    name: "Andrea",
-    requestedDate: "3-28",
-  },
-  {
-    id: 3,
-    name: "Josh",
-    requestedDate: "3-24",
-  },
-  {
-    id: 4,
-    name: "Amy",
-    requestedDate: "3-21",
-  },
-];
-
-function MentoringSessions() {
-  const [selectedMentoring, setSelectedSession] = useState(mentoringLists[0]);
+function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }) {
   const [showReviewModal, setshowReviewModal] = useState(false);
-  const [showRefundModal, setshowRefundModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({});
+
+  const openMessageModal = (sender, receiver) => {
+    setMessageInfo({
+      sender_id: sender.id,
+      sender_email: sender.email,
+      receiver_id: receiver.id,
+      receiver_email: receiver.email,
+      content: "",
+    })
+    setShowMessageModal(true);
+  }
+
+  const addMessage = async () => {
+    try {
+      const data = {};
+      const res = await customAxios({
+        method: "post",
+        url: "/api/messages",
+        data,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      if (res.status === 201) {
+        setShowMessageModal(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div>
-      <h1>Your Mentoring Sessions</h1>
-      <div className="chatting-layout">
-        <div className="mypage-mentoring-list">
-          {mentoringLists.map((each) => {
-            return (
-              <div
-                key={each.id}
-                className="mypage-request-name"
-                onClick={() => setSelectedSession(each)}
-              >
-                {each.name}
-              </div>
-            );
-          })}
+      {
+        mentoringRequests?.length > 0 &&
+        <div className="mentor-container">
+          <h2>Your Mentoring Sessions</h2>
+          <p>Send a message to your Mentees to cordinate your meeting details!</p>
+          <div>
+            {
+              mentoringRequests.map((item, idx) => {
+                return (
+                  <div className="mentor-box" key={item.mentor.email + idx}>
+                    <div>{`${item.mentor.email} (${item.mentor.name})`}</div>
+                    <Button
+                      className="default-button"
+                      content="Message"
+                      width="80px"
+                      onClickEvent={() => openMessageModal(item.mentor, item.mentee)}
+                    />
+                  </div>
+                )
+              })
+            }
+          </div>
         </div>
-        <div className="chatting-box">
-          {selectedMentoring && (
-            <div className="mentoring-detail">
-              <div>
-                Details of your Mentoring Session with {selectedMentoring.name}
-                <br />
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Euismod nisi porta lorem mollis aliquam ut. Netus et malesuada
-                  fames ac turpis egestas. Scelerisque in dictum non
-                  consectetur. Amet consectetur adipiscing elit pellentesque
-                  habitant morbi tristique. Eget nullam non nisi est sit amet
-                  facilisis magna etiam.{" "}
-                </p>
-              </div>
-              <div className="button-container">
-                <Button
-                  className="default-button"
-                  onClickEvent={() => setshowReviewModal(true)}
-                  content="REVIEW"
-                />
-                <Button
-                  className="outline-button"
-                  onClickEvent={() => setshowRefundModal(true)}
-                  content="REFUND"
-                />
+      }
+      {
+        mentorSessions?.length > 0 &&
+        <div className="mentor-container">
+          <h2>Upcoming Mentoring Session</h2>
+          <p>Send a message to your Mentors to cordinate your meeting details!</p>
+          <div>
+            {
+              mentorSessions.map((item, idx) => {
+                return (
+                  <div className="mentor-box" key={item.mentee.email + idx}>
+                    <div>{`${item.mentee.email} (${item.mentee.name})`}</div>
+                    <Button
+                      className="default-button"
+                      content="Message"
+                      width="80px"
+                      onClickEvent={() => openMessageModal(item.mentor, item.mentee)}
+                    />
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      }
+      {
+        menteeSessions?.length > 0 &&
+        <div className="mentor-container">
+          <h2>Upcoming Mentoring Session</h2>
+          <p>Send a message to your Mentees to cordinate your meeting details!</p>
+          <div>
+            {
+              menteeSessions.map((item, idx) => {
+                return (
+                  <div className="mentor-box" key={item.mentor.email + idx}>
+                    <div>{`${item.mentor.email} (${item.mentor.name})`}</div>
+                    <Button
+                      className="default-button"
+                      content="Message"
+                      width="80px"
+                      onClickEvent={() => openMessageModal(item.mentee, item.mentor)}
+                    />
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      }
+      {showReviewModal && (
+        <Modal
+          title={`How was your Mentoring Session?`}
+          content={
+            <div>
+              <Textare />
+              <div class="star-wrapper-session">
+                <a href="#" class="fas fa-star s1 checked"></a>
+                <a href="#" class="fas fa-star s2"></a>
+                <a href="#" class="fas fa-star s3"></a>
+                <a href="#" class="fas fa-star s4"></a>
+                <a href="#" class="fas fa-star s5"></a>
               </div>
             </div>
-          )}
-        </div>
-        {showReviewModal && (
-          <Modal
-            title={`How was your Mentoring Session with ${selectedMentoring.name}?`}
-            content={
-              <div>
-                <Textare />
-                <div class="star-wrapper-session">
-                  <a href="#" class="fas fa-star s1 checked"></a>
-                  <a href="#" class="fas fa-star s2"></a>
-                  <a href="#" class="fas fa-star s3"></a>
-                  <a href="#" class="fas fa-star s4"></a>
-                  <a href="#" class="fas fa-star s5"></a>
-                </div>
-              </div>
-            }
-            buttonContent="SUBMIT"
-            buttonAction={() => setshowReviewModal(false)}
-            showModal={showReviewModal}
-            closeModal={() => setshowReviewModal(false)}
-          />
-        )}
-        {showRefundModal && (
-          <Modal
-            title="What is the reason for your refund request?"
-            content={
-              <div>
-                <Textare />
-              </div>
-            }
-            buttonContent="SUBMIT"
-            buttonAction={() => setshowRefundModal(false)}
-            showModal={showRefundModal}
-            closeModal={() => setshowRefundModal(false)}
-          />
-        )}
-      </div>
+          }
+          buttonContent="SUBMIT"
+          buttonAction={() => setshowReviewModal(false)}
+          showModal={showReviewModal}
+          closeModal={() => setshowReviewModal(false)}
+        />
+      )}
+      {showMessageModal && (
+        <Modal
+          title="Send a message"
+          content={
+            <div>
+              <Textare
+
+              />
+            </div>
+          }
+          buttonContent="SEND"
+          buttonAction={() => setShowMessageModal(false)}
+          showModal={showMessageModal}
+          closeModal={() => setShowMessageModal(false)}
+        />
+      )}
     </div>
   );
 }

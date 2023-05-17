@@ -150,3 +150,24 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.mentor-container {
+  color: var(--black);
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.mentor-container>h2 {
+  color: var(--black);
+  letter-spacing: 4px;
+  text-align: left;
+}
+
+.mentor-box {
+  border-bottom: 2px solid var(--gray);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
