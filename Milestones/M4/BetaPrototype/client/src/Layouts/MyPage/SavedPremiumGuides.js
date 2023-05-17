@@ -7,10 +7,9 @@ import GuideCard from "../../Components/GuideCard";
 function SavedPremiumGuides({ saved }) {
   const navigate = useNavigate();
 
-
   useEffect(() => {
     console.log(saved);
-  }, [saved])
+  }, [saved]);
 
   return (
     <div>
@@ -19,18 +18,21 @@ function SavedPremiumGuides({ saved }) {
         {saved &&
           saved.map((item, index) => {
             return (
-              <Link key={index} id={index} to={`/premiumguides/${item.id}`}>
+              <Link
+                key={index}
+                id={index}
+                to={`/premiumguides/${item?.guide?.id}`}
+              >
                 <GuideCard
-                  id={item?.id}
+                  id={item?.guide?.id}
                   img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
                   title={item?.guide?.title}
                   author={item?.guide?.author?.name}
                   rating={Math.floor(item?.guide?.rating)}
                 />
               </Link>
-            )
-          })
-        }
+            );
+          })}
       </div>
     </div>
   );
