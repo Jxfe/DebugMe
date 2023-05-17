@@ -1,4 +1,5 @@
 from flask import request, jsonify, Blueprint
+from debugme_api.config import Config
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..debugme_toolkit import db, botox
 from sqlalchemy import and_
@@ -84,16 +85,14 @@ def create_guide():
     image = request.files.get('image_path')
     if image:
         filename = secure_filename(image.filename)
-        AWS_ACCESS_KEY = 'AKIAROYXHMJTMPJC4O4A'
-        AWS_SECRET_ACCESS_KEY = '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'
-        BUCKET_NAME = 'debugme'
+        s3_path = 'guides/'
 
         # Creates an S3 client
-        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        s3 = botox.clients['s3']
         s3.upload_fileobj(
             Fileobj=image,
-            Bucket=BUCKET_NAME,
-            Key=filename,
+            Bucket=Config.AWS_BUCKET_NAME,
+            Key=s3_path + filename,
             ExtraArgs={'ContentType': image.content_type}
         )
         image_path = filename

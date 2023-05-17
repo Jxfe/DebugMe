@@ -26,23 +26,23 @@ def get_feedback(postID):
 @feedback.route('/api/feedback', methods=['POST'])
 @jwt_required(refresh=True)
 def create_feedback():
-    #print(request.form)
     userID = get_jwt_identity()
-    rating = request.form.get('rating', '')
+    rating = request.form.get('rating', 0)
     message = request.form.get('message', '')
     postID = request.form.get('postID')
 
     if not userID or not rating or not postID:
         abort(400, message='Invalid request')
 
-    feedback = Feedback.query.filter(and_(Feedback.postID==postID, Feedback.userID==userID)).first()
+    feedback = Feedback.query.filter(and_(Feedback.premiumID==postID, Feedback.userID==userID)).first()
 
     if feedback:
-        Feedback.query.filter(and_(Feedback.postID==postID, Feedback.userID==userID)).delete(synchronize_session='fetch')
+        Feedback.query.filter(and_(Feedback.premiumID==postID, Feedback.userID==userID)).delete(synchronize_session='fetch')
         db.session.commit()
 
     feedbackSchema = FeedbackSchema()
-    newFeedback = Feedback(userID, rating, message, postID)
+    newFeedback = Feedback(userID, int(rating), message, int(postID))
+
     db.session.add(newFeedback)
     db.session.commit()
 
@@ -54,7 +54,7 @@ def create_feedback():
 
 def updateGuideRating(guide_id):
     guide = Premium.query.get(guide_id)
-    rating_avg = Feedback.query.with_entities(func.avg(Feedback.rating)).filter(Feedback.postID==guide_id).all()
+    rating_avg = Feedback.query.with_entities(func.avg(Feedback.rating)).filter(Feedback.premiumID==guide_id).all()
 
     guide.rating = rating_avg[0][0]
     db.session.commit()
