@@ -33,3 +33,8 @@ class GuideFeedbackSchema(ma.SQLAlchemyAutoSchema):
     author = ma.Nested(UserSchema)
     class Meta:
         model = Premium
+
+class GuideUserSchema(ma.SQLAlchemyAutoSchema):
+    author = ma.Nested(UserSchema)
+    class Meta:
+        model = Premium
