@@ -21,7 +21,7 @@ function MyPage() {
         const res = await customAxios(url);
         const data = res.data;
         setProfile(data);
-        console.log(data.saved)
+        console.log(data)
       } catch (e) {
         console.log(e);
       }
@@ -99,7 +99,7 @@ function MyPage() {
             <Route path="updatepayment" element={<UpdatePayment />} />
             <Route path="saved-premium-guides" element={<SavedPremiumGuides saved={profile.saved} />} />
             <Route path="customer-requests" element={<CustomerRequest />} />
-            <Route path="mentoring-sessions" element={<MentoringSessions />} />
+            <Route path="mentoring-sessions" element={<MentoringSessions menteeSessions={profile.menteeSessions} mentorSessions={profile.mentorSessions} mentoringRequests={profile.mentoringRequests} />} />
             <Route path="messages" element={<Messages />} />
           </Routes>
         </div>
