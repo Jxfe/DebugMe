@@ -14,6 +14,20 @@ function CreateGuide() {
     navigate("/premiumguides");
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const maxSize = 6 * 1024 * 1024; // 6 MB in bytes
+  
+    // If file size is greater than the max size, alert the user and do not set the file
+    if (file.size > maxSize) {
+      alert('File size exceeds 6MB. Please select another image.');
+      return;
+    }
+  
+    // If file size is valid, set the file
+    setImage(file);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -60,7 +74,7 @@ function CreateGuide() {
             id="imageUpload"
             name="imageUpload"
             accept="image/*"
-            onChange={e => setImage(e.target.files[0])}
+            onChange={handleImageChange}
           />
         </div>
         <div>
