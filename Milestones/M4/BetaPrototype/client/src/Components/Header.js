@@ -84,7 +84,7 @@ function Header() {
             >
               My Page
             </Link>
-            <Badge badgeContent={2} color="primary" className="header-badge">
+            {/* <Badge badgeContent={2} color="primary" className="header-badge">
               <MailIcon
                 color="action"
                 aria-describedby={
@@ -92,7 +92,7 @@ function Header() {
                 }
                 onClick={handleClick}
               />
-            </Badge>
+            </Badge> */}
             <Popover
               id={anchorEl !== null ? "simple-popover" : undefined}
               open={anchorEl !== null}

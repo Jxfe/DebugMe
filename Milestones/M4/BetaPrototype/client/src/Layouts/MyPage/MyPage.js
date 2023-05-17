@@ -45,7 +45,7 @@ function MyPage() {
           >
             Profile
           </Link>
-          <Link
+          {/* <Link
             to="/mypage/updatepayment"
             className={
               pathname.includes("updatepayment")
@@ -54,7 +54,7 @@ function MyPage() {
             }
           >
             Financial Information
-          </Link>
+          </Link> */}
           <Link
             to="/mypage/messages"
             className={

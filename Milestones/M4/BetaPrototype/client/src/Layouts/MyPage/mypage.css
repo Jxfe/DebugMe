@@ -167,7 +167,10 @@
   border-bottom: 2px solid var(--gray);
   padding: 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
+}
+
+.mentor-box>div {
+  width: 400px;
 }
