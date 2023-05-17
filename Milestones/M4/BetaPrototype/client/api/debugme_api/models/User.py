@@ -11,6 +11,7 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     userRank = db.Column(db.Integer, nullable=True, default=0)
+    bio = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     # messages = db.relationship("Messages", lazy="joined", viewonly=True)
@@ -22,10 +23,11 @@ class User(db.Model):
         self.email = email
         self.password = password
         self.userRank = userRank
+        self.bio = bio
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email', 'userRank')
+        fields = ('id', 'name', 'email', 'userRank', 'bio')
 
 # class UserProfileSchema(ma.SQLAlchemyAutoSchema):
 #     messages = ma.Nested(MessagesSchema, many=True)
