@@ -10,6 +10,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
   const [showReviewModal, setshowReviewModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({});
+  const [content, setContent] = useState("");
 
   const openMessageModal = (sender, receiver) => {
     setMessageInfo({
@@ -17,14 +18,21 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
       sender_email: sender.email,
       receiver_id: receiver.id,
       receiver_email: receiver.email,
-      content: "",
+      receiver_name: receiver.name,
     })
     setShowMessageModal(true);
   }
 
   const addMessage = async () => {
     try {
-      const data = {};
+      console.log(messageInfo)
+      const data = {
+        sender_id: messageInfo.sender_id,
+        sender_email: messageInfo.sender_email,
+        receiver_id: messageInfo.receiver_id,
+        receiver_email: messageInfo.receiver_email,
+        content: content
+      };
       const res = await customAxios({
         method: "post",
         url: "/api/messages",
@@ -33,7 +41,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      if (res.status === 200) {
+      if (res.status === 201) {
         setShowMessageModal(false);
       }
     } catch (e) {
@@ -116,7 +124,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         mentorSessions?.length > 0 &&
         <div className="mentor-container">
           <h2>Upcoming Mentoring Session</h2>
-          <p>Send a message to your Mentors to cordinate your meeting details!</p>
+          <p>Send a message to your Mentees to cordinate your meeting details!</p>
           <div>
             {
               mentorSessions.map((item, idx) => {
@@ -140,7 +148,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         menteeSessions?.length > 0 &&
         <div className="mentor-container">
           <h2>Upcoming Mentoring Session</h2>
-          <p>Send a message to your Mentees to cordinate your meeting details!</p>
+          <p>Send a message to your Mentors to cordinate your meeting details!</p>
           <div>
             {
               menteeSessions.map((item, idx) => {
@@ -183,16 +191,17 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
       )}
       {showMessageModal && (
         <Modal
-          title="Send a message"
+          title={`Send a message to ${messageInfo.receiver_name}(${messageInfo.receiver_email})`}
           content={
             <div>
               <Textare
-
+                onChangeEvent={(e) => setContent(e.target.value)}
+                value={content}
               />
             </div>
           }
           buttonContent="SEND"
-          buttonAction={() => setShowMessageModal(false)}
+          buttonAction={addMessage}
           showModal={showMessageModal}
           closeModal={() => setShowMessageModal(false)}
         />
