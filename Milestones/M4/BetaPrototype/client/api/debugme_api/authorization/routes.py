@@ -119,6 +119,26 @@ def become_premium():
 
     return jsonify(response), 200
 
+@authorization.route('/removepremium', methods=['PUT', 'POST'])
+@jwt_required(refresh=True)
+def remove_premium():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if user.userRank == ROLES['basic'] or user.userRank == ROLES['mentor']:
+        abort(400, 'You are not a Premium member')
+
+    elif user.userRank == ROLES['premium']:
+        user.userRank = ROLES['basic']
+
+    elif user.userRank == ROLES['premium_mentor']:
+        user.userRank = ROLES['mentor']
+
+    db.session.commit()
+
+    response = {"message": "You are no longer a Premium member"}
+
+    return jsonify(response), 200
 
 @authorization.route('/whoami', methods=['GET'])
 @jwt_required(refresh=True)
