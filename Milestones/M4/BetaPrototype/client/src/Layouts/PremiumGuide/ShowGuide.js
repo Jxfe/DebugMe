@@ -17,8 +17,15 @@ function ShowGuide() {
   const [rating, setRating] = useState(0);
   const [isLiked, setLiked] = useState(false);
   const [guideContents, setGuideContents] = useState({});
+  const [guideImage, setGuideImage] = useState(""); 
   const { id } = useParams();
   const { auth } = useAuth();
+
+
+  useEffect(() => {
+    getGuideContents();
+    getGuideImage(); 
+  }, []);
 
   useEffect(() => {
     getGuideContents();
@@ -51,6 +58,21 @@ function ShowGuide() {
       console.error("Failed to submit feedback", e);
     }
   };
+
+  const getGuideImage = async () => {
+    try {
+      const res = await customAxios.get(`/api/getguideimage?id=${id}`);
+      console.log('Guide image response', res);
+      if (res.status === 200 && res.data.url) {
+        setGuideImage(res.data.url);
+      } else {
+        setGuideImage("");
+      }
+    } catch (error) {
+      console.error('Failed to fetch guide image', error);
+      setGuideImage("");
+    }
+}
 
   const getGuideContents = () => {
     const url = `/api/getguide?id=${id}`;
@@ -145,6 +167,7 @@ function ShowGuide() {
 
         <div className="guide-contents">
           <h1>{guideContents?.title}</h1>
+          { guideImage && <img src={guideImage} alt="Guide" /> }
           <p>{guideContents?.content}</p>
         </div>
       </div>

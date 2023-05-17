@@ -5,6 +5,8 @@ from sqlalchemy import and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
 from werkzeug.utils import secure_filename
 from ..models.Saved import Saved, SavedSchema, SavedUserSchema
+import boto3
+from botocore.exceptions import NoCredentialsError
 
 SAVED_TABLE_CODES = {'post': 0, 'guide': 1}
 
@@ -46,6 +48,32 @@ def get_guide():
 
     return jsonify(response), 200
 
+@guides.route('/getguideimage', methods=['GET'])
+def get_guide_image():
+    guide_id = request.args.get('id', 0)
+
+    guide = Premium.query.get(guide_id)
+
+    if guide and guide.image_path:
+        AWS_ACCESS_KEY = 'AKIAROYXHMJTMPJC4O4A'
+        AWS_SECRET_ACCESS_KEY = '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'
+        BUCKET_NAME = 'debugme'
+
+        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        try:
+            url = s3.generate_presigned_url(
+                ClientMethod='get_object',
+                Params={
+                    'Bucket': BUCKET_NAME,
+                    'Key': guide.image_path
+                }
+            )
+            return jsonify({'url': url}), 200
+        except NoCredentialsError:
+            return jsonify({'error': 'Error in getting credentials'}), 500
+    else:
+        return jsonify({'error': 'No image found'}), 404
+
 @guides.route('/guides', methods=['POST'])
 @jwt_required(refresh=True)
 def create_guide():
@@ -53,22 +81,22 @@ def create_guide():
     content = request.form.get('content', '')
     user_id = get_jwt_identity()
 
-
     image = request.files.get('image_path')
     if image:
         filename = secure_filename(image.filename)
+        AWS_ACCESS_KEY = 'AKIAROYXHMJTMPJC4O4A'
+        AWS_SECRET_ACCESS_KEY = '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'
         BUCKET_NAME = 'debugme'
-        s3_path = 'guides/'
 
         # Creates an S3 client
-        s3 = botox.clients['s3']
+        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
         s3.upload_fileobj(
             Fileobj=image,
             Bucket=BUCKET_NAME,
-            Key=s3_path + filename,
+            Key=filename,
             ExtraArgs={'ContentType': image.content_type}
         )
-        image_path = s3_path + filename
+        image_path = filename
     else:
         image_path = ''
 
