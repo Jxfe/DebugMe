@@ -6,7 +6,6 @@ import useAuth from "../../Hooks/useAuth";
 import Modal from "../../Components/Modal";
 import Button from "../../Components/Button";
 import LikeButton from "../../Components/LikeButton";
-//import Rating from "../../Components/Rating";
 import { Rating } from "@mui/material";
 import { Stack } from "@mui/material";
 
@@ -63,7 +62,7 @@ function ShowGuide() {
     await customAxios({
       method: "post",
       url: "/api/feedback",
-      data: { rating: newRating, message: "", postID: id },
+      data: { rating: newRating, message: "New Rating", postID: id },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }

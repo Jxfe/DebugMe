@@ -1,6 +1,5 @@
 import datetime
 from debugme_api.debugme_toolkit import db, ma
-from debugme_api.models.User import UserSchema
 from debugme_api.models.Premium import GuideUserSchema
 class Saved(db.Model):
     __tablename__ = 'Saved'
