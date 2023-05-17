@@ -17,9 +17,9 @@ def get_profile():
 
     messages = Messages.query.filter(or_(Messages.sender_id==user_id, Messages.receiver_id==user_id)).order_by(Messages.created_at.desc())
 
-    mentorSessions = MentoringSession.query.filter(MentoringSession.mentor_id==user_id).order_by(MentoringSession.created_at.desc())
+    mentorSessions = MentoringSession.query.filter(and_(MentoringSession.mentor_id==user_id, MentoringSession.status == MENTORING_TABLE_STATUS_CODES['accept'])).order_by(MentoringSession.created_at.desc())
 
-    menteeSessions = MentoringSession.query.filter(MentoringSession.mentee_id==user_id).order_by(MentoringSession.created_at.desc())
+    menteeSessions = MentoringSession.query.filter(and_(MentoringSession.mentee_id==user_id, MentoringSession.status == MENTORING_TABLE_STATUS_CODES['accept'])).order_by(MentoringSession.created_at.desc())
 
     mentoringRequests = MentoringSession.query.filter(and_(MentoringSession.mentor_id==user_id, MentoringSession.status==MENTORING_TABLE_STATUS_CODES['request']))
 
