@@ -1,13 +1,13 @@
-import React from "react"; // Needed for AWS since it's using node 16
+import React from "react"; // Needed for AWS since it's using Node 16
 
 function Policy() {
   return (
     <div>
-      <h1>DegubMe Terms and Conditions of Use</h1>
+      <h1>DebugMe Terms and Conditions of Use</h1>
       <p>Effective Date: 5/3/2023</p>
       <h2>1. Description of Service</h2>
       <p>
-        DegubMe provides a [description of the Service, including any features,
+        DebugMe provides a [description of the Service, including any features,
         functionalities, or content that users can access through the Service].
       </p>
       <h2>2. Use of Service</h2>
@@ -19,7 +19,7 @@ function Policy() {
       </p>
       <h3>2.2 License</h3>
       <p>
-        Subject to your compliance with these Terms, DegubMe grants you a
+        Subject to your compliance with these Terms, DebugMe grants you a
         limited, non-exclusive, non-transferable, and revocable license to
         access and use the Service for your personal or internal business
         purposes.
@@ -51,15 +51,15 @@ function Policy() {
         The Service and its entire contents, features, and functionality
         (including but not limited to all information, software, text, displays,
         images, video, and audio, and the design, selection, and arrangement
-        thereof), are owned by DegubMe, its licensors, or other providers of
+        thereof), are owned by DebugMe, its licensors, or other providers of
         such material and are protected by United States and international
         copyright, trademark, patent, trade secret, and other intellectual
         property or proprietary rights laws.
       </p>
       <h3>3.2 Trademarks</h3>
       <p>
-        DegubMe and its logo are trademarks of DegubMe. You may not use these
-        marks without the prior written consent of DegubMe. All other names,
+        DebugMe and its logo are trademarks of DebugMe. You may not use these
+        marks without the prior written consent of DebugMe. All other names,
         logos, product and service names, designs, and slogans on the Service
         are the trademarks of their respective owners.
       </p>
