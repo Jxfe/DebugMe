@@ -17,12 +17,13 @@ const useRefreshToken = () => {
       url: "/api/whoami"
     });
 
+    const userID = whoami.data.user_id;
     const username = whoami.data.username;
     const email = whoami.data.email;
     const userRank = whoami.data.userRank;
     const roles = whoami.data.roles;
     const accessToken = response.data.access_token;
-    setAuth({ username, email, userRank, roles, accessToken });
+    setAuth({ userID, username, email, userRank, roles, accessToken });
 
     return response.data.access_token;
   };

@@ -4,7 +4,7 @@ from ..debugme_toolkit import db, botox
 from sqlalchemy import and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
 from werkzeug.utils import secure_filename
-from ..models.Saved import Saved, SavedSchema
+from ..models.Saved import Saved, SavedSchema, SavedUserSchema
 
 SAVED_TABLE_CODES = {'post': 0, 'guide': 1}
 
@@ -32,12 +32,17 @@ def get_guides():
 @guides.route('/getguide', methods=['GET'])
 @jwt_required(refresh=True)
 def get_guide():
+    user_id = get_jwt_identity()
     guide_id = request.args.get('id', 0)
 
     guide = Premium.query.get(guide_id)
     guideFeedbackSchema = GuideFeedbackSchema()
 
+    savedSchema = SavedSchema(many=True)
+    saves = Saved.query.filter(Saved.user_id==user_id).order_by(Saved.created_at.desc())
+
     response = guideFeedbackSchema.dump(guide)
+    response['saves'] = savedSchema.dump(saves)
 
     return jsonify(response), 200
 

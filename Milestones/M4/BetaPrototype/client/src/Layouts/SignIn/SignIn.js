@@ -44,11 +44,13 @@ function SignIn() {
       }
     })
       .then((response) => {
+        const userID = response.data.user.id;
+        const name = response.data.user.username;
         const accessToken = response.data.user.access_token;
         const userRank = response.data.user.userRank;
         const roles = response.data.user.roles;
 
-        setAuth({ username, email, userRank, roles, accessToken });
+        setAuth({ userID, username, email, userRank, roles, accessToken });
 
         setUsername("");
         setEmail("");

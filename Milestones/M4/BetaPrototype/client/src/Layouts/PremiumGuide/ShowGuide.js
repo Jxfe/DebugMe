@@ -73,7 +73,7 @@ function ShowGuide() {
 
   const checkGuideSaved = () => {
     const user = guideContents?.saves?.filter(
-      (user) => user?.author?.email === auth?.email
+      (user) => user?.user_id == auth?.userID && user?.post_id == id
     );
 
     if (user?.length > 0) {
