@@ -106,7 +106,7 @@ def create_guide():
     image = request.files.get('image_path')
     if image:
         filename = secure_filename(image.filename)
-        s3_path = 'guides/'
+        s3_path = str(user_id)
 
         # Creates an S3 client
         s3 = botox.clients['s3']
@@ -116,7 +116,7 @@ def create_guide():
             Key=s3_path + filename,
             ExtraArgs={'ContentType': image.content_type}
         )
-        image_path = filename
+        image_path = s3_path + filename
     else:
         image_path = ''
 
