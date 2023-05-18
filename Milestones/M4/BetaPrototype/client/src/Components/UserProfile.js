@@ -51,16 +51,11 @@ export default function UserProfile({ profileContents }) {
         }
       });
       if (res.status === 201) {
-<<<<<<< HEAD
-        alert("Message sent");
-        onClose();
-=======
         toast.success("Your message has been sent.", {
           position: "bottom-left",
           autoClose: 3000,
           hideProgressBar: true,
         });
->>>>>>> bc9a6377 (add toastify)
       }
     } catch (e) {
       console.log(e);
