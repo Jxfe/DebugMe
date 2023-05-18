@@ -50,7 +50,7 @@ function SignIn() {
         const userRank = response.data.user.userRank;
         const roles = response.data.user.roles;
 
-        setAuth({ userID, username, email, userRank, roles, accessToken });
+        setAuth({ userID, name, email, userRank, roles, accessToken });
 
         setUsername("");
         setEmail("");
