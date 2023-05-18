@@ -46,12 +46,14 @@
 
 .footer-wrapper {
   background-color: var(--lightgray);
-  height: 120px;
-  padding: 20px;
+  height: 110px;
+  padding: 45px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 18px;
+  font-size: 17px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .button {
