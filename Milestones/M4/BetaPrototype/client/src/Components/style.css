@@ -222,7 +222,6 @@
   vertical-align: top;
 }
 
-
 /* User Profile Modal */
 .profile-container {
   height: 275px;
@@ -241,9 +240,11 @@
 .user-info {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .picture-container {
+  padding-top: 0;
   width: 150px;
 }
 
@@ -264,5 +265,30 @@
 
 .profile-buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.profile-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0px;
+  padding: 0px;
+}
+
+.profile-close-btn {
+  width: 30px;
+  height: 30px;
+}
+
+.profile-message-textarea {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 10px;
 }
