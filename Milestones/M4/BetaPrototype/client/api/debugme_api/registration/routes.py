@@ -1,4 +1,5 @@
 from flask import request, jsonify, Blueprint
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
@@ -19,6 +20,18 @@ def register():
     db.session.commit()
 
     return user_schema.jsonify(new_user)
+
+@registration.route('/api/deleteaccount', methods=['DELETE'])
+@jwt_required(refresh=True)
+def delete_account():
+    user_id = get_jwt_identity()
+
+    User.query.filter(User.id==user_id).delete()
+    db.session.commit()
+
+    response = {'message': 'Account has been deleted'}
+
+    return jsonify(response), 200
 
 @registration.route('/api/checkEmailDuplicate', methods=['POST'])
 def check_email_duplicate():
