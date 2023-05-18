@@ -150,7 +150,14 @@ def whoami():
     user_id = get_jwt_identity()
     user = db.session.query(User).filter(User.id==user_id).first()
 
-    response = jsonify({'user_id':user_id,  'username': user.name, 'email': user.email, 'userRank': user.userRank, 'roles': get_roles(user.userRank)})
+    response = jsonify({'user_id':user_id,
+                        'username': user.name,
+                        'email': user.email,
+                        'userRank': user.userRank,
+                        'roles': get_roles(user.userRank),
+                        'bio': user.bio,
+                        'image_path': user.image_path
+                        })
 
     return response, 200
 
