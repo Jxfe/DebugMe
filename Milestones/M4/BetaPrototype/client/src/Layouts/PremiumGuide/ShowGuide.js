@@ -11,6 +11,7 @@ import { Rating } from "@mui/material";
 import { Stack } from "@mui/material";
 
 import "./showguide.css";
+import { toast } from "react-toastify";
 
 function ShowGuide() {
   const [profileShowing, setProfileShowing] = useState(false);
@@ -19,14 +20,14 @@ function ShowGuide() {
   const [rating, setRating] = useState(0);
   const [isLiked, setLiked] = useState(false);
   const [guideContents, setGuideContents] = useState({});
-  const [guideImage, setGuideImage] = useState(""); 
+  const [guideImage, setGuideImage] = useState("");
   const { id } = useParams();
   const { auth } = useAuth();
 
 
   useEffect(() => {
     getGuideContents();
-    getGuideImage(); 
+    getGuideImage();
   }, []);
 
   useEffect(() => {
@@ -58,14 +59,19 @@ function ShowGuide() {
       const res = await customAxios({
         method: "post",
         url: "/api/requestmentoring",
-        data: {mentor_id : guideContents?.author?.id},
+        data: { mentor_id: guideContents?.author?.id },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       });
 
       if (res.status === 201) {
-        setShowSuccessModal(true);
+        toast.success("Your Mentoring Session request has been sent.", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+        //setShowSuccessModal(true);
       }
     } catch (e) {
       console.error("Failed to request mentoring session", e);
@@ -89,7 +95,11 @@ function ShowGuide() {
       });
 
       if (res.status === 201) {
-        setShowSuccessModal(true);
+        toast.success("Your rating has been recorded.", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       }
     } catch (e) {
       console.error("Failed to submit feedback", e);
@@ -109,7 +119,7 @@ function ShowGuide() {
       console.error('Failed to fetch guide image', error);
       setGuideImage("");
     }
-}
+  }
 
   const getGuideContents = () => {
     const url = `/api/getguide?id=${id}`;
@@ -119,14 +129,25 @@ function ShowGuide() {
   };
 
   const giveFeedback = async (newRating) => {
-    await customAxios({
-      method: "post",
-      url: "/api/feedback",
-      data: { rating: newRating, message: "New Rating", postID: id },
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+    try {
+      const res = await customAxios({
+        method: "post",
+        url: "/api/feedback",
+        data: { rating: newRating, message: "New Rating", postID: id },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      });
+      if (res.status === 201) {
+        toast.success("Your rating has been recorded.", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       }
-    });
+    } catch (e) {
+      console.log(e)
+    }
     return;
   };
 
@@ -161,7 +182,7 @@ function ShowGuide() {
       <div className="guide-container">
         <div className="sidenav">
           <div className="nav-author-details">
-            <p>Author: 
+            <p>Author:
               <Link
                 to="#"
                 onClick={() => {
@@ -177,7 +198,7 @@ function ShowGuide() {
                 {guideContents?.author?.name}
               </Link>
             </p>
-            
+
             <Button
               content="Request Mentoring Session"
               className="default-button"
@@ -219,7 +240,7 @@ function ShowGuide() {
 
         <div className="guide-contents">
           <h1>{guideContents?.title}</h1>
-          { guideImage && <img src={guideImage} alt="Image from Guide" /> }
+          {guideImage && <img src={guideImage} alt="Image from Guide" />}
           <p>{guideContents?.content}</p>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { customAxios } from "../../utils/customAxios";
 import "./style.css";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
+import { toast } from "react-toastify";
 
 function SubmitFeedback() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -29,7 +30,13 @@ function SubmitFeedback() {
       });
 
       if (res.status === 201) {
-        setShowSuccessModal(true);
+        console.log('??')
+        //setShowSuccessModal(true);
+        toast.success("Your rating has been recorded.", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
       }
     } catch (e) {
       console.error('Failed to submit feedback', e);
@@ -46,7 +53,7 @@ function SubmitFeedback() {
           <a href="#" class="fas fa-star s2" onClick={() => setRating(4)}></a>
           <a href="#" class="fas fa-star s3" onClick={() => setRating(3)}></a>
           <a href="#" class="fas fa-star s4" onClick={() => setRating(2)}></a>
-          <a href="#" class="fas fa-star s5" onClick={() => setRating(1)}></a> 
+          <a href="#" class="fas fa-star s5" onClick={() => setRating(1)}></a>
         </div>
         <br />
         <br />

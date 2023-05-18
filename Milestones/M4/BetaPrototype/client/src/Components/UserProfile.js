@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import useAuth from "../Hooks/useAuth";
 import { customAxios } from "../utils/customAxios";
 import Button from "./Button";
+import { toast } from "react-toastify";
 
 import "./style.css";
 
@@ -50,8 +51,16 @@ export default function UserProfile({ profileContents }) {
         }
       });
       if (res.status === 201) {
+<<<<<<< HEAD
         alert("Message sent");
         onClose();
+=======
+        toast.success("Your message has been sent.", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+>>>>>>> bc9a6377 (add toastify)
       }
     } catch (e) {
       console.log(e);
