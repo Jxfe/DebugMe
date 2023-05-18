@@ -166,7 +166,6 @@
   margin: 10px auto;
   padding: 5px;
   border: 1px solid var(--black);
-  decoration: none;
 }
 
 .post-description:hover {

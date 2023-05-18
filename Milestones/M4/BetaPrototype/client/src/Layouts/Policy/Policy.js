@@ -4,7 +4,7 @@ import "./PolicyStyles.css"
 function Policy() {
   return (
     <div className="policy-container">
-      <h1>DebugMe Terms and Conditions of Use</h1>
+      <h1><span className="name-decor">DebugMe</span> Terms and Conditions of Use</h1>
       <p>Effective Date: 5/3/2023</p> <br />
       <h2 className="terms-header">1. Description of Service</h2>
       <p>
