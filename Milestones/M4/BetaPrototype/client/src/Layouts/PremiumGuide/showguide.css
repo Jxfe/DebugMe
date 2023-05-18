@@ -63,3 +63,8 @@
 .guide-contents {
     width: 70%;
 }
+
+.guide-img {
+    max-height: 400px;
+    max-width: 300px;
+}
