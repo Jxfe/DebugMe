@@ -155,7 +155,13 @@ function Post() {
       </div>
 
       <div className="post-right">
-        <div className="post-comments-container">{renderComments()}</div>
+        <div className="post-comments-container">
+          {postContents?.replies?.length > 0 ? (
+            renderComments()
+          ) : (
+            <p>No comments</p>
+          )}
+        </div>
         <div className="new-comment-container">
           <form onSubmit={handleSubmit}>
             <textarea

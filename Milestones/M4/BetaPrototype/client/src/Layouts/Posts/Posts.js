@@ -9,6 +9,7 @@ import "./style.css";
 import Pagination from "../../Components/Pagination";
 
 const ITEMS_PER_PAGE = 4;
+const SEARCH_INPUT_MAX_SIZE = 250;
 
 function Posts() {
   const [isCreateShowing, setCreateShowing] = useState(false);
@@ -32,6 +33,11 @@ function Posts() {
     e.preventDefault();
     if (keyword === "") {
       alert("Please provide a search parameter");
+      return;
+    } else if (keyword.length >= SEARCH_INPUT_MAX_SIZE) {
+      alert(
+        `Search input should not exceed ${SEARCH_INPUT_MAX_SIZE} characters`
+      );
       return;
     }
 
