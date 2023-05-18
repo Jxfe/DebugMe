@@ -441,8 +441,8 @@ a:active {
 }
 
 .gallery img {
-  width: 100%;
-  height: auto;
+  width: 200px;
+  height: 140px;
 }
 
 .desc {
