@@ -224,7 +224,7 @@
 
 /* User Profile Modal */
 .profile-container {
-  height: 275px;
+  height: 375px;
   width: 600px;
   border: 1px solid black;
   background-color: var(--lightgray);
@@ -235,12 +235,15 @@
   transform: translate(-50%, -50%);
   z-index: 50;
   padding: 25px;
+  padding-top: 5px;
+  padding-right: 5px;
 }
 
 .user-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-top: 20px;
 }
 
 .picture-container {
@@ -267,12 +270,15 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: end;
+  padding-right: 20px;
 }
 
 .profile-data {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding-right: 20px;
 }
 
 .profile-header {
@@ -283,12 +289,17 @@
 }
 
 .profile-close-btn {
-  width: 30px;
+  width: 20px;
   height: 30px;
+  align-items: center;
 }
 
 .profile-message-textarea {
   margin-top: 0px;
   margin-bottom: 0px;
-  height: 10px;
+  height: 5px;
+}
+
+.profile-close-icon:hover {
+  cursor: pointer;
 }

@@ -80,7 +80,7 @@ function SignIn() {
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <input
+          {/* <input
             ref={inputRef}
             type="text"
             name="username"
@@ -89,10 +89,11 @@ function SignIn() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-          />
+          /> */}
         </div>
         <div className="form-group">
           <input
+            ref={inputRef}
             type="text"
             name="email"
             id="email"
