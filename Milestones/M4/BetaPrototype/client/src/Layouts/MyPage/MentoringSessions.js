@@ -159,7 +159,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         </div>
       }
       {
-        (auth?.userRank === 0 || auth?.userRank === 1 || auth?.userRank === 3) &&
+        (auth?.userRank === 0 || auth?.userRank === 1 || auth?.userRank === 3) && // check if user is a mentee
         <div className="mentor-container">
           <h2>Upcoming Mentoring Sessions as a Mentee</h2>
           {
