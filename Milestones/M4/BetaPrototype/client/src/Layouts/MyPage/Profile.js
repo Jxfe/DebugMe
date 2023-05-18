@@ -36,6 +36,46 @@ function Profile() {
     };
     return roles[rank];
   };
+    
+    const [editedProfile, setEditedProfile] = useState({
+      newName: "",
+      newBio: ""
+    });
+
+    const handleNameEdit = async () => {
+      try {
+        const response = await customAxios.post("/editProfileName", {
+          newName: editedProfile.newName
+        });
+        const data = response.data;
+        
+        console.log(data);
+      } catch (error) {
+        
+        console.error("Error editing profile name", error);
+      }
+    };
+
+    const handleBioEdit = async () => {
+      try {
+        const response = await customAxios.post("/editProfileBio", {
+          newBio: editedProfile.newBio
+        });
+        const data = response.data;
+        
+        console.log(data);
+      } catch (error) {
+        
+        console.error("Error editing profile bio", error);
+      }
+    };
+    
+    const test = async () => {
+     
+        
+        console.log("Testing");
+      
+    };
 
   useEffect(() => {
     fetchProfile();
@@ -48,20 +88,39 @@ function Profile() {
         <p className="personalinfo-field-head">Name</p>
         <div style={{ display: "flex", gap: "40px" }}>
           <p>{profile.name}</p>
+          
           <Button
             className="default-button"
             content="Edit"
+            onClick={handleNameEdit}
           />
+        <input
+          type="text"
+          value={editedProfile.newName}
+          onChange={(e) =>
+            setEditedProfile({ ...editedProfile, newName: e.target.value })
+          }
+        />
         </div>
       </div>
       <div className="mypage-profile">
         <p className="personalinfo-field-head">Bio</p>
         <div style={{ display: "flex", gap: "40px" }}>
           <p>{profile.name}</p>
+            
           <Button
             className="default-button"
             content="Edit"
+            onClick={handleBioEdit}
+            //onClick={console.log({test})}
           />
+        <input
+          type="text"
+          value={editedProfile.newBio}
+          onChange={(e) =>
+            setEditedProfile({ ...editedProfile, newBio: e.target.value })
+          }
+        />
         </div>
       </div>
       <div>
