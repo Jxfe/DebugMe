@@ -124,6 +124,42 @@ def cancel_mentoring():
 
     return jsonify(response), 200
 
+@mentoring.route('/completedmentoring', methods=['POST', 'PUT'])
+@jwt_required(refresh=True)
+def completed_mentoring():
+    user_id = get_jwt_identity()
+    session_id = request.form.get('id', None)
+
+    if session_id is None:
+        abort(400, 'Missing id parameter')
+
+    elif session_id == '':
+        abort(400, 'id parameter is blank')
+
+    mentoring_session = MentoringSession.query.get(session_id)
+
+    if mentoring_session is None:
+        abort(400, 'Mentoring session does not exist')
+
+    elif mentoring_session.status == MENTORING_TABLE_STATUS_CODES['reject']:
+        abort(400, 'Cannot complete a mentoring session that has been rejected')
+
+    elif mentoring_session.status == MENTORING_TABLE_STATUS_CODES['completed']:
+        abort(400, 'Cannot complete a mentoring session that has been completed already')
+
+    elif mentoring_session.status == MENTORING_TABLE_STATUS_CODES['cancelled']:
+        abort(400, 'Cannot complete a mentoring session that has been cancelled')
+
+    elif mentoring_session.mentee_id != user_id and mentoring_session.mentor_id != user_id:
+        abort(400, 'You cannot complete a mentoring sessions you are not a part of')
+
+    else:
+        mentoring_session.status = MENTORING_TABLE_STATUS_CODES['completed']
+        db.session.commit()
+
+    response = {'message': 'Mentoring session has been marked as completed'}
+
+    return jsonify(response), 200
 
 @mentoring.route('/mentoringsessions', methods=["GET"])
 @jwt_required(refresh=True)
