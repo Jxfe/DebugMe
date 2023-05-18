@@ -13,6 +13,7 @@ function Profile() {
     image_path: "",
   });
 
+  // Fetches the user's profile data
   const fetchProfile = async () => {
     try {
       const response = await customAxios.get("/api/whoami", {
@@ -30,6 +31,7 @@ function Profile() {
     }
   };
 
+  // Maps user rank to role
   const mapRankToRole = (rank) => {
     const roles = {
       0: "Basic",
@@ -41,46 +43,39 @@ function Profile() {
     return roles[rank];
   };
     
+    
+    // State for edited profile data
     const [editedProfile, setEditedProfile] = useState({
       newName: "",
       newBio: "",
       newImagePath: ""
     });
 
+    // Handles name edit
     const handleNameEdit = async () => {
       try {
-          
-       // const response = await customAxios.post("/editProfileName", {
-       //   newName: editedProfile.newName
-       // });
-          
           const response = await customAxios({
               method: "post",
               url: "/api/editProfileName",
               data: {
                 newName: editedProfile.newName,
-                //newBio: editedProfile.newBio
+                
               },
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
               }
             })
         const data = response.data;
-        
-        
+          
       } catch (error) {
         
         console.error("Error editing profile name", error);
       }
     };
 
+    // Handles bio edit
     const handleBioEdit = async () => {
       try {
-          
-       // const response = await customAxios.post("/editProfileName", {
-       //   newName: editedProfile.newName
-       // });
-          
           const response = await customAxios({
               method: "post",
               url: "/api/editProfileBio",
@@ -101,14 +96,9 @@ function Profile() {
       }
     };
     
-    
+    // Handles image edit
     const handleImageEdit = async () => {
       try {
-          
-       // const response = await customAxios.post("/editProfileName", {
-       //   newName: editedProfile.newName
-       // });
-          
           const response = await customAxios({
               method: "post",
               url: "/api/editProfileImage",
