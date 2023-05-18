@@ -77,7 +77,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
           <h2>Mentoring Session Requests</h2>
           {
             mentoringRequests?.length > 0 ?
-              <p>Send a message to your Mentees to cordinate your meeting details!</p>
+              <p>Accept or decline your Mentoring Session requests</p>
               :
               <p>No mentoring requests</p>
           }
@@ -109,7 +109,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
       {
         (auth?.userRank === 2 || auth?.userRank === 3) &&
         <div className="mentor-container">
-          <h2>Upcoming Mentoring Session</h2>
+          <h2>Upcoming Mentoring Sessions as a Mentor</h2>
           {
             mentorSessions?.length > 0 ?
               <p>Send a message to your Mentees to cordinate your meeting details!</p>
@@ -141,9 +141,9 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         </div>
       }
       {
-        (auth?.userRank === 0 || auth?.userRank === 1) &&
+        (auth?.userRank === 0 || auth?.userRank === 1 || auth?.userRank === 3) &&
         <div className="mentor-container">
-          <h2>Upcoming Mentoring Session</h2>
+          <h2>Upcoming Mentoring Sessions as a Mentee</h2>
           {
             menteeSessions?.length > 0 ?
               <p>Send a message to your Mentors to cordinate your meeting details!</p>

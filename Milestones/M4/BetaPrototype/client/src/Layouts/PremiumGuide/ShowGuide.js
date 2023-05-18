@@ -224,7 +224,7 @@ function ShowGuide() {
                   size="large"
                   value={rating}
                   onChange={(event, newRating) => {
-                    giveFeedback(newRating);
+                    // giveFeedback(newRating);
                     setRating(newRating);
                   }}
                 />
