@@ -1,18 +1,29 @@
 import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import PropTypes from 'prop-types';
+import { toast } from "react-toastify";
+import { customAxios } from "../../utils/customAxios";
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import Textare from "../../Components/Textarea";
-import "./mypage.css";
-import { customAxios } from "../../utils/customAxios";
 import useAuth from "../../Hooks/useAuth";
+import "./mypage.css";
+
+const propTypes = {
+  menteeSessions: PropTypes.array,
+  mentorSessions: PropTypes.array,
+  mentoringRequests: PropTypes.array
+};
 
 function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }) {
-  const [showReviewModal, setshowReviewModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({});
   const [content, setContent] = useState("");
   const { auth } = useAuth();
 
+  /**
+ * openMessageModal() sets message information and open message Modal
+ * based on the passed-in sender, receiver information
+ */
   const openMessageModal = (sender, receiver) => {
     setMessageInfo({
       sender_id: sender.id,
@@ -24,9 +35,8 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
     setShowMessageModal(true);
   }
 
-  const addMessage = async () => {
+  const postMessage = async () => {
     try {
-      console.log(messageInfo)
       const data = {
         sender_id: messageInfo.sender_id,
         sender_email: messageInfo.sender_email,
@@ -42,7 +52,12 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      if (res.status === 201) {
+      if (res.status === 200 || res.status === 201) {
+        toast.success("Your message has been sent.", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
         setShowMessageModal(false);
       }
     } catch (e) {
@@ -50,18 +65,21 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
     }
   };
 
-  const handleMentoring = async (url, id) => {
+  /**
+* handleMentoring() requests mentoring session status changes to server
+* based on apiUrl and mentoringId 
+*/
+  const handleMentoring = async (apiUrl, mentoringId) => {
     try {
       const res = await customAxios({
         method: "post",
-        url: url,
-        data: { id: id },
+        url: apiUrl,
+        data: { id: mentoringId },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
       if (res.status === 200 || res.staus == 201) {
-        // data reload
         window.location.reload();
       }
     } catch (e) {
@@ -72,7 +90,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
   return (
     <div>
       {
-        (auth?.userRank === 2 || auth?.userRank === 3) &&
+        (auth?.userRank === 2 || auth?.userRank === 3) && // check if user is a mentor
         <div className="mentor-container">
           <h2>Mentoring Session Requests</h2>
           {
@@ -107,7 +125,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         </div>
       }
       {
-        (auth?.userRank === 2 || auth?.userRank === 3) &&
+        (auth?.userRank === 2 || auth?.userRank === 3) && // check if user is a mentor
         <div className="mentor-container">
           <h2>Upcoming Mentoring Sessions as a Mentor</h2>
           {
@@ -175,27 +193,6 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
           </div>
         </div>
       }
-      {showReviewModal && (
-        <Modal
-          title={`How was your Mentoring Session?`}
-          content={
-            <div>
-              <Textare />
-              <div class="star-wrapper-session">
-                <a href="#" class="fas fa-star s1 checked"></a>
-                <a href="#" class="fas fa-star s2"></a>
-                <a href="#" class="fas fa-star s3"></a>
-                <a href="#" class="fas fa-star s4"></a>
-                <a href="#" class="fas fa-star s5"></a>
-              </div>
-            </div>
-          }
-          buttonContent="SUBMIT"
-          buttonAction={() => setshowReviewModal(false)}
-          showModal={showReviewModal}
-          closeModal={() => setshowReviewModal(false)}
-        />
-      )}
       {showMessageModal && (
         <Modal
           title={`Send a message to ${messageInfo.receiver_name}(${messageInfo.receiver_email})`}
@@ -208,7 +205,7 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
             </div>
           }
           buttonContent="SEND"
-          buttonAction={addMessage}
+          buttonAction={postMessage}
           showModal={showMessageModal}
           closeModal={() => setShowMessageModal(false)}
         />
@@ -217,4 +214,5 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
   );
 }
 
+MentoringSessions.propTypes = propTypes;
 export default MentoringSessions;
