@@ -120,6 +120,16 @@ function Profile() {
               <button className="default-button" onClick={removePremium}>Remove Premium</button>
             )
           }
+          {
+            profile.userRank === "Mentor" && (
+              <button className="default-button" onClick={becomePremium}>Upgrade to Premium</button>
+            )
+          }
+          {
+            profile.userRank === "Premium_mentor" && (
+              <button className="default-button" onClick={removePremium}>Remove Premium</button>
+            )
+          }
         </div>
       </div>
     </div>
