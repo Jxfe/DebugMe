@@ -24,7 +24,6 @@ function ShowGuide() {
   const { id } = useParams();
   const { auth } = useAuth();
 
-
   useEffect(() => {
     getGuideContents();
     getGuideImage();
@@ -37,7 +36,6 @@ function ShowGuide() {
   useEffect(() => {
     checkGuideSaved();
   }, [guideContents]);
-
 
   function showProfile(userID, profilePic, username, bio, onClose) {
     setProfileContents({
@@ -76,7 +74,7 @@ function ShowGuide() {
     } catch (e) {
       console.error("Failed to request mentoring session", e);
     }
-  }
+  };
 
   const handleFeedbackSubmit = async () => {
     const data = {
@@ -109,17 +107,21 @@ function ShowGuide() {
   const getGuideImage = async () => {
     try {
       const res = await customAxios.get(`/api/getguideimage?id=${id}`);
-      console.log('Guide image response', res);
+      console.log("Guide image response", res);
       if (res.status === 200 && res.data.url) {
         setGuideImage(res.data.url);
       } else {
         setGuideImage("");
       }
     } catch (error) {
-      console.error('Failed to fetch guide image', error);
+      console.error("Failed to fetch guide image", error);
       setGuideImage("");
     }
+<<<<<<< HEAD
   }
+=======
+  };
+>>>>>>> forum
 
   const getGuideContents = () => {
     const url = `/api/getguide?id=${id}`;
@@ -182,7 +184,12 @@ function ShowGuide() {
       <div className="guide-container">
         <div className="sidenav">
           <div className="nav-author-details">
+<<<<<<< HEAD
             <p>Author:
+=======
+            <p>
+              Author:
+>>>>>>> forum
               <Link
                 to="#"
                 onClick={() => {
@@ -219,7 +226,7 @@ function ShowGuide() {
           <div className="nav-rating">
             <p>How would you rate this Guide?</p>
             <div className="star-wrapper">
-              <Stack dir="ltr" spacing={2}>
+              <Stack dir="ltr" spacing={4}>
                 <Rating
                   size="large"
                   value={rating}
