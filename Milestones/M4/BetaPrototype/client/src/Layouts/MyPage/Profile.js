@@ -30,7 +30,7 @@ function Profile() {
     try {
       const response = await customAxios({
         method: 'PUT',
-        url: '/api/authorization/becomepremium',
+        url: '/api/becomepremium',
       });
   
       if (response.status === 200) {
@@ -49,7 +49,7 @@ function Profile() {
     try {
       const response = await customAxios({
         method: 'PUT',
-        url: '/api/authorization/removepremium',
+        url: '/api/removepremium',
       });
   
       if (response.status === 200) {
