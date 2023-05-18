@@ -1,11 +1,10 @@
 from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from debugme_api.config import Config
 from ..debugme_toolkit import db
-from sqlalchemy import create_engine, text, and_
+from sqlalchemy import and_, or_
 from ..models.Mentoring import MentoringSession, MentoringSessionSchema, MentoringUserSessionSchema
 
-MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2}
+MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2, 'completed': 3, 'cancelled': 4}
 
 mentoring = Blueprint('mentoring', __name__, url_prefix='/api')
 
@@ -87,6 +86,44 @@ def reject_request():
     response = {'message': 'Mentoring Session has been rejected'}
 
     return jsonify(response), 200
+
+@mentoring.route('/cancelmentoring', methods=['DELETE', 'POST', 'UPDATE'])
+@jwt_required(refresh=True)
+def cancel_mentoring():
+    user_id = get_jwt_identity()
+    session_id = request.form.get('id', None)
+
+    if session_id is None:
+        abort(400, 'Missing id parameter')
+
+    elif session_id == '':
+        abort(400, 'id parameter is blank')
+
+    mentoring_session = MentoringSession.query.get(session_id)
+
+    if mentoring_session is None:
+        abort(400, 'Mentoring session does not exist')
+
+    elif mentoring_session.status == MENTORING_TABLE_STATUS_CODES['reject']:
+        abort(400, 'Cannot cancel a mentoring session that has been rejected')
+
+    elif mentoring_session.status == MENTORING_TABLE_STATUS_CODES['completed']:
+        abort(400, 'Cannot cancel a mentoring session that has been completed')
+
+    elif mentoring_session.status == MENTORING_TABLE_STATUS_CODES['cancelled']:
+        abort(400, 'Cannot cancel a mentoring session that has been cancelled already')
+
+    elif mentoring_session.mentee_id != user_id and mentoring_session.mentor_id != user_id:
+        abort(400, 'You cannot cancel mentoring sessions you are not a part of')
+
+    else:
+        db.session.delete(mentoring_session)
+        db.session.commit()
+
+    response = {'message': 'Mentoring session has been cancelled'}
+
+    return jsonify(response), 200
+
 
 @mentoring.route('/mentoringsessions', methods=["GET"])
 @jwt_required(refresh=True)
