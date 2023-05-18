@@ -4,12 +4,14 @@ import Modal from "../../Components/Modal";
 import Textare from "../../Components/Textarea";
 import "./mypage.css";
 import { customAxios } from "../../utils/customAxios";
+import useAuth from "../../Hooks/useAuth";
 
 function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }) {
   const [showReviewModal, setshowReviewModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({});
   const [content, setContent] = useState("");
+  const { auth } = useAuth();
 
   const openMessageModal = (sender, receiver) => {
     setMessageInfo({
@@ -70,24 +72,18 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
   return (
     <div>
       {
-        menteeSessions?.length === 0 &&
-        mentorSessions?.length === 0 &&
-        mentoringRequests?.length === 0 &&
-        <div className="mentor-container">
-          <h2>Mentoring Sessions</h2>
-          <div>
-            There is no mentoring list.
-          </div>
-        </div>
-      }
-      {
-        mentoringRequests?.length > 0 &&
+        (auth?.userRank === 2 || auth?.userRank === 3) &&
         <div className="mentor-container">
           <h2>Mentoring Session Requests</h2>
-          <p>Send a message to your Mentees to cordinate your meeting details!</p>
+          {
+            mentoringRequests?.length > 0 ?
+              <p>Send a message to your Mentees to cordinate your meeting details!</p>
+              :
+              <p>No mentoring requests</p>
+          }
           <div>
             {
-              mentoringRequests.map((item, idx) => {
+              mentoringRequests?.map((item, idx) => {
                 return (
                   <div className="mentor-box" key={item.mentee.email + idx}>
                     <div>{`${item.mentee.email} (${item.mentee.name})`}</div>
@@ -111,13 +107,17 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         </div>
       }
       {
-        mentorSessions?.length > 0 &&
+        (auth?.userRank === 2 || auth?.userRank === 3) &&
         <div className="mentor-container">
           <h2>Upcoming Mentoring Session</h2>
-          <p>Send a message to your Mentees to cordinate your meeting details!</p>
+          {
+            mentorSessions?.length > 0 ?
+              <p>Send a message to your Mentees to cordinate your meeting details!</p>
+              : <p>No mentoring session</p>
+          }
           <div>
             {
-              mentorSessions.map((item, idx) => {
+              mentorSessions?.map((item, idx) => {
                 return (
                   <div className="mentor-box" key={item.mentee.email + idx}>
                     <div>{`${item.mentee.email} (${item.mentee.name})`}</div>
@@ -141,13 +141,18 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
         </div>
       }
       {
-        menteeSessions?.length > 0 &&
+        (auth?.userRank === 0 || auth?.userRank === 1) &&
         <div className="mentor-container">
           <h2>Upcoming Mentoring Session</h2>
-          <p>Send a message to your Mentors to cordinate your meeting details!</p>
+          {
+            menteeSessions?.length > 0 ?
+              <p>Send a message to your Mentors to cordinate your meeting details!</p>
+              :
+              <p>No mentoring session</p>
+          }
           <div>
             {
-              menteeSessions.map((item, idx) => {
+              menteeSessions?.map((item, idx) => {
                 return (
                   <div className="mentor-box" key={item.mentor.email + idx}>
                     <div>{`${item.mentor.email} (${item.mentor.name})`}</div>
