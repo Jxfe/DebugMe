@@ -15,7 +15,7 @@ function PostDescription({
     <div className="post-description" onClick={onClickEvent}>
       <div className="post-info">
         <span className="post-info-span">{title}</span>
-        <span>{`By ${author}`}</span>
+        <span className="author">{`By ${author}`}</span>
       </div>
 
       <div className="post-stats">

@@ -161,11 +161,12 @@
   display: flex;
   flex-direction: row;
   width: 90%;
+  min-height: 80px;
   justify-content: space-between;
   margin: 10px auto;
   padding: 5px;
   border: 1px solid var(--black);
-  border-radius: 10px;
+  decoration: none;
 }
 
 .post-description:hover {
