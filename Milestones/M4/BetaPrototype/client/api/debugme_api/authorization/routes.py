@@ -98,47 +98,51 @@ def become_mentor():
 
     return jsonify(response), 200
 
-@authorization.route('/becomepremium', methods=['PUT', 'POST'])
+@authorization.route('/becomepremium', methods=['PUT'])
 @jwt_required(refresh=True)
-def become_premium():
+def become_premium_new():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
-    if user.userRank == ROLES['premium'] or user.userRank == ROLES['premium_mentor']:
+    if not user:
+        abort(404, 'User not found')
+
+    if user.userRank in [ROLES['premium'], ROLES['premium_mentor']]:
         abort(400, 'You are a Premium member already')
 
-    elif user.userRank == ROLES['basic']:
+    if user.userRank == ROLES['basic']:
         user.userRank = ROLES['premium']
-
     elif user.userRank == ROLES['mentor']:
         user.userRank = ROLES['premium_mentor']
 
     db.session.commit()
 
     response = {"message": "You are now a Premium user!"}
-
     return jsonify(response), 200
 
-@authorization.route('/removepremium', methods=['PUT', 'POST'])
+
+@authorization.route('/removepremium', methods=['PUT'])
 @jwt_required(refresh=True)
-def remove_premium():
+def remove_premium_new():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
-    if user.userRank == ROLES['basic'] or user.userRank == ROLES['mentor']:
+    if not user:
+        abort(404, 'User not found')
+
+    if user.userRank in [ROLES['basic'], ROLES['mentor']]:
         abort(400, 'You are not a Premium member')
 
-    elif user.userRank == ROLES['premium']:
+    if user.userRank == ROLES['premium']:
         user.userRank = ROLES['basic']
-
     elif user.userRank == ROLES['premium_mentor']:
         user.userRank = ROLES['mentor']
 
     db.session.commit()
 
     response = {"message": "You are no longer a Premium member"}
-
     return jsonify(response), 200
+
 
 @authorization.route('/whoami', methods=['GET'])
 @jwt_required(refresh=True)

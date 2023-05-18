@@ -26,6 +26,44 @@ function Profile() {
     }
   };
 
+  const becomePremium = async () => {
+    try {
+      const response = await customAxios({
+        method: 'PUT',
+        url: '/api/authorization/becomepremium',
+      });
+  
+      if (response.status === 200) {
+        setProfile(prevState => ({
+          ...prevState,
+          userRank: "Premium"
+        }));
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error upgrading to premium:', error);
+    }
+  };
+  
+  const removePremium = async () => {
+    try {
+      const response = await customAxios({
+        method: 'PUT',
+        url: '/api/authorization/removepremium',
+      });
+  
+      if (response.status === 200) {
+        setProfile(prevState => ({
+          ...prevState,
+          userRank: "Basic"
+        }));
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error removing premium:', error);
+    }
+  };
+  
   const mapRankToRole = (rank) => {
     const roles = {
       0: "Basic",
@@ -73,12 +111,14 @@ function Profile() {
         <div style={{ display: "flex", gap: "40px" }}>
           <p>{profile.userRank}</p>
           {
-            profile.userRank === 0 &&
-            <Button
-              width="200px"
-              className="default-button"
-              content="Upgrade to Premium"
-            />
+            profile.userRank === "Basic" && (
+              <button className="default-button" onClick={becomePremium}>Upgrade to Premium</button>
+            )
+          }
+          {
+            profile.userRank === "Premium" && (
+              <button className="default-button" onClick={removePremium}>Remove Premium</button>
+            )
           }
         </div>
       </div>
