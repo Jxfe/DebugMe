@@ -463,6 +463,22 @@ a:active { text-decoration: none; }
   justify-content: space-evenly;
 }
 
+.disabled-guides {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.upgrade-notice {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
+
+.basic-user-guides {
+  display: flex;
+  flex-direction: column;
+}
+
 .fa-star {
   color: #ccc; /* Default color for empty stars */
   cursor: pointer;

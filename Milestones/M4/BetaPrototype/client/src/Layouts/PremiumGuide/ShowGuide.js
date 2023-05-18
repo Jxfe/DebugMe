@@ -6,12 +6,15 @@ import useAuth from "../../Hooks/useAuth";
 import Modal from "../../Components/Modal";
 import Button from "../../Components/Button";
 import LikeButton from "../../Components/LikeButton";
+import UserProfile from "../../Components/UserProfile";
 import { Rating } from "@mui/material";
 import { Stack } from "@mui/material";
 
 import "./showguide.css";
 
 function ShowGuide() {
+  const [profileShowing, setProfileShowing] = useState(false);
+  const [profileContents, setProfileContents] = useState({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [isLiked, setLiked] = useState(false);
@@ -33,6 +36,41 @@ function ShowGuide() {
   useEffect(() => {
     checkGuideSaved();
   }, [guideContents]);
+
+
+  function showProfile(userID, profilePic, username, bio, onClose) {
+    setProfileContents({
+      userID: userID,
+      profilePic: profilePic,
+      username: username,
+      bio: bio,
+      onClose: onClose
+    });
+
+    setProfileShowing(true);
+  }
+  function hideProfile() {
+    setProfileShowing(false);
+  }
+
+  const requestMentoring = async () => {
+    try {
+      const res = await customAxios({
+        method: "post",
+        url: "/api/requestmentoring",
+        data: {mentor_id : guideContents?.author?.id},
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      });
+
+      if (res.status === 201) {
+        setShowSuccessModal(true);
+      }
+    } catch (e) {
+      console.error("Failed to request mentoring session", e);
+    }
+  }
 
   const handleFeedbackSubmit = async () => {
     const data = {
@@ -123,13 +161,28 @@ function ShowGuide() {
       <div className="guide-container">
         <div className="sidenav">
           <div className="nav-author-details">
-            <p>Author: {guideContents?.author?.name}</p>
-            <Link to="#" onClick={() => setShowSuccessModal(true)}>
-              <Button
-                content="Request Mentoring Session"
-                className="default-button"
-              />
-            </Link>
+            <p>Author: 
+              <Link
+                to="#"
+                onClick={() => {
+                  showProfile(
+                    guideContents?.author?.id,
+                    "",
+                    guideContents?.author.name,
+                    `${guideContents?.author?.name}'s Bio goes here.`,
+                    hideProfile
+                  );
+                }}
+              >
+                {guideContents?.author?.name}
+              </Link>
+            </p>
+            
+            <Button
+              content="Request Mentoring Session"
+              className="default-button"
+              onClickEvent={requestMentoring}
+            />
           </div>
 
           <div className="nav-favorite">
@@ -180,6 +233,7 @@ function ShowGuide() {
           closeModal={() => setShowSuccessModal(false)}
         />
       )}
+      {profileShowing && <UserProfile profileContents={profileContents} />}
     </>
   );
 }

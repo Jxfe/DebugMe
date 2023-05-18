@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { customAxios } from "../../utils/customAxios";
 import "./style.css";
+import useAuth from "../../Hooks/useAuth";
 
 import Button from "../../Components/Button";
 import PostDescription from "../../Components/PostDescription";
@@ -14,6 +15,8 @@ const ITEMS_PER_PAGE = 3;
 function PremiumGuides() {
   const [guidesList, setGuidesList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const { auth } = useAuth();
+  const userRank = auth?.userRank;
 
   useEffect(() => {
     getGuidesList();
@@ -81,14 +84,39 @@ function PremiumGuides() {
           </div>
         </div>
 
-        <div className="guides-container">{renderGuidesList()}</div>
-        <Pagination
-          className="pagination-bar"
-          currentPage={currentPage}
-          totalCount={guidesList?.length}
-          pageSize={ITEMS_PER_PAGE}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
+        {(userRank === 0 || userRank === 2) && (
+          <div className="basic-user-guides">
+            <div className="upgrade-notice">
+              <p>Upgrade to our Premium Plan to gain access to the Premium Guides!</p>
+              <Link to="/mypage/profile">
+                <Button className={"default-button"} content="Upgrade!" />
+              </Link>
+            </div>
+
+            <div className="disabled-guides">
+              <div className="guides-container">{renderGuidesList()}</div>
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={guidesList?.length}
+                pageSize={ITEMS_PER_PAGE}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            </div>
+          </div>  
+        )}
+        {(userRank === 1 || userRank === 3) && (
+          <div>
+            <div className="guides-container">{renderGuidesList()}</div>
+            <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={guidesList?.length}
+              pageSize={ITEMS_PER_PAGE}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>  
+        )}
       </div>
     </div>
   );
