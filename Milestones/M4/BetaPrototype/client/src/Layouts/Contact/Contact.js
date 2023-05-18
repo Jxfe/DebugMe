@@ -1,66 +1,41 @@
-import React, { useState } from 'react';
-
-import Button from "../../Components/Button";
+import React from "react";
+import "./styling.css";
 
 function ContactUs() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`Thank you for your message, ${name}!`); 
-    setName("");
-    setEmail("");
-    setMessage("");
-  };
-
   return (
-    <div>
-      <h1>Contact Us</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
-          />
-        </label>
-        <br />
-        <label htmlFor="email">
-          Email:
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </label>
-        <br />
-        <label htmlFor="message">
-          Message:
-          <textarea 
-            id="message" 
-            name="message" 
-            value={message} 
-            onChange={(e) => setMessage(e.target.value)} 
-            required 
-          />
-        </label>
-        <br />
-        <Button
-            className="default-button"
-            content="Send"
-            onClickEvent={handleSubmit}
-          />
-      </form>
-    </div>
+    <html>
+      <div class="about-section">
+        <h1>How Can We Help You?</h1>
+        <p>If you have any questions regarding our website or services contact our team members!</p>
+        <p>We are available 24/7</p>
+      </div>
+      <h3 className="team-header">Our Team</h3>
+      <div className="contact-us-container">
+        <div class="contact-card">
+          <h3 className="contact-header">Emily Padilla</h3>
+          <p class="title">Team Lead</p>
+          <p>Contact me anytime without any hesitation</p>
+          <p className="email-style">emily@example.com</p>
+          <p><a className="button" href="mailto:someone@yoursite.com">Contact</a></p>
+        </div>
+
+        <div class="contact-card">
+          <h3 className="contact-header">Jijieong Lee</h3>
+          <p class="title">Front-End Lead</p>
+          <p>Contact me anytime without any hesitation</p>
+          <p className="email-style">jijieong@example.com</p>
+          <p><a className="button" href="mailto:someone@yoursite.com">Contact</a></p>
+        </div>
+
+        <div class="contact-card">
+          <h3 className="contact-header">Cristobal Padilla</h3>
+          <p class="title">Backend Master</p>
+          <p>Contact me anytime without any hesitation</p>
+          <p className="email-style">cris@example.com</p>
+          <p><a className="button" href="mailto:someone@yoursite.com">Contact</a></p>
+        </div>
+      </div>  
+    </html>
   );
 }
 
