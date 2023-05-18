@@ -29,7 +29,7 @@ html {
   color: grey;
 }
 
-.button {
+.contact-button {
   display: inline-block;
   width: 180px;
   height: 30px;
@@ -47,7 +47,7 @@ html {
   text-align: center;
 }
 
-.button:hover {
+.contact-button:hover {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 

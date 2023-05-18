@@ -16,7 +16,7 @@ function ContactUs() {
           <p class="title">Team Lead</p>
           <p>Contact me anytime without any hesitation</p>
           <p className="email-style">emily@example.com</p>
-          <p><a className="button" href="mailto:someone@yoursite.com">Contact</a></p>
+          <p><a className="contact-button" href="mailto:someone@yoursite.com">Contact</a></p>
         </div>
 
         <div class="contact-card">
@@ -24,7 +24,7 @@ function ContactUs() {
           <p class="title">Front-End Lead</p>
           <p>Contact me anytime without any hesitation</p>
           <p className="email-style">jijieong@example.com</p>
-          <p><a className="button" href="mailto:someone@yoursite.com">Contact</a></p>
+          <p><a className="contact-button" href="mailto:someone@yoursite.com">Contact</a></p>
         </div>
 
         <div class="contact-card">
@@ -32,7 +32,7 @@ function ContactUs() {
           <p class="title">Backend Master</p>
           <p>Contact me anytime without any hesitation</p>
           <p className="email-style">cris@example.com</p>
-          <p><a className="button" href="mailto:someone@yoursite.com">Contact</a></p>
+          <p><a className="contact-button" href="mailto:someone@yoursite.com">Contact</a></p>
         </div>
       </div>  
     </html>
