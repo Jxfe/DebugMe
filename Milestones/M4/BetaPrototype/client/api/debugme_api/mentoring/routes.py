@@ -4,9 +4,11 @@ from ..debugme_toolkit import db
 from sqlalchemy import and_, or_
 from ..models.Mentoring import MentoringSession, MentoringSessionSchema, MentoringUserSessionSchema
 
-MENTORING_TABLE_STATUS_CODES = {'request': 0, 'accept': 1, 'reject': 2, 'completed': 3, 'cancelled': 4}
+MENTORING_TABLE_STATUS_CODES = {
+    'request': 0, 'accept': 1, 'reject': 2, 'completed': 3, 'cancelled': 4}
 
 mentoring = Blueprint('mentoring', __name__, url_prefix='/api')
+
 
 @mentoring.route('/requestmentoring', methods=['POST'])
 @jwt_required(refresh=True)
@@ -23,7 +25,8 @@ def request_mentoring():
         response = {'message': 'Mentor and Mentee are the same'}
         return jsonify(response), 400
 
-    mentoring_request = MentoringSession.query.filter(and_(MentoringSession.mentee_id==mentee_id, MentoringSession.mentor_id==mentor_id)).first()
+    mentoring_request = MentoringSession.query.filter(and_(
+        MentoringSession.mentee_id == mentee_id, MentoringSession.mentor_id == mentor_id)).first()
 
     if mentoring_request:
         response = {'message': 'Mentoring session already exists'}
@@ -39,11 +42,12 @@ def request_mentoring():
 
     return jsonify(response), 201
 
+
 @mentoring.route('/acceptmentoring', methods=['PUT', 'POST'])
 @jwt_required(refresh=True)
 def accept_request():
     mentor_id = get_jwt_identity()
-    mentoring_id = request.form.get('mentoring_id', None)
+    mentoring_id = request.form.get('id', None)
 
     if mentoring_id is None:
         abort(400, {'error': 'Missing mentoring session id'})
@@ -63,11 +67,12 @@ def accept_request():
 
     return jsonify(response), 200
 
+
 @mentoring.route('/rejectmentoring', methods=['PUT', 'POST'])
 @jwt_required(refresh=True)
 def reject_request():
     mentor_id = get_jwt_identity()
-    mentoring_id = request.form.get('mentoring_id', None)
+    mentoring_id = request.form.get('id', None)
 
     if mentoring_id is None:
         abort(400, {'error': 'Missing mentoring session id'})
@@ -86,6 +91,7 @@ def reject_request():
     response = {'message': 'Mentoring Session has been rejected'}
 
     return jsonify(response), 200
+
 
 @mentoring.route('/cancelmentoring', methods=['DELETE', 'POST', 'UPDATE'])
 @jwt_required(refresh=True)
@@ -124,6 +130,7 @@ def cancel_mentoring():
 
     return jsonify(response), 200
 
+
 @mentoring.route('/completedmentoring', methods=['POST', 'PUT'])
 @jwt_required(refresh=True)
 def completed_mentoring():
@@ -161,13 +168,14 @@ def completed_mentoring():
 
     return jsonify(response), 200
 
+
 @mentoring.route('/mentoringsessions', methods=["GET"])
 @jwt_required(refresh=True)
 def get_mentoring_sessions():
-    sessions = MentoringSession.query.order_by(MentoringSession.created_at.desc())
+    sessions = MentoringSession.query.order_by(
+        MentoringSession.created_at.desc())
 
     mentoringSessionSchema = MentoringUserSessionSchema(many=True)
     response = mentoringSessionSchema.dump(sessions)
 
     return jsonify(response), 200
-

@@ -110,19 +110,24 @@ function Messages() {
                 );
               })}
           </div>
-          <Textare
-            className="default-textarea message-textarea"
-            rows={3}
-            value={text}
-            onChangeEvent={(e) => setText(e.target.value)}
-          />
-          <div>
-            <Button
-              className="default-button"
-              onClickEvent={addMessage}
-              content="SEND"
-            />
-          </div>
+          {
+            selectedUser &&
+            <>
+              <Textare
+                className="default-textarea message-textarea"
+                rows={3}
+                value={text}
+                onChangeEvent={(e) => setText(e.target.value)}
+              />
+              <div>
+                <Button
+                  className="default-button"
+                  onClickEvent={addMessage}
+                  content="SEND"
+                />
+              </div>
+            </>
+          }
         </div>
       </div>
     </div>

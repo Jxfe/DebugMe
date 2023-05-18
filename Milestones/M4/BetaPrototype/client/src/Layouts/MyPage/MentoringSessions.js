@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"; // Needed for AWS since it's using node 16
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react"; // Needed for AWS since it's using node 16
 import Button from "../../Components/Button";
 import Modal from "../../Components/Modal";
 import Textare from "../../Components/Textarea";
@@ -49,37 +48,17 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
     }
   };
 
-  const acceptMentoring = async (id) => {
+  const handleMentoring = async (url, id) => {
     try {
       const res = await customAxios({
         method: "post",
-        url: "/api/acceptmentoring",
-        data: { mentoring_id: id },
+        url: url,
+        data: { id: id },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      if (res.status === 200) {
-        // data reload
-        window.location.reload();
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const declineMentoring = async (id) => {
-    try {
-      const data = {};
-      const res = await customAxios({
-        method: "post",
-        url: "/api/rejectmentoring",
-        data: { mentoring_id: id },
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
-      if (res.status === 201) {
+      if (res.status === 200 || res.staus == 201) {
         // data reload
         window.location.reload();
       }
@@ -116,13 +95,13 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
                       className="default-button"
                       content="Accept"
                       width="80px"
-                      onClickEvent={() => acceptMentoring(item.id)}
+                      onClickEvent={() => handleMentoring("/api/acceptmentoring", item.id)}
                     />
                     <Button
                       className="outline-button"
                       content="Decline"
                       width="80px"
-                      onClickEvent={() => declineMentoring(item.id)}
+                      onClickEvent={() => handleMentoring("/api/rejectmentoring", item.id)}
                     />
                   </div>
                 )
@@ -148,6 +127,12 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
                       width="80px"
                       onClickEvent={() => openMessageModal(item.mentor, item.mentee)}
                     />
+                    <Button
+                      className="outline-button"
+                      content="Mark as Done"
+                      width="120px"
+                      onClickEvent={() => handleMentoring("/api/completedmentoring", item.id)}
+                    />
                   </div>
                 )
               })
@@ -171,6 +156,12 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
                       content="Message"
                       width="80px"
                       onClickEvent={() => openMessageModal(item.mentee, item.mentor)}
+                    />
+                    <Button
+                      className="outline-button"
+                      content="Cancel"
+                      width="80px"
+                      onClickEvent={() => handleMentoring("/api/cancelmentoring", item.id)}
                     />
                   </div>
                 )
