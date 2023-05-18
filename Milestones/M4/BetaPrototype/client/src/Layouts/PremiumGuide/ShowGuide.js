@@ -67,7 +67,7 @@ function ShowGuide() {
         toast.success("Your Mentoring Session request has been sent.", {
           position: "bottom-left",
           autoClose: 3000,
-          hideProgressBar: true,
+          hideProgressBar: true
         });
         //setShowSuccessModal(true);
       }
@@ -96,7 +96,7 @@ function ShowGuide() {
         toast.success("Your rating has been recorded.", {
           position: "bottom-left",
           autoClose: 3000,
-          hideProgressBar: true,
+          hideProgressBar: true
         });
       }
     } catch (e) {
@@ -117,11 +117,7 @@ function ShowGuide() {
       console.error("Failed to fetch guide image", error);
       setGuideImage("");
     }
-<<<<<<< HEAD
-  }
-=======
   };
->>>>>>> forum
 
   const getGuideContents = () => {
     const url = `/api/getguide?id=${id}`;
@@ -144,11 +140,11 @@ function ShowGuide() {
         toast.success("Your rating has been recorded.", {
           position: "bottom-left",
           autoClose: 3000,
-          hideProgressBar: true,
+          hideProgressBar: true
         });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
     return;
   };
@@ -184,12 +180,8 @@ function ShowGuide() {
       <div className="guide-container">
         <div className="sidenav">
           <div className="nav-author-details">
-<<<<<<< HEAD
-            <p>Author:
-=======
             <p>
               Author:
->>>>>>> forum
               <Link
                 to="#"
                 onClick={() => {
