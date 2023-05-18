@@ -1,0 +1,109 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+.about-section {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 50px;
+  text-align: center;
+  background-color: var(--primary);
+  color: white;
+  width: 85%;
+  margin: 0 auto;
+  box-shadow: 0 15px 18px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.title {
+  color: grey;
+}
+
+.contact-button {
+  display: inline-block;
+  width: 180px;
+  height: 30px;
+  font-weight: 400;
+  white-space: nowrap;
+  user-select: none;
+  margin-top: 10px;
+  padding: 2px;
+  font-size: 19px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  cursor: pointer;
+  text-align: center;
+}
+
+.contact-button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+.contact-header {
+  text-align: center;
+}
+
+.team-header {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 2.5rem;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+p{
+  text-align: center;
+}
+
+.email-style {
+  font-style: italic;
+  font-size: 1.5rem;
+  font-style: bold;
+  font-family: serif;
+}
+
+
+.contact-card {
+  margin: 50px 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 300px;
+  min-height: 300px;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  float: left;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.contact-us-container {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
