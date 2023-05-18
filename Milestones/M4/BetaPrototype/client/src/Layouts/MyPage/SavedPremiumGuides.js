@@ -33,6 +33,8 @@ function SavedPremiumGuides({ saved }) {
               </Link>
             );
           })}
+        {saved.length === 0 &&
+          <div>There is no saved premium guide.</div>}
       </div>
     </div>
   );

@@ -91,6 +91,17 @@ function MentoringSessions({ menteeSessions, mentorSessions, mentoringRequests }
   return (
     <div>
       {
+        menteeSessions?.length === 0 &&
+        mentorSessions?.length === 0 &&
+        mentoringRequests?.length === 0 &&
+        <div className="mentor-container">
+          <h2>Mentoring Sessions</h2>
+          <div>
+            There is no mentoring list.
+          </div>
+        </div>
+      }
+      {
         mentoringRequests?.length > 0 &&
         <div className="mentor-container">
           <h2>Mentoring Session Requests</h2>
