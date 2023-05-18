@@ -83,3 +83,20 @@ def post_edit_profile_name():
         return jsonify({'message': 'Profile updated successfully'}), 200
     else:
         return jsonify({'error': 'User not found'}), 404
+
+
+@profile.route('/editProfileImage', methods=['Post'])
+@jwt_required(refresh=True)
+def post_edit_image():
+    user_id = get_jwt_identity()
+    new_image = request.form.get('newImagePath', '')
+
+    user = db.session.query(User).filter(User.id == user_id).first()
+
+    if user:
+        user.image_path = new_image
+
+        db.session.commit()
+        return jsonify({'message': 'Profile updated successfully'}), 200
+    else:
+        return jsonify({'error': 'User not found'}), 404

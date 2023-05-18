@@ -9,6 +9,8 @@ function Profile() {
     name: "",
     email: "",
     userRank: "",
+    bio: "",
+    image_path: "",
   });
 
   const fetchProfile = async () => {
@@ -20,6 +22,8 @@ function Profile() {
         name: data.username,
         email: data.email,
         userRank: mapRankToRole(data.userRank),
+        bio: data.bio,
+        image_path: data.image_path
       });
     } catch (error) {
       console.error("Error fetching profile data", error);
@@ -39,17 +43,31 @@ function Profile() {
     
     const [editedProfile, setEditedProfile] = useState({
       newName: "",
-      newBio: ""
+      newBio: "",
+      newImagePath: ""
     });
 
     const handleNameEdit = async () => {
       try {
-        const response = await customAxios.post("/editProfileName", {
-          newName: editedProfile.newName
-        });
+          
+       // const response = await customAxios.post("/editProfileName", {
+       //   newName: editedProfile.newName
+       // });
+          
+          const response = await customAxios({
+              method: "post",
+              url: "/api/editProfileName",
+              data: {
+                newName: editedProfile.newName,
+                //newBio: editedProfile.newBio
+              },
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              }
+            })
         const data = response.data;
         
-        console.log(data);
+        
       } catch (error) {
         
         console.error("Error editing profile name", error);
@@ -58,71 +76,124 @@ function Profile() {
 
     const handleBioEdit = async () => {
       try {
-        const response = await customAxios.post("/editProfileBio", {
-          newBio: editedProfile.newBio
-        });
+          
+       // const response = await customAxios.post("/editProfileName", {
+       //   newName: editedProfile.newName
+       // });
+          
+          const response = await customAxios({
+              method: "post",
+              url: "/api/editProfileBio",
+              data: {
+                //newName: editedProfile.newName,
+                newBio: editedProfile.newBio
+              },
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              }
+            })
         const data = response.data;
         
-        console.log(data);
+        
       } catch (error) {
         
-        console.error("Error editing profile bio", error);
+        console.error("Error editing profile name", error);
       }
     };
     
-    const test = async () => {
-     
+    
+    const handleImageEdit = async () => {
+      try {
+          
+       // const response = await customAxios.post("/editProfileName", {
+       //   newName: editedProfile.newName
+       // });
+          
+          const response = await customAxios({
+              method: "post",
+              url: "/api/editProfileImage",
+              data: {
+                newImagePath: editedProfile.newImagePath
+              },
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              }
+            })
+        const data = response.data;
         
-        console.log("Testing");
-      
+        
+      } catch (error) {
+        
+        console.error("Error editing profile name", error);
+      }
     };
+    
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
-  return (
+return (
     <div>
       <h1>Profile</h1>
+        <div className="mypage-profile">
+            <div style={{ display: "flex", gap: "40px", alignItems: "center" }}>
+              <img
+                src={profile.image_path}
+                alt="User"
+                className="user-image"
+              />
+              <input
+                type="text"
+                value={editedProfile.newImagePath}
+                onChange={(e) =>
+                  setEditedProfile({ ...editedProfile, newImagePath: e.target.value })
+                }
+              />
+              <Button
+                className="default-button"
+                content="Save"
+                onClick={handleImageEdit}
+              />
+            </div>
+        </div>
       <div className="mypage-profile">
         <p className="personalinfo-field-head">Name</p>
         <div style={{ display: "flex", gap: "40px" }}>
           <p>{profile.name}</p>
-          
           <Button
             className="default-button"
             content="Edit"
             onClick={handleNameEdit}
           />
-        <input
-          type="text"
-          value={editedProfile.newName}
-          onChange={(e) =>
-            setEditedProfile({ ...editedProfile, newName: e.target.value })
-          }
-        />
+          <input
+            type="text"
+            value={editedProfile.newName}
+            onChange={(e) =>
+              setEditedProfile({ ...editedProfile, newName: e.target.value })
+            }
+          />
         </div>
       </div>
       <div className="mypage-profile">
         <p className="personalinfo-field-head">Bio</p>
         <div style={{ display: "flex", gap: "40px" }}>
-          <p>{profile.name}</p>
-            
+          <p>{profile.bio}</p>
           <Button
             className="default-button"
             content="Edit"
             onClick={handleBioEdit}
-            //onClick={console.log({test})}
           />
-        <input
-          type="text"
-          value={editedProfile.newBio}
-          onChange={(e) =>
-            setEditedProfile({ ...editedProfile, newBio: e.target.value })
-          }
-        />
+          <input
+            type="text"
+            value={editedProfile.newBio}
+            onChange={(e) =>
+              setEditedProfile({ ...editedProfile, newBio: e.target.value })
+            }
+          />
         </div>
       </div>
+      
       <div>
         <p className="personalinfo-field-head">Email</p>
         <p>{profile.email}</p>
