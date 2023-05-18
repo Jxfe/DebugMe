@@ -20,15 +20,36 @@ def get_guides():
 
     if input != '':
         search = "%" + input + "%"
-
         guides = Premium.query.filter(Premium.title.like(search)).order_by(Premium.created_at.desc())
     else:
         guides = Premium.query.order_by(Premium.created_at.desc())
 
     response = []
     guideFeedbackSchema = GuideFeedbackSchema()
+
+    AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
+    BUCKET_NAME = 'debugme'
+    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     for guide in guides:
-        response.append(guideFeedbackSchema.dump(guide))
+        guide_data = guideFeedbackSchema.dump(guide)
+
+        if guide.image_path:
+            try:
+                url = s3.generate_presigned_url(
+                    ClientMethod='get_object',
+                    Params={
+                        'Bucket': BUCKET_NAME,
+                        'Key': guide.image_path
+                    }
+                )
+                guide_data['image_url'] = url
+            except NoCredentialsError:
+                guide_data['image_url'] = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+        else:
+            guide_data['image_url'] = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+
+        response.append(guide_data)
 
     return jsonify(response), 200
 
@@ -56,8 +77,8 @@ def get_guide_image():
     guide = Premium.query.get(guide_id)
 
     if guide and guide.image_path:
-        AWS_ACCESS_KEY = 'AKIAROYXHMJTMPJC4O4A'
-        AWS_SECRET_ACCESS_KEY = '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'
+        AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
+        AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
         BUCKET_NAME = 'debugme'
 
         s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)

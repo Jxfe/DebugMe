@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { customAxios } from "../../utils/customAxios";
 import "./style.css";
 
@@ -28,7 +27,8 @@ function PremiumGuides() {
 
   const getGuidesList = async () => {
     await customAxios(`/api/guides?search=`).then((res) => {
-      setGuidesList(() => res.data);
+      setGuidesList(res.data);
+      console.log(res.data);
     });
   };
 
@@ -38,7 +38,7 @@ function PremiumGuides() {
         <Link key={index} id={index} to={`/premiumguides/${item.id}`}>
           <GuideCard
             id={item?.id}
-            img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+            img={item?.image_url} // Image URL is now directly used here
             title={item?.title}
             author={item?.author?.name}
             rating={Math.floor(item?.rating)}
@@ -47,7 +47,7 @@ function PremiumGuides() {
       );
     });
   };
-
+  
   return (
     <div>
       <div className="album-container">
