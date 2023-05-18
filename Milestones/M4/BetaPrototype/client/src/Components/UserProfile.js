@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+
 import useAuth from "../Hooks/useAuth";
 import { customAxios } from "../utils/customAxios";
 import Button from "./Button";
@@ -25,26 +27,9 @@ export default function UserProfile({ profileContents }) {
   }, [profileContents]);
 
   const addMessage = async () => {
-    // const ms = messages[selectedUser][0];
-    // if (ms.sender_email === selectedUser) {
-    //   data = {
-    //     receiver_id: ms.sender_id,
-    //     receiver_email: ms.sender_email,
-    //     sender_id: ms.receiver_id,
-    //     sender_email: ms.receiver_email,
-    //     content: text,
-    //   };
-    // } else {
-    //   data = {
-    //     sender_id: ms.sender_id,
-    //     sender_email: ms.sender_email,
-    //     receiver_id: ms.receiver_id,
-    //     receiver_email: ms.receiver_email,
-    //     content: text,
-    //   };
-    // }
     if (auth?.userID == userID) {
       alert("Sending message to yourself.");
+      return;
     }
 
     let data = {
@@ -65,9 +50,8 @@ export default function UserProfile({ profileContents }) {
         }
       });
       if (res.status === 201) {
-        //getMessages();
-        //setText("");
         alert("Message sent");
+        onClose();
       }
     } catch (e) {
       console.log(e);
@@ -78,11 +62,10 @@ export default function UserProfile({ profileContents }) {
     <div>
       <div className="profile-container">
         <div className="profile-header">
-          <button
-            className="profile-close-btn"
-            value="X"
+          <CloseIcon
+            className="profile-close-icon"
             onClick={onClose}
-          ></button>
+          ></CloseIcon>
         </div>
         <div className="user-info">
           <div className="picture-container">
@@ -97,26 +80,21 @@ export default function UserProfile({ profileContents }) {
           </div>
           <div className="profile-data">
             <div className="username-bio">
-              <span>{username}</span>
-              <span>{bio}</span>
-            </div>
-            <div className="profile-buttons">
-              <textarea
-                className="profile-message-textarea"
-                onChange={(e) => setMessage(e.target.value)}
-              ></textarea>
-              <Button
-                className={"default-button"}
-                content="Message"
-                onClickEvent={addMessage}
-              />
-              {/* <Button
-                className={"outline-button"}
-                content="Close"
-                onClickEvent={onClose}
-              /> */}
+              <h1>{username}</h1>
+              <p>{bio}</p>
             </div>
           </div>
+        </div>
+        <div className="profile-buttons">
+          <textarea
+            className="profile-message-textarea"
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
+          <Button
+            className={"default-button"}
+            content="Message"
+            onClickEvent={addMessage}
+          />
         </div>
       </div>
     </div>
