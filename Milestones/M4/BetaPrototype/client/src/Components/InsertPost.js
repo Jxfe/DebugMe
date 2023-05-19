@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import useAuth from "../Hooks/useAuth";
 import "./style.css";
 import axios from "axios";
+import { customAxios } from "../utils/customAxios";
 import Button from "./Button";
 
 /**
@@ -11,6 +13,7 @@ import Button from "./Button";
 
 function InsertPost() {
   const [post, setPost] = useState("");
+  const { auth } = useAuth();
 
   const submitPost = async (e) => {
     e.preventDefault();
@@ -19,17 +22,23 @@ function InsertPost() {
       return;
     }
 
+    const title = "test";
+    const user_id = 6;
+    const image_path = "/root";
+    const is_premium = true;
+
     try {
       const randomId = Math.floor(Math.random() * (10 - 1) + 1);
       const url = "/api/posts";
       const body = {
+        title: title,
         content: post,
-        id: randomId,
-        user_id: 3,
-        forum_id: 1
+        accessToken: auth?.accessToken,
+        image_path: image_path,
+        is_premium: is_premium
       };
 
-      axios({
+      customAxios({
         method: "post",
         url: url,
         data: body,
@@ -39,8 +48,7 @@ function InsertPost() {
       })
         .then((response) => {
           if (response.data) {
-            window.alert("Your post has ben successfuly created!");
-            window.location.reload();
+            alert("Your post has ben successfuly created!");
           }
         })
         .catch((err) => {

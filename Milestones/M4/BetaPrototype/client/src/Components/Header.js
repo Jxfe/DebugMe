@@ -28,8 +28,16 @@ function Header() {
   };
 
   const capitalizeName = (name) => {
-    const lowerCase = name.toLowerCase();
-    return name.charAt(0).toUpperCase() + lowerCase.slice(1);
+    const words = name.split(" ");
+
+    let str = "";
+    for (let i = 0; i < words.length; i++) {
+      let lower = words[i].toLowerCase();
+      let first = words[i].charAt(0);
+      str += first + lower;
+    }
+
+    return words.join(" ");
   };
 
   const signout = async () => {
@@ -47,28 +55,28 @@ function Header() {
             to="/posts"
             className={pathname.includes("posts") ? "highlight" : null}
           >
-            Posts
+            Forum
           </Link>
           <Link
-            to="/upgradepage"
-            className={pathname.includes("upgradepage") ? "highlight" : null}
+            to="/premiumguides"
+            className={pathname.includes("premiumguides") ? "highlight" : null}
           >
             Premium Guides
           </Link>
-          <Link
+          {/* <Link
             to="/calendar"
             className={pathname.includes("calendar") ? "highlight" : null}
           >
             Calendar
-          </Link>
+          </Link> */}
         </nav>
       </div>
 
       <nav className="wrapper link-wrapper">
         <div>
-          {auth?.username ? `Hello, ${capitalizeName(auth?.username)}!` : ""}
+          {auth?.accessToken ? `Hello, ${capitalizeName(auth?.username)}!` : ""}
         </div>
-        {auth?.username ? (
+        {auth?.accessToken ? (
           <>
             <Link
               to="/mypage/profile"
@@ -76,7 +84,7 @@ function Header() {
             >
               My Page
             </Link>
-            <Badge badgeContent={2} color="primary" className="header-badge">
+            {/* <Badge badgeContent={2} color="primary" className="header-badge">
               <MailIcon
                 color="action"
                 aria-describedby={
@@ -84,7 +92,7 @@ function Header() {
                 }
                 onClick={handleClick}
               />
-            </Badge>
+            </Badge> */}
             <Popover
               id={anchorEl !== null ? "simple-popover" : undefined}
               open={anchorEl !== null}

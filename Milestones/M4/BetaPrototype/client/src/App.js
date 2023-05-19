@@ -4,7 +4,7 @@ import "./App.css";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Calendar from "./Layouts/Calendar/Calendar";
-import MentoringRequest from "./Layouts/MyPage/MentoringRequest";
+import SavedPremiumGuides from "./Layouts/MyPage/SavedPremiumGuides";
 import CustomerRequest from "./Layouts/MyPage/CustomerRequests";
 import MentoringSessions from "./Layouts/MyPage/MentoringSessions";
 import Messages from "./Layouts/MyPage/Messages";
@@ -33,69 +33,75 @@ import Layout from "./Components/Layout";
 import Unauthorized from "./Components/Unauthorized";
 import RequireAuth from "./Components/RequireAuth";
 import PersistLogin from "./Components/PersistLogin";
+import ContactUs from "./Layouts/Contact/Contact";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        {/* Public Routes */}
-        <Route path="/" element={<Main />} />
-        <Route path="signin" element={<SignIn />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="policy" element={<Policy />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* Public Routes */}
+          <Route path="/" element={<Main />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="policy" element={<Policy />} />
+          <Route path="contact" element={<ContactUs />} />
+          <Route path="unauthorized" element={<Unauthorized />} />
 
-        {/* Basic User Routes (Protected)*/}
-        <Route element={<PersistLogin />}>
-          {/* <Route element={<RequireAuth allowedRoles={[0]}/>}> */}
-          <Route element={<RequireAuth />}>
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="posts" element={<Posts />} />
-            <Route path="posts/post" element={<Post />} />
-            <Route path="premiumguides" element={<PremiumGuide />} />
-            <Route path="upgradepage" element={<UpgradePage />} />
-            <Route path="successpage" element={<SuccessPage />} />
-            <Route path="showguide" element={<ShowGuide />} />
-            <Route path="feedback" element={<Feedback />} />
-            <Route path="mypage" element={<MyPage />} />
-            <Route path="myevents" element={<MyEvents />} />
-            <Route path="createevent" element={<CreateEvent />} />
-            <Route path="event/:id" element={<Event />} />
-            <Route path="mypage" exact element={<MyPage />} />
-            <Route path="success" element={<Success />} />
-            <Route path="mypage" exact element={<MyPage />}>
-              <Route path="updatepayment" element={<UpdatePayment />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="mentoring-requests" element={<MentoringRequest />} />
-              <Route path="customer-requests" element={<CustomerRequest />} />
-              <Route
-                path="mentoring-sessions"
-                element={<MentoringSessions />}
-              />
-              <Route path="messages" element={<Messages />} />
+          {/* Basic User Routes (Protected)*/}
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRoles={[0]} />}>
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="posts" element={<Posts />} />
+              <Route path="posts/:id" element={<Post />} />
+              <Route path="premiumguides" element={<PremiumGuide />} />
+              <Route path="premiumguides/:id" element={<ShowGuide />} />
+              <Route path="upgradepage" element={<UpgradePage />} />
+              <Route path="successpage" element={<SuccessPage />} />
+              <Route path="feedback" element={<Feedback />} />
+              <Route path="mypage" element={<MyPage />} />
+              <Route path="myevents" element={<MyEvents />} />
+              <Route path="createevent" element={<CreateEvent />} />
+              <Route path="event/:id" element={<Event />} />
+              <Route path="mypage" exact element={<MyPage />} />
+              <Route path="success" element={<Success />} />
+              <Route path="mypage" exact element={<MyPage />}>
+                <Route path="updatepayment" element={<UpdatePayment />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="saved-premium-guides" element={<SavedPremiumGuides />} />
+                <Route path="customer-requests" element={<CustomerRequest />} />
+                <Route
+                  path="mentoring-sessions"
+                  element={<MentoringSessions />}
+                />
+                <Route path="messages" element={<Messages />} />
+              </Route>
+              <Route path="CreateGuide" element={<CreateGuide />} />
+              <Route path="myevents/eventmessages" element={<EventMessages />} />
             </Route>
-            <Route path="CreateGuide" element={<CreateGuide />} />
-            <Route path="myevents/eventmessages" element={<EventMessages />} />
           </Route>
+
+          {/* Premium User Routes (Protected)*/}
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRoles={[0, 1]} />}></Route>
+          </Route>
+
+          {/* Mentor  Routes (Protected)*/}
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRoles={[0, 2]} />}></Route>
+          </Route>
+
+          {/* Admin Routes (Protected)*/}
+          <Route element={<RequireAuth allowedRoles={[3]} />}></Route>
+
+          {/* Catch All Routes */}
+          <Route path="*" element={<Error />} />
         </Route>
-
-        {/* Premium User Routes (Protected)*/}
-        <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={[0, 1]} />}></Route>
-        </Route>
-
-        {/* Mentor  Routes (Protected)*/}
-        <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={[0, 2]} />}></Route>
-        </Route>
-
-        {/* Admin Routes (Protected)*/}
-        <Route element={<RequireAuth allowedRoles={[3]} />}></Route>
-
-        {/* Catch All Routes */}
-        <Route path="*" element={<Error />} />
-      </Route>
-    </Routes>
+      </Routes>
+      <ToastContainer />
+    </>
   );
 }
 

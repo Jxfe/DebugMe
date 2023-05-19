@@ -1,54 +1,74 @@
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import React, { useContext, useEffect, useState } from "react"; // Needed for AWS since it's using node 16
+import { customAxios } from "../../utils/customAxios";
+import AuthContext from "../../Context/AuthProvider";
 import Button from "../../Components/Button";
 import Textare from "../../Components/Textarea";
 import "./mypage.css";
 
-const mentoringLists = [
-  {
-    id: 1,
-    name: "samuel",
-    requestedDate: "4-24",
-  },
-  {
-    id: 2,
-    name: "Jiji",
-    requestedDate: "3-28",
-  },
-  {
-    id: 3,
-    name: "Josh",
-    requestedDate: "3-24",
-  },
-  {
-    id: 4,
-    name: "Amy",
-    requestedDate: "3-21",
-  },
-];
-
-const messageList = [
-  {
-    id: 1,
-    send: false,
-    content: "Hello",
-  },
-  {
-    id: 2,
-    send: false,
-    content: "How are you?",
-  },
-];
-
 function Messages() {
-  const [selectedMentoring, setSelectedMentoring] = useState(mentoringLists[0]);
+  const { auth } = useContext(AuthContext);
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState(messageList);
+  const [messages, setMessages] = useState({});
+  const [uesrList, setUserList] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
 
-  const addMessage = () => {
-    setMessages([
-      ...messages,
-      { id: messages.length + 1, send: true, content: text },
-    ]);
+  const getMessages = async () => {
+    try {
+      const url = "/api/messages";
+      const res = await customAxios(url);
+      const data = res.data;
+      const temp = [];
+      for (const key in data) {
+        temp.push(key);
+        if (selectedUser === "") setSelectedUser(key);
+      }
+      setMessages(res.data);
+      setUserList(temp);
+    } catch (e) {
+      setMessages({});
+    }
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, []);
+
+  const addMessage = async () => {
+    let data = {};
+    const ms = messages[selectedUser][0];
+    if (ms.sender_email === selectedUser) {
+      data = {
+        receiver_id: ms.sender_id,
+        receiver_email: ms.sender_email,
+        sender_id: ms.receiver_id,
+        sender_email: ms.receiver_email,
+        content: text,
+      };
+    } else {
+      data = {
+        sender_id: ms.sender_id,
+        sender_email: ms.sender_email,
+        receiver_id: ms.receiver_id,
+        receiver_email: ms.receiver_email,
+        content: text,
+      };
+    }
+    try {
+      const res = await customAxios({
+        method: "post",
+        url: "/api/messages",
+        data,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      if (res.status === 201) {
+        getMessages();
+        setText("");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -56,48 +76,58 @@ function Messages() {
       <h1>Messages</h1>
       <div className="chatting-layout">
         <div className="mypage-mentoring-list">
-          {mentoringLists.map((each) => {
+          {uesrList.map((each) => {
             return (
               <div
-                key={each.id}
+                key={each}
+                id={each === selectedUser ? "mypage-selected-name" : null}
                 className="mypage-request-name"
-                onClick={() => setSelectedMentoring(each)}
+                onClick={() => setSelectedUser(each)}
               >
-                {each.name}
+                {each}
               </div>
             );
           })}
         </div>
         <div className="message-box">
-          {selectedMentoring && (
-            <div className="message-detail">
-              {messages.map((each) => {
+          <div className="mypage-message-detail">
+            {selectedUser &&
+              messages[selectedUser].map((each) => {
                 return (
                   <div
                     key={each.id}
-                    className={each.send ? "send-message" : "receive-message"}
+                    className={
+                      each.sender_email === auth.email
+                        ? "send-message"
+                        : "receive-message"
+                    }
                   >
                     <div className="message-label">
-                      {each.send ? "Me" : selectedMentoring.name}
+                      {each.sender_email === auth.email ? "Me" : selectedUser}
                     </div>
                     <div>{each.content}</div>
                   </div>
                 );
               })}
-              <div></div>
-            </div>
-          )}
-          <Textare
-            value={text}
-            onChangeEvent={(e) => setText(e.target.value)}
-          />
-          <div>
-            <Button
-              className="default-button"
-              onClickEvent={addMessage}
-              content="SEND"
-            />
           </div>
+          {
+            selectedUser &&
+            <>
+              <Textare
+                className="default-textarea message-textarea"
+                rows={3}
+                value={text}
+                onChangeEvent={(e) => setText(e.target.value)}
+              />
+              <div>
+                <Button
+                  className="default-button"
+                  onClickEvent={addMessage}
+                  content="SEND"
+                />
+              </div>
+            </>
+          }
         </div>
       </div>
     </div>

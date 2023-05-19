@@ -1,16 +1,35 @@
-import React from "react"; // Needed for AWS since it's using node 16
+import React, { useEffect, useState } from "react"; // Needed for AWS since it's using node 16
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
-import MentoringRequest from "./MentoringRequest";
+import SavedPremiumGuides from "./SavedPremiumGuides";
 import CustomerRequest from "./CustomerRequests";
 import MentoringSessions from "./MentoringSessions";
 import Messages from "./Messages";
 import "./mypage.css";
 import Profile from "./Profile";
 import UpdatePayment from "../UpdatePayment/UpdatePayment";
+import { customAxios } from "../../utils/customAxios";
 
 function MyPage() {
   const { pathname } = useLocation();
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const url = "/api/profile";
+        const res = await customAxios(url);
+        const data = res.data;
+        setProfile(data);
+        console.log(data)
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getProfile();
+  }, [])
+
   return (
     <div className="mypage-layout">
       <div className="mypage-content">
@@ -26,7 +45,7 @@ function MyPage() {
           >
             Profile
           </Link>
-          <Link
+          {/* <Link
             to="/mypage/updatepayment"
             className={
               pathname.includes("updatepayment")
@@ -35,7 +54,7 @@ function MyPage() {
             }
           >
             Financial Information
-          </Link>
+          </Link> */}
           <Link
             to="/mypage/messages"
             className={
@@ -47,16 +66,6 @@ function MyPage() {
             Direct Messages
           </Link>
           <Link
-            to="/mypage/mentoring-requests"
-            className={
-              pathname.includes("mentoring-requests")
-                ? "highlight mypage-nav-link"
-                : "mypage-nav-link"
-            }
-          >
-            Mentoring Session Requests
-          </Link>
-          <Link
             to="/mypage/mentoring-sessions"
             className={
               pathname.includes("mentoring-sessions")
@@ -65,6 +74,16 @@ function MyPage() {
             }
           >
             My Mentoring Sessions
+          </Link>
+          <Link
+            to="/mypage/saved-premium-guides"
+            className={
+              pathname.includes("saved-premium-guides")
+                ? "highlight mypage-nav-link"
+                : "mypage-nav-link"
+            }
+          >
+            Saved Premium Guides
           </Link>
           {/* <Link to="/myevents" className="mypage-nav-link">
             My Events
@@ -78,9 +97,9 @@ function MyPage() {
           <Routes>
             <Route path="profile" element={<Profile />} />
             <Route path="updatepayment" element={<UpdatePayment />} />
-            <Route path="mentoring-requests" element={<MentoringRequest />} />
+            <Route path="saved-premium-guides" element={<SavedPremiumGuides saved={profile.saved} />} />
             <Route path="customer-requests" element={<CustomerRequest />} />
-            <Route path="mentoring-sessions" element={<MentoringSessions />} />
+            <Route path="mentoring-sessions" element={<MentoringSessions menteeSessions={profile.menteeSessions} mentorSessions={profile.mentorSessions} mentoringRequests={profile.mentoringRequests} />} />
             <Route path="messages" element={<Messages />} />
           </Routes>
         </div>

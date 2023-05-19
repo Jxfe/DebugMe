@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
 import "./style.css";
-import axios from "axios";
+import { customAxios } from "../utils/customAxios";
 
 /**
  * className: default-button | disabled-button
@@ -21,7 +21,7 @@ function SearchPost() {
 
     try {
       const url = `/api/posts?search=${keyword}`;
-      const res = await axios(url);
+      const res = await customAxios(url);
       setSearchList(res.data);
     } catch (e) {
       setSearchList([]);

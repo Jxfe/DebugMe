@@ -44,11 +44,13 @@ function SignIn() {
       }
     })
       .then((response) => {
+        const userID = response.data.user.id;
+        const name = response.data.user.username;
         const accessToken = response.data.user.access_token;
         const userRank = response.data.user.userRank;
         const roles = response.data.user.roles;
 
-        setAuth({ username, email, userRank, roles, accessToken });
+        setAuth({ userID, name, email, userRank, roles, accessToken });
 
         setUsername("");
         setEmail("");
@@ -78,7 +80,7 @@ function SignIn() {
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <input
+          {/* <input
             ref={inputRef}
             type="text"
             name="username"
@@ -87,10 +89,11 @@ function SignIn() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-          />
+          /> */}
         </div>
         <div className="form-group">
           <input
+            ref={inputRef}
             type="text"
             name="email"
             id="email"

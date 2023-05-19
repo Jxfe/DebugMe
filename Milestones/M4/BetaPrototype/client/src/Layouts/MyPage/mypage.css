@@ -44,13 +44,14 @@
   align-self: flex-end;
 }
 
-.message-detail {
-  min-height: 40vh;
+.mypage-message-detail {
   background-color: var(--lightgray);
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  height: 60vh;
+  overflow: scroll;
 }
 
 .message-box {
@@ -138,4 +139,53 @@
 
 .mypage-profile {
   margin-top: 40px;
+}
+
+#mypage-selected-name {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.mypage-saved-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mentor-container {
+  color: var(--black);
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.mentor-container>h2 {
+  color: var(--black);
+  letter-spacing: 4px;
+  text-align: left;
+}
+
+.mentor-container>p {
+  text-align: left;
+}
+
+.mentor-box {
+  border-bottom: 2px solid var(--gray);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.mentor-box>div {
+  width: 400px;
+}
+
+.user-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.user-input-box {
+  width: 100px;
+  
 }

@@ -46,12 +46,14 @@
 
 .footer-wrapper {
   background-color: var(--lightgray);
-  height: 120px;
-  padding: 20px;
+  height: 110px;
+  padding: 45px 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 18px;
+  font-size: 17px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .button {
@@ -99,6 +101,10 @@
   border: 1px solid var(--darkgray);
   background-color: var(--lightgray);
   border-radius: 8px;
+}
+
+.message-textarea {
+  height: 120px;
 }
 
 .highlight {
@@ -155,11 +161,11 @@
   display: flex;
   flex-direction: row;
   width: 90%;
+  min-height: 80px;
   justify-content: space-between;
   margin: 10px auto;
-  padding: 0 10px;
+  padding: 5px;
   border: 1px solid var(--black);
-  border-radius: 10px;
 }
 
 .post-description:hover {
@@ -169,42 +175,133 @@
 /* Create Post */
 .post-popup-container {
   position: fixed;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--white);
   z-index: 50;
-  width: 800px;
-  height: 500px;
+  width: 50vw;
+  height: 600px;
   border: 1px solid var(--black);
   border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
 }
 
 .create-post-info {
-  margin: 15px;
-  width: 70%;
+  margin: 0 auto;
+  height: 90%;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid;
-  padding-right: 10px;
 }
 
-.create-post-utils {
+.new-post-form {
+  width: 90%;
+}
+
+.form-buttons {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 5px;
-  width: 25%;
-  height: 95%;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.input-box {
-  padding: 8px;
-  border: 1px solid var(--darkgray);
+.new-post-body {
+  height: 300px;
+}
+
+.post-date {
+  margin-left: 10px;
+}
+
+.post-likes {
+  margin-right: 5px;
+  margin-left: 3px;
+  vertical-align: top;
+}
+
+.post-count {
+  margin-top: 0px;
+  margin-left: 3px;
+  vertical-align: top;
+}
+
+/* User Profile Modal */
+.profile-container {
+  height: 375px;
+  width: 600px;
+  border: 1px solid black;
   background-color: var(--lightgray);
-  border-radius: 8px;
-  width: calc(100% - 20px);
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  padding: 25px;
+  padding-top: 5px;
+  padding-right: 5px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.picture-container {
+  padding-top: 0;
+  width: 150px;
+}
+
+.profile-img {
+  height: 150px;
+  width: 150px;
+}
+
+.username-bio {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.username-bio h1 {
+  margin: 0;
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: end;
+  padding-right: 20px;
+}
+
+.profile-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-right: 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0px;
+  padding: 0px;
+}
+
+.profile-close-btn {
+  width: 20px;
+  height: 30px;
+  align-items: center;
+}
+
+.profile-message-textarea {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 5px;
+}
+
+.profile-close-icon:hover {
+  cursor: pointer;
 }

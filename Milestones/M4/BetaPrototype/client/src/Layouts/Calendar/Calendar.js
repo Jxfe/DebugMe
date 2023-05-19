@@ -31,13 +31,13 @@ function Calendar() {
   }
 
   var state_1 = (
-    <div class="calendar-container">
-      <div class="calendar">
-        <div class="month">
+    <div className="calendar-container">
+      <div className="calendar">
+        <div className="month">
           <h2>April 2023</h2>
         </div>
 
-        <ul class="weekdays">
+        <ul className="weekdays">
           <li>Mo</li>
           <li>Tu</li>
           <li>We</li>
@@ -47,7 +47,7 @@ function Calendar() {
           <li>Su</li>
         </ul>
 
-        <ul class="days">
+        <ul className="days">
           <li></li>
           <li></li>
           <li></li>
@@ -86,8 +86,8 @@ function Calendar() {
         </ul>
       </div>
 
-      <div class="filter-container">
-        <div class="calendar-filters">
+      <div className="filter-container">
+        <div className="calendar-filters">
           <Button className="filter-button" content="Type" />
           <Button
             className="filter-button"
@@ -96,25 +96,25 @@ function Calendar() {
           />
         </div>
 
-        <div class="event-buttons">
+        <div className="event-buttons">
           <Link to="/myevents">
             <Button className="btn" content="My Events" />
           </Link>
-          <button class="event-button" onClick={() => goToNState(4)}>
-            <div class="event-date">May 10</div>
-            <div class="event-description">
+          <button className="event-button" onClick={() => goToNState(4)}>
+            <div className="event-date">May 10</div>
+            <div className="event-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </div>
           </button>
-          <button class="event-button">
-            <div class="event-date">May 15</div>
-            <div class="event-description">
+          <button className="event-button">
+            <div className="event-date">May 15</div>
+            <div className="event-description">
               Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </div>
           </button>
-          <button class="event-button">
-            <div class="event-date">May 20</div>
-            <div class="event-description">
+          <button className="event-button">
+            <div className="event-date">May 20</div>
+            <div className="event-description">
               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </div>
@@ -125,13 +125,13 @@ function Calendar() {
   );
 
   var state_2 = (
-    <div class="calendar-container">
-      <div class="calendar">
-        <div class="month">
+    <div className="calendar-container">
+      <div className="calendar">
+        <div className="month">
           <h2>April 2023</h2>
         </div>
 
-        <ul class="weekdays">
+        <ul className="weekdays">
           <li>Mo</li>
           <li>Tu</li>
           <li>We</li>
@@ -141,7 +141,7 @@ function Calendar() {
           <li>Su</li>
         </ul>
 
-        <ul class="days">
+        <ul className="days">
           <li></li>
           <li></li>
           <li></li>
@@ -180,8 +180,8 @@ function Calendar() {
         </ul>
       </div>
 
-      <div class="filter-container">
-        <div class="calendar-filters">
+      <div className="filter-container">
+        <div className="calendar-filters">
           <Button className="filter-button" content="Type" />
           <Button
             className="filter-button"
@@ -190,7 +190,7 @@ function Calendar() {
           />
         </div>
 
-        <div class="event-buttons">
+        <div className="event-buttons">
           <Button
             className="filter-button"
             onClickEvent={goToFiltedValues}
@@ -217,13 +217,13 @@ function Calendar() {
   );
 
   var state_3 = (
-    <div class="calendar-container">
-      <div class="calendar">
-        <div class="month">
+    <div className="calendar-container">
+      <div className="calendar">
+        <div className="month">
           <h2>April 2023</h2>
         </div>
 
-        <ul class="weekdays">
+        <ul className="weekdays">
           <li>Mo</li>
           <li>Tu</li>
           <li>We</li>
@@ -233,7 +233,7 @@ function Calendar() {
           <li>Su</li>
         </ul>
 
-        <ul class="days">
+        <ul className="days">
           <li></li>
           <li></li>
           <li></li>
@@ -272,8 +272,8 @@ function Calendar() {
         </ul>
       </div>
 
-      <div class="filter-container">
-        <div class="calendar-filters">
+      <div className="filter-container">
+        <div className="calendar-filters">
           <Button className="filter-button" content="Type" />
           <Button
             className="filter-button"
@@ -282,10 +282,10 @@ function Calendar() {
           />
         </div>
 
-        <div class="event-buttons">
-          <button class="event-button" onClick={() => goToNState(4)}>
-            <div class="event-date">May 10</div>
-            <div class="event-description">
+        <div className="event-buttons">
+          <button className="event-button" onClick={() => goToNState(4)}>
+            <div className="event-date">May 10</div>
+            <div className="event-description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </div>
           </button>
@@ -295,9 +295,9 @@ function Calendar() {
   );
   var state_4 = (
     <div>
-      <div class="calendar-container">
-        <div class="calendar">
-          <div class="month">
+      <div className="calendar-container">
+        <div className="calendar">
+          <div className="month">
             <h2>May 10</h2>
           </div>
 
@@ -305,12 +305,12 @@ function Calendar() {
             <li>From Tom</li>
           </ul>
 
-          <ul class="days">
+          <ul className="days">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </ul>
         </div>
 
-        <div class="filter-container">
+        <div className="filter-container">
           <img
             src="https://media.istockphoto.com/id/1181250359/photo/business-people.jpg?s=1024x1024&w=is&k=20&c=YNRK_RMfy98iOmkkJwzcDJg2uoZqmymNyXbyvKo7qIU="
             alt="alternatetext"
@@ -319,7 +319,7 @@ function Calendar() {
           />
         </div>
       </div>
-      <div class="calendar-container">
+      <div className="calendar-container">
         <Button
           className="filter-button"
           onClickEvent={goToBase}
@@ -336,19 +336,19 @@ function Calendar() {
 
   var state_5 = (
     <div>
-      <div class="calendar-container">
-        <div class="calendar">
-          <div class="month">
+      <div className="calendar-container">
+        <div className="calendar">
+          <div className="month">
             <h2>Thank you for Attending!</h2>
           </div>
 
-          <ul class="days">
+          <ul className="days">
             <p>How many people will attend?</p>
             <input type="text" id="fname" name="fname" />
           </ul>
         </div>
       </div>
-      <div class="calendar-container">
+      <div className="calendar-container">
         <Button
           className="filter-button"
           onClickEvent={goToConfirm}
@@ -360,14 +360,14 @@ function Calendar() {
 
   var state_6 = (
     <div>
-      <div class="calendar-container">
-        <div class="calendar">
-          <div class="month">
+      <div className="calendar-container">
+        <div className="calendar">
+          <div className="month">
             <h2>Attendance Confirmed</h2>
           </div>
         </div>
       </div>
-      <div class="calendar-container">
+      <div className="calendar-container">
         <Button
           className="filter-button"
           onClickEvent={goToBase}

@@ -1,36 +1,186 @@
-import React from 'react'
-import Button from '../../Components/Button';
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+import Button from "../../Components/Button";
+import { Link, useParams } from "react-router-dom";
+import { customAxios } from "../../utils/customAxios";
+import useAuth from "../../Hooks/useAuth";
 import "./style.css";
-import { Link } from "react-router-dom";
+import LikeButton from "../../Components/LikeButton";
+import UserProfile from "../../Components/UserProfile";
 
 function Post() {
-  return (
-    <div className='post-container'>
-      <div className='post-contents'>
-          <div className='contents-left'>
-              <div className='post-body'>
-                  <h1>Post Title</h1>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec dui nunc mattis enim ut tellus elementum. Luctus accumsan tortor posuere ac ut. Turpis in eu mi bibendum neque. Vulputate odio ut enim blandit volutpat maecenas. Nunc sed augue lacus viverra vitae congue eu consequat ac. Interdum varius sit amet mattis. Erat pellentesque adipiscing commodo elit. Euismod nisi porta lorem mollis aliquam ut. Nulla aliquet porttitor lacus luctus accumsan tortor posuere ac. Consequat ac felis donec et odio pellentesque. Elit duis tristique sollicitudin nibh sit amet commodo. Ultricies tristique nulla aliquet enim tortor at. Tempor orci dapibus ultrices in. In eu mi bibendum neque egestas congue quisque. Vestibulum rhoncus est pellentesque elit ullamcorper dignissim. Leo vel orci porta non pulvinar neque laoreet suspendisse. Nullam non nisi est sit amet facilisis magna etiam. Blandit aliquam etiam erat velit scelerisque.</p>
-              </div>
-              
-              <div className='post-comments'>
-                <h1>Comments</h1>
-                <textarea className='comment-input' placeholder='Leave a comment'></textarea>
-                <Button content="Comment" onClickEvent={() => {alert("Comment submitted")}}/>
-              </div>    
-          </div>
+  const [profileShowing, setProfileShowing] = useState(false);
+  const [profileContents, setProfileContents] = useState({});
+  const [postContents, setPostContents] = useState({});
+  const [newComment, setNewComment] = useState("");
+  const [isLiked, setLiked] = useState(false);
+  const { auth } = useAuth();
+  const { id } = useParams();
 
-          <div className='contents-right'>
-              <div>
-                  <h2>Author</h2>
-                  <p>Author Name</p>
-                  <Link to="/mypage/messages" >
-                    <Button className={"default-button"} content="Message"/> 
-                  </Link>
-              </div>
-          </div>        
+  useEffect(() => {
+    getPostContents();
+  }, []);
+
+  useEffect(() => {
+    checkPostLike();
+  }, [postContents]);
+
+  function showProfile(userID, profilePic, username, bio, onClose) {
+    setProfileContents({
+      userID: userID,
+      profilePic: profilePic,
+      username: username,
+      bio: bio,
+      onClose: onClose
+    });
+
+    setProfileShowing(true);
+  }
+  function hideProfile() {
+    setProfileShowing(false);
+  }
+
+  const getPostContents = async () => {
+    const url = `/api/getpost?id=${id}`;
+    const response = await customAxios(url);
+    setPostContents(response?.data);
+  };
+
+  const updateLikeStatus = async (likeStatus) => {
+    let url = "";
+    likeStatus ? (url = "/api/dislikepost") : (url = "/api/likepost");
+
+    await customAxios({
+      method: "post",
+      url: url,
+      data: {
+        post_id: id
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    });
+  };
+
+  const renderComments = () => {
+    return postContents?.replies?.map((item, index) => {
+      return (
+        <div key={index} id={index} className="comment-container">
+          <p className="comment-author">
+            <Link
+              to="#"
+              onClick={() => {
+                showProfile(
+                  item?.author?.id,
+                  "",
+                  item?.author?.name,
+                  `${item?.author?.name}'s Bio goes here.`,
+                  hideProfile
+                );
+              }}
+            >
+              {item.author?.name}
+            </Link>
+          </p>
+          <p>{moment.utc(item?.created_at).fromNow()}</p>
+          <p className="comment-content">{item?.content}</p>
+        </div>
+      );
+    });
+  };
+
+  const checkPostLike = () => {
+    const user = postContents?.likes?.filter(
+      (user) => user.author.email === auth?.email
+    );
+
+    if (user?.length > 0) {
+      setLiked(true);
+    }
+    return isLiked;
+  };
+
+  const handleSubmit = async () => {
+    await customAxios({
+      method: "post",
+      url: "/api/addcomment",
+      data: {
+        post_id: id,
+        content: newComment
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    });
+  };
+
+  return (
+    <div className="post-display-container">
+      <div className="post-left">
+        <div className="post-header">
+          <div>
+            <h1>{postContents?.title}</h1>
+            <Link
+              to="#"
+              onClick={() => {
+                showProfile(
+                  postContents?.author?.id,
+                  "",
+                  postContents?.author.name,
+                  `${postContents?.author?.name}'s Bio goes here.`,
+                  hideProfile
+                );
+              }}
+            >
+              {postContents?.author?.name}
+            </Link>
+            <br />
+            <span>
+              {`Date: ${moment(postContents?.created_at).format(
+                "MMM Do, YYYY"
+              )}`}
+            </span>
+          </div>
+        </div>
+
+        <p>{postContents?.content}</p>
+        <div className="likeBtn-container">
+          <LikeButton
+            isLiked={isLiked}
+            content="Like"
+            icon="Hand"
+            callBack={updateLikeStatus}
+          />
+        </div>
       </div>
+
+      <div className="post-right">
+        <div className="post-comments-container">
+          {postContents?.replies?.length > 0 ? (
+            renderComments()
+          ) : (
+            <p>No comments</p>
+          )}
+        </div>
+        <div className="new-comment-container">
+          <form onSubmit={handleSubmit}>
+            <textarea
+              className="new-comment-textarea"
+              type="text"
+              name="newComment"
+              id="newComment"
+              placeholder="Leave a new comment"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              required
+            />
+            <Button className="default-button" content="Submit" />
+          </form>
+        </div>
+      </div>
+      {profileShowing && <UserProfile profileContents={profileContents} />}
     </div>
-  )
+  );
 }
- export default Post;
+
+export default Post;

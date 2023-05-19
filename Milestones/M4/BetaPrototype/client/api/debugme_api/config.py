@@ -24,6 +24,16 @@ class Config:
     AWS_DB_HOSTNAME=os.environ.get('AWS_DB_HOSTNAME')
     AWS_DB_NAME=os.environ.get('AWS_DB_NAME')
 
+    # AWS Bucket settings
+    AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_DEFAULT_REGION='us-west-2'
+    AWS_BUCKET_NAME=os.environ.get('BUCKET_NAME')
+
+    # Flask Botox (boto3) settings
+    BOTOX_SERVICES=["s3", "ses", "sqs"]
+    #BOTOX_OPTIONAL_PARAMS={'s3': {'args':{'Bucket': AWS_BUCKET_NAME}}}
+
 class ProductionConfig(Config):
     """Production Credentials go here, like production DB settings
     Args:

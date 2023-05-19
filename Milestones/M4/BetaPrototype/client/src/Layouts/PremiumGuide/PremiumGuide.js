@@ -1,213 +1,122 @@
-import React from "react"; // Needed for AWS since it's using node 16
-import "./style.css";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { customAxios } from "../../utils/customAxios";
+import "./style.css";
+import useAuth from "../../Hooks/useAuth";
+
+import Button from "../../Components/Button";
+import PostDescription from "../../Components/PostDescription";
+import GuideCard from "../../Components/GuideCard";
+import Pagination from "../../Components/Pagination";
+
+const ITEMS_PER_PAGE = 3;
 
 function PremiumGuides() {
+  const [guidesList, setGuidesList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { auth } = useAuth();
+  const userRank = auth?.userRank;
+
+  useEffect(() => {
+    getGuidesList();
+  }, []);
+
+  const currentGuideList = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const lastPageIndex = firstPageIndex + ITEMS_PER_PAGE;
+
+    return guidesList?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, guidesList]);
+
+  const getGuidesList = async () => {
+    await customAxios(`/api/guides?search=`).then((res) => {
+      setGuidesList(res.data);
+      console.log(res.data);
+    });
+  };
+
+  const renderGuidesList = () => {
+    return currentGuideList?.map((item, index) => {
+      return (
+        <Link key={index} id={index} to={`/premiumguides/${item.id}`}>
+          <GuideCard
+            id={item?.id}
+            img={item?.image_url} // Image URL is now directly used here
+            title={item?.title}
+            author={item?.author?.name}
+            rating={Math.floor(item?.rating)}
+          />
+        </Link>
+      );
+    });
+  };
+  
   return (
     <div>
-      {/*      <div class="guide-container">
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Title</th>
-              <th>Author</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>How to ace interviews?</td>
-              <td>Anna</td>
-              <td>
-                <Link to="/upgradepage" class="feedback-btn">
-                  Open the guide
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Important leetcode problems</td>
-              <td>Josh</td>
-              <td>
-                <Link to="/upgradepage" class="feedback-btn">
-                  Open the guide
-                </Link>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>The most important algorithm questions</td>
-              <td>Mark</td>
-              <td>
-                <Link to="/showguide" class="feedback-btn">
-                  Open the guide
-                </Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <Link to="/createguide" className="create-btn">
-          Create A Premium Guide
-        </Link>
-      </div> */}
       <div className="album-container">
-        <h3 className="header">
-          Expand your career opportunities with Premium Guides by our Mentors
-        </h3>
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
+        <div className="guides-header">
+          <div className="guides-info">
+            <div>
+              <p className="guides-info-title">What are Premium Guides?</p>
+              <p>
+                Premium Guides are specialized resources written by DebugMe's
+                Mentors, users with previous internship experience or advanced
+                knowledge related to internship hunting.
+              </p>
+            </div>
 
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1353816198/photo/mobile-display-with-logo-of-facebook-whatsapp-and-instagram-apps-in-hand-against-blurred-meta.jpg?s=1024x1024&w=is&k=20&c=RZuTpxq_4IQL7-um_vbLSo8MxY70MB_iHMIjVKBEghs="
-                alt="Forest"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to pass Meta internship interview?</div>
-            <div className="author">Jose Ortiz</div>
+            <div>
+              <p className="guides-info-title">Want more help?</p>
+              <p>
+                You can request a one-on-one Mentoring Session with any of our
+                Mentors! From simple questions to resume reviews, this is your
+                opportunity to get the specialized help you deserve from someone
+                with relevant expertise.
+              </p>
+            </div>
           </div>
-        </Link>
 
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">Nail data structures and algorithms!</div>
-            <div className="author">Jose Ortiz</div>
+          <div className="guides-create">
+            <p>Do you have what it takes to be a Mentor?</p>
+            <Link to="/createguide">
+              <Button className={"default-button"} content="Create New Guide" />
+            </Link>
           </div>
-        </Link>
+        </div>
 
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
+        {(userRank === 0 || userRank === 2) && (
+          <div className="basic-user-guides">
+            <div className="upgrade-notice">
+              <p>Upgrade to our Premium Plan to gain access to the Premium Guides!</p>
+              <Link to="/mypage/profile">
+                <Button className={"default-button"} content="Upgrade!" />
+              </Link>
+            </div>
+
+            <div className="disabled-guides">
+              <div className="guides-container">{renderGuidesList()}</div>
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={guidesList?.length}
+                pageSize={ITEMS_PER_PAGE}
+                onPageChange={(page) => setCurrentPage(page)}
               />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1353816198/photo/mobile-display-with-logo-of-facebook-whatsapp-and-instagram-apps-in-hand-against-blurred-meta.jpg?s=1024x1024&w=is&k=20&c=RZuTpxq_4IQL7-um_vbLSo8MxY70MB_iHMIjVKBEghs="
-                alt="Forest"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to pass Meta internship interview?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">Nail data structures and algorithms!</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1353816198/photo/mobile-display-with-logo-of-facebook-whatsapp-and-instagram-apps-in-hand-against-blurred-meta.jpg?s=1024x1024&w=is&k=20&c=RZuTpxq_4IQL7-um_vbLSo8MxY70MB_iHMIjVKBEghs="
-                alt="Forest"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to pass Meta internship interview?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1202250586/photo/program-code-javascript-php-html-css-of-site-web-development-programmer-workflow-source-code.jpg?s=1024x1024&w=is&k=20&c=bC_rM0KXTvutSphhakTyZvtmB4qO5R4nCdzbpp5IUMI="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">Nail data structures and algorithms!</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/showguide">
-          <div className="gallery">
-            <a target="_blank">
-              <img
-                src="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
-                alt="Cinque Terre"
-                width="600"
-                height="400"
-              />
-            </a>
-            <div className="desc">How to ace interview at Amazon?</div>
-            <div className="author">Jose Ortiz</div>
-          </div>
-        </Link>
-
-        <Link to="/createguide" className="create-guide-btn">
-          Create A Premium Guide
-        </Link>
+            </div>
+          </div>  
+        )}
+        {(userRank === 1 || userRank === 3) && (
+          <div>
+            <div className="guides-container">{renderGuidesList()}</div>
+            <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={guidesList?.length}
+              pageSize={ITEMS_PER_PAGE}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>  
+        )}
       </div>
     </div>
   );
