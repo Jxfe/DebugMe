@@ -163,6 +163,10 @@
   text-align: left;
 }
 
+.mentor-container>p {
+  text-align: left;
+}
+
 .mentor-box {
   border-bottom: 2px solid var(--gray);
   padding: 20px;

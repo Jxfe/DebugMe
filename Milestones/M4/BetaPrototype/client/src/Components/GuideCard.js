@@ -5,7 +5,7 @@ import "../Layouts/PremiumGuide/style.css";
 function GuideCard({ id, img, title, author, rating }) {
   return (
     <div className="gallery">
-      <img src={img} width="600" height="400" />
+      <img src={img} width="100%" height="400" />
       <div className="desc">{title}</div>
       <div className="author">{author}</div>
 
