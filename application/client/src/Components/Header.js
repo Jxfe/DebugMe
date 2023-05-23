@@ -1,5 +1,5 @@
 import "./style.css";
-import React, { useState } from "react"; // Needed for AWS since it's using node 16
+import React, { useEffect, useState } from "react"; // Needed for AWS since it's using node 16
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import Badge from "@mui/material/Badge";
@@ -9,10 +9,19 @@ import useLogout from "../Hooks/useLogout";
 
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [name, setName] = useState("");
   const { pathname } = useLocation();
   const { auth } = useAuth();
   const navigate = useNavigate();
   const logout = useLogout();
+
+  useEffect(() => {
+    setName(auth?.username);
+  }, []);
+
+  useEffect(() => {
+    setName(auth?.username);
+  }, [auth]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,16 +37,16 @@ function Header() {
   };
 
   const capitalizeName = (name) => {
-    const words = name.split(" ");
+    const words = name?.split(" ");
 
     let str = "";
-    for (let i = 0; i < words.length; i++) {
+    for (let i = 0; i < words?.length; i++) {
       let lower = words[i].toLowerCase();
       let first = words[i].charAt(0);
       str += first + lower;
     }
 
-    return words.join(" ");
+    return words?.join(" ");
   };
 
   const signout = async () => {
@@ -74,7 +83,10 @@ function Header() {
 
       <nav className="wrapper link-wrapper">
         <div>
-          {auth?.accessToken ? `Hello, ${capitalizeName(auth?.username)}!` : ""}
+          {name && auth?.accessToken ? `Hello, ${capitalizeName(name)}!` : ""}
+          {/* {auth?.accessToken
+            ? `Hello, ${capitalizeName(auth?.username)}!`
+            : name} */}
         </div>
         {auth?.accessToken ? (
           <>
