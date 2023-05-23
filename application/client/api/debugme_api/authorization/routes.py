@@ -4,8 +4,17 @@ from datetime import timezone
 from flask import Blueprint, request, jsonify, abort
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, get_jwt, set_access_cookies, unset_jwt_cookies, set_refresh_cookies
+from sqlalchemy import or_
 from ..debugme_toolkit import db
 from ..models.User import User, UserSchema
+from ..models.Feedback import Feedback
+from ..models.Saved import Saved
+from ..models.Premium import Premium
+from ..models.Likes import Likes
+from ..models.Mentoring import MentoringSession
+from ..models.Post import Post
+from ..models.Reply import Reply
+from ..models.Messages import Messages
 
 ROLES = {"basic": 0, "premium": 1, "mentor": 2, "premium_mentor": 3, "admin": 4}
 
@@ -159,6 +168,70 @@ def whoami():
                         'image_path': user.image_path
                         })
     return response, 200
+
+@authorization.route('/deleteaccount', methods=['DELETE'])
+@jwt_required(refresh=True)
+def delete_user_account():
+    user_id = get_jwt_identity()
+    delete_account(user_id=user_id)
+
+    response = {'message': 'Account has been deleted'}
+
+    return jsonify(response), 200
+
+def delete_account(user_id):
+    delete_messages(user_id=user_id)
+    delete_guides(user_id=user_id)
+    delete_feedbacks(user_id=user_id)
+    delete_likes(user_id=user_id)
+    delete_mentoring_sessions(user_id=user_id)
+    delete_comments(user_id=user_id)
+    delete_posts(user_id=user_id)
+    delete_user(user_id=user_id)
+
+def delete_user(user_id):
+    User.query.filter(User.id==user_id).delete()
+    db.session.commit()
+
+def delete_guides(user_id):
+    guides = Premium.query.filter(Premium.user_id==user_id)
+    for guide in guides:
+        Feedback.query.filter(Feedback.premiumID==guide.id).delete(synchronize_session='fetch')
+
+        Saved.query.filter(Saved.post_id==guide.id).delete(synchronize_session='fetch')
+        db.session.delete(guide)
+        db.session.commit()
+
+def delete_feedbacks(user_id):
+    Feedback.query.filter(Feedback.userID==user_id).delete(synchronize_session='fetch')
+    db.session.commit()
+
+def delete_likes(user_id):
+    Likes.query.filter(Likes.user_id==user_id).delete(synchronize_session='fetch')
+
+    db.session.commit()
+
+def delete_mentoring_sessions(user_id):
+    MentoringSession.query.filter(or_(MentoringSession.mentee_id==user_id, MentoringSession.mentor_id==user_id)).delete(synchronize_session='fetch')
+
+    db.session.commit()
+
+def delete_posts(user_id):
+    posts = Post.query.filter(Post.user_id==user_id)
+    for post in posts:
+        Reply.query.filter(Reply.post_id==post.id).delete(synchronize_session='fetch')
+        db.session.delete(post)
+        db.session.commit()
+
+def delete_comments(user_id):
+    Reply.query.filter(Reply.user_id==user_id).delete(synchronize_session='fetch')
+
+    db.session.commit()
+
+def delete_messages(user_id):
+    Messages.query.filter(or_(Messages.sender_id==user_id, Messages.receiver_id==user_id)).delete(synchronize_session='fetch')
+
+    db.session.commit()
 
 def get_roles(userRank):
     roles = []
