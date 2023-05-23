@@ -239,11 +239,13 @@ function ShowGuide() {
 
         <div className="guide-contents">
           <h1>{guideContents?.title}</h1>
-          {guideImage && 
-            <img 
-            className="guide-img"
-            src={guideImage} 
-            alt="Image from Guide" />}
+          {guideImage && (
+            <img
+              className="guide-img"
+              src={guideImage}
+              alt="Image from Guide"
+            />
+          )}
           <p>{guideContents?.content}</p>
         </div>
       </div>

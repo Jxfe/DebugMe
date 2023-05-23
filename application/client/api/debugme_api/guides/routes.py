@@ -6,6 +6,7 @@ from sqlalchemy import and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
 from werkzeug.utils import secure_filename
 from ..models.Saved import Saved, SavedSchema, SavedUserSchema
+from ..models.Feedback import Feedback
 import boto3
 from botocore.exceptions import NoCredentialsError
 
@@ -194,6 +195,10 @@ def delete_guide():
         abort(400, 'You can only delete guides you authored')
 
     else:
+        Feedback.query.filter(Feedback.premiumID==guide_id).delete(synchronize_session='fetch')
+
+        Saved.query.filter(Saved.post_id==guide_id).delete(synchronize_session='fetch')
+
         db.session.delete(guide)
         db.session.commit()
 
