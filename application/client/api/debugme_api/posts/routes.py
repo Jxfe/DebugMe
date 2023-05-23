@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from debugme_api.config import Config
 from debugme_api.models.Reply import Reply, ReplySchema
@@ -39,6 +39,33 @@ def get_post():
     postReplySchema = PostRepliesSchema()
 
     response = postReplySchema.dump(post)
+
+    return jsonify(response), 200
+
+@posts.route('/deletepost', methods=['DELETE'])
+@jwt_required(refresh=True)
+def delete_post():
+    user_id = get_jwt_identity()
+    post_id = request.form.get('id', None)
+
+    if post_id is None:
+        abort(400, 'No id parameter found on request')
+
+    elif post_id == '':
+        abort(400, 'No value given for id parameter')
+
+    post = Post.query.get(post_id)
+
+    if post is None:
+        abort(400, 'No post found')
+
+    elif post.user_id != user_id:
+        abort(400, 'You can only delete post you authored')
+
+    else:
+        delete_post(post)
+
+    response = {'message': 'Post has been deleted'}
 
     return jsonify(response), 200
 
@@ -133,3 +160,9 @@ def dislike():
     else:
         response = "You haven't liked this post yet."
         return jsonify(response), 409
+
+def delete_post(post):
+    Reply.query.filter(Reply.post_id==post.id).delete(synchronize_session='fetch')
+    Likes.query.filter(Likes.post_id==post.id).delete(synchronize_session='fetch')
+    db.session.delete(post)
+    db.session.commit()
