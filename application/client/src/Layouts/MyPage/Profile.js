@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
 import AuthContext from "../../Context/AuthProvider";
 import Button from "../../Components/Button";
 
 function Profile() {
+  const navigator = useNavigate();
   const { auth } = useContext(AuthContext);
   const [profile, setProfile] = useState({
     name: "",
     email: "",
     userRank: "",
     bio: "",
-    image_path: "",
+    image_path: ""
   });
 
   // Fetches the user's profile data
   const fetchProfile = async () => {
     try {
-      const response = await customAxios.get("/api/whoami", {
-      });
+      const response = await customAxios.get("/api/whoami", {});
       const data = response.data;
       setProfile({
         name: data.username,
@@ -38,11 +39,10 @@ function Profile() {
       1: "Premium",
       2: "Mentor",
       3: "Premium_mentor",
-      4: "Admin",
+      4: "Admin"
     };
     return roles[rank];
   };
-
 
   // State for edited profile data
   const [editedProfile, setEditedProfile] = useState({
@@ -58,17 +58,14 @@ function Profile() {
         method: "post",
         url: "/api/editProfileName",
         data: {
-          newName: editedProfile.newName,
-
+          newName: editedProfile.newName
         },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
-      })
+      });
       const data = response.data;
-
     } catch (error) {
-
       console.error("Error editing profile name", error);
     }
   };
@@ -86,12 +83,9 @@ function Profile() {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
-      })
+      });
       const data = response.data;
-
-
     } catch (error) {
-
       console.error("Error editing profile name", error);
     }
   };
@@ -108,57 +102,70 @@ function Profile() {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
-      })
+      });
       const data = response.data;
-
-
     } catch (error) {
-
       console.error("Error editing profile name", error);
     }
   };
 
-
-
   const becomePremium = async () => {
     try {
       const response = await customAxios({
-        method: 'PUT',
-        url: '/api/becomepremium',
+        method: "PUT",
+        url: "/api/becomepremium"
       });
 
       if (response.status === 200) {
-        setProfile(prevState => ({
+        setProfile((prevState) => ({
           ...prevState,
           userRank: "Premium"
         }));
         alert(response.data.message);
       }
     } catch (error) {
-      console.error('Error upgrading to premium:', error);
+      console.error("Error upgrading to premium:", error);
     }
   };
 
   const removePremium = async () => {
     try {
       const response = await customAxios({
-        method: 'PUT',
-        url: '/api/removepremium',
+        method: "PUT",
+        url: "/api/removepremium"
       });
 
       if (response.status === 200) {
-        setProfile(prevState => ({
+        setProfile((prevState) => ({
           ...prevState,
           userRank: "Basic"
         }));
         alert(response.data.message);
       }
     } catch (error) {
-      console.error('Error removing premium:', error);
+      console.error("Error removing premium:", error);
     }
   };
 
+  const deleteAccount = async () => {
+    await customAxios({
+      method: "delete",
+      url: "/api/deleteaccount"
+    })
+      .then((response) => {
+        customAxios({
+          method: "post",
+          url: "/api/logout"
+        });
 
+        return response;
+      })
+      .then((response) => {
+        alert("Your account has been deleted");
+        window.location.reload();
+        navigator("/");
+      });
+  };
 
   useEffect(() => {
     fetchProfile();
@@ -167,7 +174,7 @@ function Profile() {
   return (
     <div>
       <div className="mypage-profile">
-        <h1 >Profile</h1>
+        <h1>Profile</h1>
       </div>
       {/* <div style={{ display: "flex", gap: "40px" }} >
         <input
@@ -185,10 +192,19 @@ function Profile() {
         />
       </div> */}
 
-      <div className="mypage-profile" style={{ display: "flex", alignItems: "left", gap: "20px", }}>
-
+      <div
+        className="mypage-profile"
+        style={{ display: "flex", alignItems: "left", gap: "20px" }}
+      >
         <p className="personalinfo-field-head">Name:</p>
-        <div style={{ display: "flex", gap: "40px", alignItems: "left", marginTop: "15px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "40px",
+            alignItems: "left",
+            marginTop: "15px"
+          }}
+        >
           <p>{profile.name}</p>
           <input
             style={{ width: "200px", hight: "50px" }}
@@ -203,24 +219,27 @@ function Profile() {
             content="Edit"
             onClick={handleNameEdit}
           />
-
         </div>
-
-
-
-
       </div>
-      <div className="mypage-profile" style={{ display: "flex", alignItems: "left", gap: "20px", }}>
+      <div
+        className="mypage-profile"
+        style={{ display: "flex", alignItems: "left", gap: "20px" }}
+      >
         <p className="personalinfo-field-head">Bio:</p>
-        <div style={{ display: "flex", gap: "40px", alignItems: "left", marginTop: "15px" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "40px",
+            alignItems: "left",
+            marginTop: "15px"
+          }}
+        >
           <p>{profile.bio}</p>
         </div>
-
-
       </div>
-      <div >
+      <div>
         <input
-          style={{ width: "400px", }}
+          style={{ width: "400px" }}
           type="text"
           value={editedProfile.newBio}
           onChange={(e) =>
@@ -232,37 +251,56 @@ function Profile() {
           content="Edit"
           onClick={handleBioEdit}
         />
-
       </div>
-      <div style={{ display: "flex", gap: "40px", alignItems: "center", marginTop: "15px" }}>
-        <p className="personalinfo-field-head" >Email</p>
+      <div
+        style={{
+          display: "flex",
+          gap: "40px",
+          alignItems: "center",
+          marginTop: "15px"
+        }}
+      >
+        <p className="personalinfo-field-head">Email</p>
         <p>{profile.email}</p>
       </div>
       <div>
-        <p className="personalinfo-field-head" style={{ textAlign: "left" }}>Subscription Plan</p>
+        <p className="personalinfo-field-head" style={{ textAlign: "left" }}>
+          Subscription Plan
+        </p>
         <div style={{ display: "flex", gap: "40px" }}>
           <p>{profile.userRank}</p>
-          {
-            profile.userRank === "Basic" && (
-              <button className="default-button" onClick={becomePremium}>Upgrade to Premium</button>
-            )
-          }
-          {
-            profile.userRank === "Premium" && (
-              <button className="default-button" style={{ borderRadius: "12px" }} onClick={removePremium}>Remove Premium</button>
-            )
-          }
-          {
-            profile.userRank === "Mentor" && (
-              <button className="default-button" onClick={becomePremium}>Upgrade to Premium</button>
-            )
-          }
-          {
-            profile.userRank === "Premium_mentor" && (
-              <button className="default-button" onClick={removePremium}>Remove Premium</button>
-            )
-          }
+          {profile.userRank === "Basic" && (
+            <button className="default-button" onClick={becomePremium}>
+              Upgrade to Premium
+            </button>
+          )}
+          {profile.userRank === "Premium" && (
+            <button
+              className="default-button"
+              style={{ borderRadius: "12px" }}
+              onClick={removePremium}
+            >
+              Remove Premium
+            </button>
+          )}
+          {profile.userRank === "Mentor" && (
+            <button className="default-button" onClick={becomePremium}>
+              Upgrade to Premium
+            </button>
+          )}
+          {profile.userRank === "Premium_mentor" && (
+            <button className="default-button" onClick={removePremium}>
+              Remove Premium
+            </button>
+          )}
         </div>
+      </div>
+      <div>
+        <Button
+          className="delete-acct-btn"
+          onClickEvent={deleteAccount}
+          content="Delete Account"
+        />
       </div>
     </div>
   );
