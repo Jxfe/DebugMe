@@ -25,4 +25,4 @@ def generate_presigned_url(image_path):
         )
         return url
     except NoCredentialsError:
-        return NoCredentialsError
+        return None

@@ -29,10 +29,6 @@ def get_guides():
     response = []
     guideFeedbackSchema = GuideFeedbackSchema()
 
-    # AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
-    # AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
-    # BUCKET_NAME = 'debugme'
-    # s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     for guide in guides:
         guide_data = guideFeedbackSchema.dump(guide)
 
@@ -48,22 +44,6 @@ def get_guides():
             guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
 
         response.append(guide_data)
-
-            # try:
-            #     url = s3.generate_presigned_url(
-            #         ClientMethod='get_object',
-            #         Params={
-            #             'Bucket': BUCKET_NAME,
-            #             'Key': guide.image_path
-            #         }
-            #     )
-            #     guide_data['image_url'] = url
-            # except NoCredentialsError:
-            #     guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
-        # else:
-        #     guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
-
-        # response.append(guide_data)
 
     return jsonify(response), 200
 
@@ -91,24 +71,36 @@ def get_guide_image():
     guide = Premium.query.get(guide_id)
 
     if guide and guide.image_path:
-        AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
-        AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
-        BUCKET_NAME = 'debugme'
+        url = generate_presigned_url(guide.image_path)
 
-        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-        try:
-            url = s3.generate_presigned_url(
-                ClientMethod='get_object',
-                Params={
-                    'Bucket': BUCKET_NAME,
-                    'Key': guide.image_path
-                }
-            )
+        if url is None:
+            return jsonify({'url': DEFAULT_GUIDE_IMAGE})
+            #return jsonify({'error': 'Error in getting credentials'}), 500
+
+        else:
             return jsonify({'url': url}), 200
-        except NoCredentialsError:
-            return jsonify({'error': 'Error in getting credentials'}), 500
+
     else:
         return jsonify({'url': DEFAULT_GUIDE_IMAGE})
+
+    #     AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
+    #     AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
+    #     BUCKET_NAME = 'debugme'
+
+    #     s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    #     try:
+    #         url = s3.generate_presigned_url(
+    #             ClientMethod='get_object',
+    #             Params={
+    #                 'Bucket': BUCKET_NAME,
+    #                 'Key': guide.image_path
+    #             }
+    #         )
+    #         return jsonify({'url': url}), 200
+    #     except NoCredentialsError:
+    #         return jsonify({'error': 'Error in getting credentials'}), 500
+    # else:
+    #     return jsonify({'url': DEFAULT_GUIDE_IMAGE})
 
 @guides.route('/guides', methods=['POST'])
 @jwt_required(refresh=True)
