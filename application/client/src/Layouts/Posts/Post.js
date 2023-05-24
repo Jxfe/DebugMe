@@ -99,7 +99,7 @@ function Post() {
               {item.author?.name}
             </Link>
           </p>
-          <p>{moment.utc(item?.created_at).fromNow()}</p>
+          <p style={{ fontSize: "12px" }}>{moment.utc(item?.created_at).fromNow()}</p>
           <p className="comment-content">{item?.content}</p>
         </div>
       );

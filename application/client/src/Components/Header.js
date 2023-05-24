@@ -57,7 +57,7 @@ function Header() {
     <header className="wrapper header-wrapper">
       <div className="nav-wrapper">
         <Link className="logo" to="/">
-          <img src="/logo.png" className="img-logo" />
+          <img src="/logo.png" className="img-logo" style={{ marginTop: "10px" }} />
         </Link>
         <nav className="wrapper link-wrapper">
           <Link
