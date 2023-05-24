@@ -119,6 +119,34 @@ def add_comment():
 
     return jsonify(response), 201
 
+@posts.route('/deletecomment', methods=['DELETE'])
+@jwt_required(refresh=True)
+def delete_comment():
+    user_id = get_jwt_identity()
+    comment_id = request.form.get('id', None)
+
+    if comment_id is None:
+        abort(400, 'No id parameter found on request')
+
+    elif comment_id == '':
+        abort(400, 'No value given for id parameter')
+
+    comment = Reply.query.get(comment_id)
+
+    if comment is None:
+        abort(400, 'No comment found')
+
+    elif comment.user_id != user_id:
+        abort(400, 'You can only delete comments you authored')
+
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+
+    response = {'message': 'Comment has been deleted'}
+
+    return jsonify(response), 200
+
 @posts.route('/likepost', methods=['POST'])
 @jwt_required(refresh=True)
 def like():
