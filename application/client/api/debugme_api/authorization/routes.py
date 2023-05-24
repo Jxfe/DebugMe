@@ -55,7 +55,9 @@ def login():
                     'username': user.name,
                     'email': user.email,
                     'userRank': user.userRank,
-                    'roles': roles
+                    'roles': roles,
+                    'bio': user.bio,
+                    'image_path': user.image_path
                 }
 
             access_token = create_access_token(identity=user.id, additional_claims=additional_claims)

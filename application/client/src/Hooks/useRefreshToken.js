@@ -22,8 +22,20 @@ const useRefreshToken = () => {
     const email = whoami.data.email;
     const userRank = whoami.data.userRank;
     const roles = whoami.data.roles;
+    const bio = whoami.data.bio;
+    const imagePath = whoami.data.image_path;
+
     const accessToken = response.data.access_token;
-    setAuth({ userID, username, email, userRank, roles, accessToken });
+    setAuth({
+      userID,
+      username,
+      email,
+      userRank,
+      roles,
+      accessToken,
+      bio,
+      imagePath
+    });
 
     return response.data.access_token;
   };

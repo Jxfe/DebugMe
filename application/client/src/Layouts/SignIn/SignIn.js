@@ -49,12 +49,24 @@ function SignIn() {
         const accessToken = response.data.user.access_token;
         const userRank = response.data.user.userRank;
         const roles = response.data.user.roles;
+        const bio = response.data.user.bio;
+        const imagePath = response.data.user.image_path;
 
-        setAuth({ userID, name, email, userRank, roles, accessToken });
+        setAuth({
+          userID,
+          name,
+          email,
+          userRank,
+          roles,
+          accessToken,
+          bio,
+          imagePath
+        });
 
         setUsername("");
         setEmail("");
         setPassword("");
+        window.location.reload();
         navigate(from, { replace: true });
       })
       .catch((error) => {
