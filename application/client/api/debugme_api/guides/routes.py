@@ -1,7 +1,7 @@
 from flask import request, jsonify, Blueprint, abort
 from debugme_api.config import Config
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..debugme_toolkit import db, botox
+from ..debugme_toolkit import db, botox, generate_presigned_url
 from sqlalchemy import and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
 from werkzeug.utils import secure_filename
@@ -29,29 +29,41 @@ def get_guides():
     response = []
     guideFeedbackSchema = GuideFeedbackSchema()
 
-    AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
-    AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
-    BUCKET_NAME = 'debugme'
-    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    # AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
+    # AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
+    # BUCKET_NAME = 'debugme'
+    # s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     for guide in guides:
         guide_data = guideFeedbackSchema.dump(guide)
 
         if guide.image_path:
-            try:
-                url = s3.generate_presigned_url(
-                    ClientMethod='get_object',
-                    Params={
-                        'Bucket': BUCKET_NAME,
-                        'Key': guide.image_path
-                    }
-                )
-                guide_data['image_url'] = url
-            except NoCredentialsError:
+            url = generate_presigned_url(image_path=guide.image_path)
+
+            if url is NoCredentialsError:
                 guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
+            else:
+                guide_data['image_url'] = url
+
         else:
             guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
 
         response.append(guide_data)
+
+            # try:
+            #     url = s3.generate_presigned_url(
+            #         ClientMethod='get_object',
+            #         Params={
+            #             'Bucket': BUCKET_NAME,
+            #             'Key': guide.image_path
+            #         }
+            #     )
+            #     guide_data['image_url'] = url
+            # except NoCredentialsError:
+            #     guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
+        # else:
+        #     guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
+
+        # response.append(guide_data)
 
     return jsonify(response), 200
 
