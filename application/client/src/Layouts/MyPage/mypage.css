@@ -124,8 +124,9 @@
 }
 
 .personalinfo-field-head {
+  align-self: center;
   font-weight: bold;
-  margin-bottom: 0;
+  margin-top: 0;
 }
 
 /* Mentoring Sessions */
@@ -157,13 +158,13 @@
   margin-bottom: 10px;
 }
 
-.mentor-container > h2 {
+.mentor-container>h2 {
   color: var(--black);
   letter-spacing: 4px;
   text-align: left;
 }
 
-.mentor-container > p {
+.mentor-container>p {
   text-align: left;
 }
 
@@ -175,7 +176,7 @@
   gap: 20px;
 }
 
-.mentor-box > div {
+.mentor-box>div {
   width: 400px;
 }
 

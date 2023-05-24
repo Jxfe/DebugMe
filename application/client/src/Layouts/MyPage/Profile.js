@@ -14,6 +14,10 @@ function Profile() {
     bio: "",
     image_path: ""
   });
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [canEditName, setCanEditName] = useState(false);
+  const [canEditBio, setCanEditBio] = useState(false);
 
   // Fetches the user's profile data
   const fetchProfile = async () => {
@@ -27,6 +31,8 @@ function Profile() {
         bio: data.bio,
         image_path: data.image_path
       });
+      setName(data.username);
+      setBio(data.bio);
     } catch (error) {
       console.error("Error fetching profile data", error);
     }
@@ -58,13 +64,13 @@ function Profile() {
         method: "post",
         url: "/api/editProfileName",
         data: {
-          newName: editedProfile.newName
+          newName: name
         },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       });
-      const data = response.data;
+      setCanEditName(false);
     } catch (error) {
       console.error("Error editing profile name", error);
     }
@@ -72,19 +78,20 @@ function Profile() {
 
   // Handles bio edit
   const handleBioEdit = async () => {
+    console.log('??')
     try {
       const response = await customAxios({
         method: "post",
         url: "/api/editProfileBio",
         data: {
           //newName: editedProfile.newName,
-          newBio: editedProfile.newBio
+          newBio: bio
         },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       });
-      const data = response.data;
+      setCanEditBio(false);
     } catch (error) {
       console.error("Error editing profile name", error);
     }
@@ -176,82 +183,81 @@ function Profile() {
       <div className="mypage-profile">
         <h1>Profile</h1>
       </div>
-      {/* <div style={{ display: "flex", gap: "40px" }} >
-        <input
-          style={{ width: "150px" }}
-          type="text"
-          value={editedProfile.newImagePath}
-          onChange={(e) =>
-            setEditedProfile({ ...editedProfile, newImagePath: e.target.value })
-          }
-        />
-        <Button
-          className="default-button"
-          content="Update Image"
-          onClick={handleImageEdit}
-        />
-      </div> */}
-
       <div
         className="mypage-profile"
-        style={{ display: "flex", alignItems: "left", gap: "20px" }}
+        style={{ display: "flex", alignItems: "center", gap: "20px" }}
       >
-        <p className="personalinfo-field-head">Name:</p>
-        <div
-          style={{
-            display: "flex",
-            gap: "40px",
-            alignItems: "left",
-            marginTop: "15px"
-          }}
-        >
-          <p>{profile.name}</p>
-          <input
-            style={{ width: "200px", hight: "50px" }}
-            type="text"
-            value={editedProfile.newName}
-            onChange={(e) =>
-              setEditedProfile({ ...editedProfile, newName: e.target.value })
-            }
+        <p className="personalinfo-field-head">Name: </p>
+        {
+          !canEditName ?
+            <div style={{ width: "200px" }}>
+              {name}
+            </div>
+            :
+            <input
+              style={{ width: "200px" }}
+              type="text"
+              value={name}
+              onChange={(e) =>
+                setName(e.target.value)
+              }
+            />
+        }
+
+        {
+          canEditName ?
+            <Button
+              className="default-button"
+              content="Update"
+              onClickEvent={handleNameEdit}
+            />
+            :
+            <Button
+              className="default-button"
+              content="Edit"
+              onClickEvent={() => setCanEditName(true)}
+            />
+        }
+
+      </div>
+      <div
+        className="mypage-profile"
+        style={{ display: "flex", alignItems: "center", gap: "20px" }}
+      >
+        <p className="personalinfo-field-head">Bio: </p>
+        {
+          !canEditBio ?
+            <div style={{ width: "600px" }}>
+              {bio ? bio : "There is no bio yet."}
+            </div>
+            :
+            <input
+              style={{ width: "600px" }}
+              type="text"
+              value={bio}
+              placeholder="Write your bio"
+              onChange={(e) =>
+                setBio(e.target.value)
+              }
+            />
+        }
+
+
+      </div>
+      {
+        canEditBio ?
+          <Button
+            className="default-button"
+            content="Update"
+            onClickEvent={handleBioEdit}
           />
+          :
           <Button
             className="default-button"
             content="Edit"
-            onClick={handleNameEdit}
+            onClickEvent={() => setCanEditBio(true)}
           />
-        </div>
-      </div>
-      <div
-        className="mypage-profile"
-        style={{ display: "flex", alignItems: "left", gap: "20px" }}
-      >
-        <p className="personalinfo-field-head">Bio:</p>
-        <div
-          style={{
-            display: "flex",
-            gap: "40px",
-            alignItems: "left",
-            marginTop: "15px"
-          }}
-        >
-          <p>{profile.bio}</p>
-        </div>
-      </div>
-      <div>
-        <input
-          style={{ width: "400px" }}
-          type="text"
-          value={editedProfile.newBio}
-          onChange={(e) =>
-            setEditedProfile({ ...editedProfile, newBio: e.target.value })
-          }
-        />
-        <Button
-          className="default-button"
-          content="Edit"
-          onClick={handleBioEdit}
-        />
-      </div>
+      }
       <div
         style={{
           display: "flex",
@@ -284,18 +290,22 @@ function Profile() {
             </button>
           )}
           {profile.userRank === "Mentor" && (
-            <button className="default-button" onClick={becomePremium}>
-              Upgrade to Premium
-            </button>
+            <Button
+              className="delete-acct-btn"
+              onClickEvent={becomePremium}
+              content="Upgrade to Premium"
+            />
           )}
           {profile.userRank === "Premium_mentor" && (
-            <button className="default-button" onClick={removePremium}>
-              Remove Premium
-            </button>
+            <Button
+              className="delete-button"
+              onClickEvent={removePremium}
+              content="Remove Premium"
+            />
           )}
         </div>
       </div>
-      <div>
+      <div style={{ marginTop: "40px" }}>
         <Button
           className="delete-acct-btn"
           onClickEvent={deleteAccount}
