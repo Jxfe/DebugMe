@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Button from "../../Components/Button";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
 import useAuth from "../../Hooks/useAuth";
 import "./style.css";
@@ -16,6 +16,7 @@ function Post() {
   const [isLiked, setLiked] = useState(false);
   const { auth } = useAuth();
   const { id } = useParams();
+  const navigator = useNavigate();
 
   useEffect(() => {
     getPostContents();
@@ -59,6 +60,22 @@ function Post() {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
+    });
+  };
+
+  const deletePost = async () => {
+    await customAxios({
+      method: "delete",
+      url: "/api/deletepost",
+      data: {
+        id: id
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then((response) => {
+      navigator("/posts");
+      window.location.reload();
     });
   };
 
@@ -126,7 +143,7 @@ function Post() {
                 showProfile(
                   postContents?.author?.id,
                   "",
-                  postContents?.author.name,
+                  postContents?.author?.name,
                   `${postContents?.author?.name}'s Bio goes here.`,
                   hideProfile
                 );
@@ -145,6 +162,11 @@ function Post() {
 
         <p>{postContents?.content}</p>
         <div className="likeBtn-container">
+          {postContents?.author?.id != auth?.userID ? (
+            ""
+          ) : (
+            <Button content="Delete Post" onClickEvent={deletePost} />
+          )}
           <LikeButton
             isLiked={isLiked}
             content="Like"
