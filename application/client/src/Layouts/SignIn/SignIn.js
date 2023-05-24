@@ -3,6 +3,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./style.css";
 import Button from "../../Components/Button";
 import axios from "axios";
+import { customAxios } from "../../utils/customAxios";
 import useAuth from "../../Hooks/useAuth";
 
 function SignIn() {
@@ -32,7 +33,7 @@ function SignIn() {
     e.preventDefault();
 
     // Login logic here
-    axios({
+    customAxios({
       method: "post",
       url: "/api/login",
       data: {
@@ -62,12 +63,16 @@ function SignIn() {
           bio,
           imagePath
         });
-
         setUsername("");
         setEmail("");
         setPassword("");
-        window.location.reload();
+        // const whoami = customAxios({
+        //   method: "get",
+        //   url: "/api/whoami"
+        // });
         navigate(from, { replace: true });
+        //navigate("/");
+        window.location.reload();
       })
       .catch((error) => {
         if (!error.response) {

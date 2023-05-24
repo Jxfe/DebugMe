@@ -17,10 +17,12 @@ function Header() {
 
   useEffect(() => {
     setName(auth?.username);
+    console.log("Name: ", name);
   }, []);
 
   useEffect(() => {
     setName(auth?.username);
+    console.log("Name: ", name);
   }, [auth]);
 
   const handleClick = (event) => {
