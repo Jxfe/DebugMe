@@ -165,7 +165,11 @@ function Post() {
           {postContents?.author?.id != auth?.userID ? (
             ""
           ) : (
-            <Button content="Delete Post" onClickEvent={deletePost} />
+            <Button
+              content="Delete Post"
+              className="delete-btn"
+              onClickEvent={deletePost}
+            />
           )}
           <LikeButton
             isLiked={isLiked}
