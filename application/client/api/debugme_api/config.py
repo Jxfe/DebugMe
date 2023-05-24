@@ -32,7 +32,11 @@ class Config:
 
     # Flask Botox (boto3) settings
     BOTOX_SERVICES=["s3", "ses", "sqs"]
-    #BOTOX_OPTIONAL_PARAMS={'s3': {'args':{'Bucket': AWS_BUCKET_NAME}}}
+    # BOTOX_OPTIONAL_PARAMS={'s3':
+    #                        {'kwargs': {'Bucket': AWS_BUCKET_NAME}
+
+    #                         }
+    #                         }
 
 class ProductionConfig(Config):
     """Production Credentials go here, like production DB settings

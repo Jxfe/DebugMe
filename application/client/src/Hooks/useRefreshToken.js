@@ -17,15 +17,15 @@ const useRefreshToken = () => {
       url: "/api/whoami"
     });
 
-    const userID = whoami.data.user_id;
-    const username = whoami.data.username;
-    const email = whoami.data.email;
-    const userRank = whoami.data.userRank;
-    const roles = whoami.data.roles;
-    const bio = whoami.data.bio;
-    const imagePath = whoami.data.image_path;
+    const userID = whoami?.data?.user_id;
+    const username = whoami?.data?.username;
+    const email = whoami?.data?.email;
+    const userRank = whoami?.data?.userRank;
+    const roles = whoami?.data?.roles;
+    const bio = whoami?.data?.bio;
+    const imagePath = whoami?.data?.image_path;
+    const accessToken = response?.data?.access_token;
 
-    const accessToken = response.data.access_token;
     setAuth({
       userID,
       username,
@@ -37,7 +37,7 @@ const useRefreshToken = () => {
       imagePath
     });
 
-    return response.data.access_token;
+    return accessToken;
   };
 
   return refresh;
