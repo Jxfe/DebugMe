@@ -1,14 +1,10 @@
 from flask import request, jsonify, Blueprint, abort
-from debugme_api.config import Config
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..debugme_toolkit import db, botox, generate_presigned_url
+from ..debugme_toolkit import db, generate_presigned_url, upload_image
 from sqlalchemy import and_
 from ..models.Premium import Premium, PremiumSchema, GuideFeedbackSchema
-from werkzeug.utils import secure_filename
 from ..models.Saved import Saved, SavedSchema, SavedUserSchema
 from ..models.Feedback import Feedback
-import boto3
-from botocore.exceptions import NoCredentialsError
 
 SAVED_TABLE_CODES = {'post': 0, 'guide': 1}
 DEFAULT_GUIDE_IMAGE = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
@@ -35,7 +31,7 @@ def get_guides():
         if guide.image_path:
             url = generate_presigned_url(image_path=guide.image_path)
 
-            if url is NoCredentialsError:
+            if url is None:
                 guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
             else:
                 guide_data['image_url'] = url
@@ -83,25 +79,6 @@ def get_guide_image():
     else:
         return jsonify({'url': DEFAULT_GUIDE_IMAGE})
 
-    #     AWS_ACCESS_KEY = Config.AWS_ACCESS_KEY_ID
-    #     AWS_SECRET_ACCESS_KEY = Config.AWS_SECRET_ACCESS_KEY
-    #     BUCKET_NAME = 'debugme'
-
-    #     s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
-    #     try:
-    #         url = s3.generate_presigned_url(
-    #             ClientMethod='get_object',
-    #             Params={
-    #                 'Bucket': BUCKET_NAME,
-    #                 'Key': guide.image_path
-    #             }
-    #         )
-    #         return jsonify({'url': url}), 200
-    #     except NoCredentialsError:
-    #         return jsonify({'error': 'Error in getting credentials'}), 500
-    # else:
-    #     return jsonify({'url': DEFAULT_GUIDE_IMAGE})
-
 @guides.route('/guides', methods=['POST'])
 @jwt_required(refresh=True)
 def create_guide():
@@ -111,18 +88,8 @@ def create_guide():
 
     image = request.files.get('image_path')
     if image:
-        filename = secure_filename(image.filename)
-        s3_path = str(user_id)
+        image_path = upload_image(image=image, user_id=user_id)
 
-        # Creates an S3 client
-        s3 = botox.clients['s3']
-        s3.upload_fileobj(
-            Fileobj=image,
-            Bucket=Config.AWS_BUCKET_NAME,
-            Key=s3_path + filename,
-            ExtraArgs={'ContentType': image.content_type}
-        )
-        image_path = s3_path + filename
     else:
         image_path = ''
 
@@ -201,7 +168,6 @@ def delete_guide():
 
     else:
         Feedback.query.filter(Feedback.premiumID==guide_id).delete(synchronize_session='fetch')
-
         Saved.query.filter(Saved.post_id==guide_id).delete(synchronize_session='fetch')
 
         db.session.delete(guide)
