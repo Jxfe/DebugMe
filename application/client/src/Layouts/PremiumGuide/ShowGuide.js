@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { customAxios } from "../../utils/customAxios";
 import useAuth from "../../Hooks/useAuth";
 
@@ -23,6 +23,7 @@ function ShowGuide() {
   const [guideImage, setGuideImage] = useState("");
   const { id } = useParams();
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getGuideContents();
@@ -175,6 +176,26 @@ function ShowGuide() {
     });
   };
 
+  const deleteGuide = async () => {
+    await customAxios({
+      method: "delete",
+      url: "/api/deleteguide",
+      data: {
+        id: id
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then((response) => {
+        alert("Guide has been deleted");
+        navigate("/premiumguides");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <div className="guide-container">
@@ -199,9 +220,17 @@ function ShowGuide() {
             </p>
 
             <Button
-              content="Request Mentoring Session"
+              content={
+                guideContents?.author?.id == auth?.userID
+                  ? "Delete Guide"
+                  : "Request Mentoring Session"
+              }
               className="default-button"
-              onClickEvent={requestMentoring}
+              onClickEvent={
+                guideContents?.author?.id == auth?.userID
+                  ? deleteGuide
+                  : requestMentoring
+              }
             />
           </div>
 
