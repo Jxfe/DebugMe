@@ -61,10 +61,15 @@
 }
 
 .guide-contents {
-    width: 70%;
+  width: 70%;
 }
 
 .guide-img {
-    max-height: 400px;
-    max-width: 300px;
+  max-height: 400px;
+  max-width: 300px;
+}
+
+.align-left {
+  text-align: left;
+  text-justify: auto;
 }

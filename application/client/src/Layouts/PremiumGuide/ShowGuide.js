@@ -12,6 +12,8 @@ import { Stack } from "@mui/material";
 
 import "./showguide.css";
 import { toast } from "react-toastify";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { ReactDOM } from "react";
 
 function ShowGuide() {
   const [profileShowing, setProfileShowing] = useState(false);
@@ -275,7 +277,12 @@ function ShowGuide() {
               alt="Image from Guide"
             />
           )}
-          <p>{guideContents?.content}</p>
+
+          {/* <ReactMarkdown className="align-left">
+            {`${guideContents?.content}`}
+          </ReactMarkdown> */}
+
+          <p className="align-left">{guideContents?.content}</p>
         </div>
       </div>
       {showSuccessModal && (

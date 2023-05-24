@@ -11,6 +11,7 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 
 SAVED_TABLE_CODES = {'post': 0, 'guide': 1}
+DEFAULT_GUIDE_IMAGE = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
 
 guides = Blueprint('guides', __name__, url_prefix='/api')
 
@@ -46,9 +47,9 @@ def get_guides():
                 )
                 guide_data['image_url'] = url
             except NoCredentialsError:
-                guide_data['image_url'] = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+                guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
         else:
-            guide_data['image_url'] = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+            guide_data['image_url'] = DEFAULT_GUIDE_IMAGE
 
         response.append(guide_data)
 
@@ -95,7 +96,7 @@ def get_guide_image():
         except NoCredentialsError:
             return jsonify({'error': 'Error in getting credentials'}), 500
     else:
-        return jsonify({'error': 'No image found'}), 404
+        return jsonify({'url': DEFAULT_GUIDE_IMAGE})
 
 @guides.route('/guides', methods=['POST'])
 @jwt_required(refresh=True)
