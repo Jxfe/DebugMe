@@ -7,7 +7,7 @@ from ..models.Saved import Saved, SavedSchema, SavedUserSchema
 from ..models.Feedback import Feedback
 
 SAVED_TABLE_CODES = {'post': 0, 'guide': 1}
-DEFAULT_GUIDE_IMAGE = "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+DEFAULT_GUIDE_IMAGE = "/logo.png"
 
 guides = Blueprint('guides', __name__, url_prefix='/api')
 

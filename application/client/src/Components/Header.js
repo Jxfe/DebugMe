@@ -2,8 +2,6 @@ import "./style.css";
 import React, { useEffect, useState } from "react"; // Needed for AWS since it's using node 16
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
-import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
 import useAuth from "../Hooks/useAuth";
 import useLogout from "../Hooks/useLogout";
 
@@ -74,21 +72,12 @@ function Header() {
           >
             Premium Guides
           </Link>
-          {/* <Link
-            to="/calendar"
-            className={pathname.includes("calendar") ? "highlight" : null}
-          >
-            Calendar
-          </Link> */}
         </nav>
       </div>
 
       <nav className="wrapper link-wrapper">
         <div>
           {name && auth?.accessToken ? `Hello, ${capitalizeName(name)}!` : ""}
-          {/* {auth?.accessToken
-            ? `Hello, ${capitalizeName(auth?.username)}!`
-            : name} */}
         </div>
         {auth?.accessToken ? (
           <>
@@ -98,15 +87,6 @@ function Header() {
             >
               My Page
             </Link>
-            {/* <Badge badgeContent={2} color="primary" className="header-badge">
-              <MailIcon
-                color="action"
-                aria-describedby={
-                  anchorEl !== null ? "simple-popover" : undefined
-                }
-                onClick={handleClick}
-              />
-            </Badge> */}
             <Popover
               id={anchorEl !== null ? "simple-popover" : undefined}
               open={anchorEl !== null}

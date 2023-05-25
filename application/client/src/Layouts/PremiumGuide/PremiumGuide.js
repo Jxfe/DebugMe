@@ -5,7 +5,6 @@ import "./style.css";
 import useAuth from "../../Hooks/useAuth";
 
 import Button from "../../Components/Button";
-import PostDescription from "../../Components/PostDescription";
 import GuideCard from "../../Components/GuideCard";
 import Pagination from "../../Components/Pagination";
 

@@ -1,7 +1,6 @@
 import React from "react"; // Needed for AWS since it's using node 16
 import Button from "../../Components/Button";
 import { Link } from "react-router-dom";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import ForumIcon from '@mui/icons-material/Forum';
 
