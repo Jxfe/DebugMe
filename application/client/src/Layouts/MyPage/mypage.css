@@ -1,0 +1,214 @@
+.chatting-layout {
+  margin-top: 40px;
+  display: flex;
+  gap: 40px;
+}
+
+.mypage-mentoring-list {
+  max-width: 200px;
+  background-color: var(--lightgray);
+  padding: 20px 20px 20px 0;
+  flex: 1;
+  border-radius: 4px;
+  min-height: 60vh;
+  border-right: 2px solid var(--gray);
+}
+
+.chatting-box {
+  background-color: var(--lightgray);
+  padding: 20px;
+  flex: 2;
+  border-radius: 4px;
+  min-height: 60vh;
+}
+
+.mypage-request-name {
+  font-size: var(--defaultfont);
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--darkgray);
+}
+
+.mentoring-detail {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  align-self: flex-end;
+}
+
+.mypage-message-detail {
+  background-color: var(--lightgray);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 60vh;
+  overflow: scroll;
+}
+
+.message-box {
+  flex: 2;
+  border-radius: 4px;
+}
+
+.send-message {
+  background-color: #faf0e6;
+  width: 60%;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  align-self: flex-end;
+  text-align: right;
+}
+
+.receive-message {
+  background-color: var(--secondary);
+  width: 60%;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.message-label {
+  color: var(--darkgray);
+  font-size: var(--smallfont);
+}
+
+/* My Page */
+.mypage-layout {
+  min-height: 600px;
+  background-color: var(--lightgray);
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.mypage-content {
+  min-height: 550px;
+  display: flex;
+  flex-direction: row;
+}
+
+.mypage-navbar {
+  max-width: 240px;
+  margin: 10px 20px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--gray);
+  padding-right: 20px;
+}
+
+.header-wrapper {
+  border-bottom: 1px solid var(--gray);
+}
+
+.mypage-nav-link {
+  margin: 10px 20px 10px 10px;
+  text-decoration: none;
+  color: var(--black);
+  padding-bottom: 10px;
+}
+
+.mypage-personalinfo {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  width: 70%;
+}
+
+.personalinfo-field-head {
+  align-self: center;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+/* Mentoring Sessions */
+.star-wrapper-session a {
+  font-size: 2em;
+  color: var(--dark);
+  text-decoration: none;
+  transition: all 0.5s;
+  margin: 4px;
+}
+
+.mypage-profile {
+  margin-top: 40px;
+}
+
+#mypage-selected-name {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.mypage-saved-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mentor-container {
+  color: var(--black);
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.mentor-container>h2 {
+  color: var(--black);
+  letter-spacing: 4px;
+  text-align: left;
+}
+
+.mentor-container>p {
+  text-align: left;
+}
+
+.mentor-box {
+  border-bottom: 2px solid var(--gray);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.mentor-box>div {
+  width: 400px;
+}
+
+.user-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.user-input-box {
+  width: 100px;
+}
+
+.delete-acct-btn {
+  background-color: #4b1161;
+  color: white;
+}
+
+.mypage-profile {
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+}
+
+.mypage-profile-container {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.mypage-profilepic {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 10px rgb(136, 136, 136);
+  margin-bottom: 10px;
+}

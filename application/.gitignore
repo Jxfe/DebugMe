@@ -79,6 +79,7 @@ celerybeat-schedule
 
 # dotenv
 .env
+.env.local
 
 # virtualenv
 env/
@@ -214,6 +215,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# iCloud
+.icloud
+
 ### Node
 # dependencies
 /node_modules
@@ -230,3 +234,18 @@ Temporary Items
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+### VS Code
+.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
