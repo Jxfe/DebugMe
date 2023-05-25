@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from ..debugme_toolkit import db
+from ..debugme_toolkit import db, upload_image, generate_presigned_url
 from sqlalchemy import or_, and_
 from debugme_api.models.Messages import Messages, MessagesSchema
 from debugme_api.models.Mentoring import MentoringSession, MentoringUserSessionSchema
@@ -93,12 +93,14 @@ def post_edit_profile_name():
 @jwt_required(refresh=True)
 def post_edit_image():
     user_id = get_jwt_identity()
-    new_image = request.form.get('newImagePath', '')
+    new_image = request.files.get('newImagePath', '')
+    image_path = upload_image(image=new_image, user_id=user_id)
+    url = generate_presigned_url(image_path)
 
     user = db.session.query(User).filter(User.id == user_id).first()
 
     if user:
-        user.image_path = new_image
+        user.image_path = url
 
         db.session.commit()
         return jsonify({'message': 'Profile updated successfully'}), 200

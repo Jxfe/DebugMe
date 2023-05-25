@@ -89,6 +89,8 @@
 
 .comment-container {
   border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
 
 .new-comment-container {
@@ -144,4 +146,18 @@ p.comment-author:hover {
   color: white;
   margin-right: 10px;
   padding: 0px;
+}
+
+.comment-delete {
+  font-size: 12px;
+  padding: 5px;
+  background-color: #4b1161;
+  border-radius: 5px;
+  color: white;
+  margin-left: 10px;
+}
+
+.comment-delete:hover {
+  cursor: pointer;
+  opacity: 0.9;
 }

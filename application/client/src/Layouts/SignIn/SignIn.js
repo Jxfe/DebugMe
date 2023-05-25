@@ -70,8 +70,8 @@ function SignIn() {
         //   method: "get",
         //   url: "/api/whoami"
         // });
-        navigate(from, { replace: true });
-        //navigate("/");
+        // navigate(from, { replace: true });
+        navigate("/posts");
         window.location.reload();
       })
       .catch((error) => {

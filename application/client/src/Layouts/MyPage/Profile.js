@@ -16,8 +16,10 @@ function Profile() {
   });
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
+  const [profilePic, setProfilePic] = useState("");
   const [canEditName, setCanEditName] = useState(false);
   const [canEditBio, setCanEditBio] = useState(false);
+  const [image, setImage] = useState(null);
 
   // Fetches the user's profile data
   const fetchProfile = async () => {
@@ -33,6 +35,11 @@ function Profile() {
       });
       setName(data.username);
       setBio(data.bio);
+      if (data.image_path) {
+        setProfilePic(data.image_path)
+      } else {
+        setProfilePic("/logo.png")
+      }
     } catch (error) {
       console.error("Error fetching profile data", error);
     }
@@ -49,13 +56,6 @@ function Profile() {
     };
     return roles[rank];
   };
-
-  // State for edited profile data
-  const [editedProfile, setEditedProfile] = useState({
-    newName: "",
-    newBio: "",
-    newImagePath: ""
-  });
 
   // Handles name edit
   const handleNameEdit = async () => {
@@ -98,22 +98,39 @@ function Profile() {
   };
 
   // Handles image edit
-  const handleImageEdit = async () => {
+  const handleImageSubmit = async () => {
     try {
       const response = await customAxios({
         method: "post",
         url: "/api/editProfileImage",
         data: {
-          newImagePath: editedProfile.newImagePath
+          newImagePath: image
         },
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "multipart/form-data"
         }
       });
-      const data = response.data;
+      window.location.reload();
     } catch (error) {
-      console.error("Error editing profile name", error);
+      console.error("Error editing profile picture", error);
     }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const maxSize = 6 * 1024 * 1024; // 6 MB in bytes
+    const validFileTypes = ["image/png", "image/jpeg", "image/jpg"];
+
+    // If file size is greater than the max size or file type is not valid, alert the user and do not set the file
+    if (file.size > maxSize || !validFileTypes.includes(file.type)) {
+      alert(
+        "File size exceeds 6MB or the file type is not supported. Please select another image."
+      );
+      return;
+    }
+
+    // If file size and type are valid, set the file
+    setImage(file);
   };
 
   const becomePremium = async () => {
@@ -179,9 +196,29 @@ function Profile() {
   }, []);
 
   return (
-    <div>
+    <div className="mypage-profile-container">
       <div className="mypage-profile">
         <h1>Profile</h1>
+      </div>
+      <div
+        className="mypage-profile"
+        style={{ display: "flex", alignItems: "center", gap: "20px" }}
+      >
+        <div>
+          <img src={profilePic} className="mypage-profilepic"></img>
+          <input
+            type="file"
+            id="imageUpload"
+            name="imageUpload"
+            accept=".png, .jpg, .jpeg"
+            onChange={handleImageChange}
+          />
+          <Button
+              className="default-button"
+              content="Upload Image"
+              onClickEvent={handleImageSubmit}
+            />
+        </div>
       </div>
       <div
         className="mypage-profile"
@@ -228,7 +265,7 @@ function Profile() {
         {
           !canEditBio ?
             <div style={{ width: "600px" }}>
-              {bio ? bio : "There is no bio yet."}
+              {bio ? bio : "You have not created a Bio yet"}
             </div>
             :
             <input
@@ -242,9 +279,7 @@ function Profile() {
             />
         }
 
-
-      </div>
-      {
+        {
         canEditBio ?
           <Button
             className="default-button"
@@ -258,18 +293,22 @@ function Profile() {
             onClickEvent={() => setCanEditBio(true)}
           />
       }
+      </div>
+      
       <div
         style={{
           display: "flex",
           gap: "40px",
           alignItems: "center",
-          marginTop: "15px"
+          marginTop: "15px",
+          paddingBottom: "10px",
+          borderBottom: "1px solid black"
         }}
       >
         <p className="personalinfo-field-head">Email</p>
         <p>{profile.email}</p>
       </div>
-      <div>
+      <div style={{paddingTop:"10px"}}>
         <p className="personalinfo-field-head" style={{ textAlign: "left" }}>
           Subscription Plan
         </p>

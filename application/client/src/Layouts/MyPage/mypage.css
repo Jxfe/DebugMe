@@ -194,3 +194,21 @@
   background-color: #4b1161;
   color: white;
 }
+
+.mypage-profile {
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+}
+
+.mypage-profile-container {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.mypage-profilepic {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 10px rgb(136, 136, 136);
+  margin-bottom: 10px;
+}
