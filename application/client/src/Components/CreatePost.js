@@ -22,6 +22,7 @@ export default function CreatePost({ onClose, setCreateShowing }) {
       }
     });
     setCreateShowing(false);
+    window.location.reload();
   };
 
   return (

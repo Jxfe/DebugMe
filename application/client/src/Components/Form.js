@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import EventInfo_1 from "./EventInfo_1";
-import EventInfo_2 from "./EventInfo_2";
 
 function Form() {
   const [page, setPage] = useState(0);

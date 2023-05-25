@@ -148,7 +148,7 @@ function SignUp() {
       <form className="form-container" onSubmit={submitForm}>
         <div className="input-container">
           <label className="input-label" htmlFor="name">
-            name
+            Username
           </label>
           <input
             className="input-box"
@@ -157,7 +157,7 @@ function SignUp() {
             type="text"
             id="name"
             onChange={changeName}
-            placeholder="Full Name"
+            placeholder="Username"
           />
           <p className="warning">
             {!isValidname &&

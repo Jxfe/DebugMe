@@ -25,7 +25,7 @@ function SavedPremiumGuides({ saved }) {
               >
                 <GuideCard
                   id={item?.guide?.id}
-                  img="https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+                  img="/logo.png"
                   title={item?.guide?.title}
                   author={item?.guide?.author?.name}
                   rating={Math.floor(item?.guide?.rating)}

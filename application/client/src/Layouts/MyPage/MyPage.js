@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react"; // Needed for AWS since it's
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
 import SavedPremiumGuides from "./SavedPremiumGuides";
-import CustomerRequest from "./CustomerRequests";
 import MentoringSessions from "./MentoringSessions";
 import Messages from "./Messages";
 import "./mypage.css";
 import Profile from "./Profile";
-import UpdatePayment from "../UpdatePayment/UpdatePayment";
 import { customAxios } from "../../utils/customAxios";
 
 function MyPage() {
@@ -45,16 +43,6 @@ function MyPage() {
           >
             Profile
           </Link>
-          {/* <Link
-            to="/mypage/updatepayment"
-            className={
-              pathname.includes("updatepayment")
-                ? "highlight mypage-nav-link"
-                : "mypage-nav-link"
-            }
-          >
-            Financial Information
-          </Link> */}
           <Link
             to="/mypage/messages"
             className={
@@ -85,20 +73,12 @@ function MyPage() {
           >
             Saved Premium Guides
           </Link>
-          {/* <Link to="/myevents" className="mypage-nav-link">
-            My Events
-          </Link>
-          <Link to="/mypage/customer-requests" className="mypage-nav-link">
-            Customer Requests
-          </Link> */}
         </div>
 
         <div className="mypage-personalinfo">
           <Routes>
             <Route path="profile" element={<Profile />} />
-            <Route path="updatepayment" element={<UpdatePayment />} />
             <Route path="saved-premium-guides" element={<SavedPremiumGuides saved={profile.saved} />} />
-            <Route path="customer-requests" element={<CustomerRequest />} />
             <Route path="mentoring-sessions" element={<MentoringSessions menteeSessions={profile.menteeSessions} mentorSessions={profile.mentorSessions} mentoringRequests={profile.mentoringRequests} />} />
             <Route path="messages" element={<Messages />} />
           </Routes>
