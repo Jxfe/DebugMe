@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/Milestones/M4/BetaPrototype/client/api
-ExecStart=/home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/Milestones/M4/BetaPrototype/client/api/env/bin/gunicorn -w 2 -b 127.0.0.1:5000 run:app
+WorkingDirectory=/home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/application/client/api
+ExecStart=/home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/application/client/api/env/bin/gunicorn -w 2 -b 127.0.0.1:5000 run:app
 Restart=always
 
 [Install]

@@ -1,7 +1,7 @@
 server {
     listen 80;
     server_name 18.237.101.95;
-    root /home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/Milestones/M4/BetaPrototype/client/build;
+    root /home/ubuntu/actions-debugme/_work/csc648-848-05-sw-engineering-spring-2023-T02/csc648-848-05-sw-engineering-spring-2023-T02/application/client/build;
     index index.html;
 
     location / {
