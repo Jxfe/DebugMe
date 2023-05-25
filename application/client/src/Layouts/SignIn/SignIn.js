@@ -66,12 +66,11 @@ function SignIn() {
         setUsername("");
         setEmail("");
         setPassword("");
-        // const whoami = customAxios({
-        //   method: "get",
-        //   url: "/api/whoami"
-        // });
+        const whoami = customAxios({
+          method: "get",
+          url: "/api/whoami"
+        });
         navigate(from, { replace: true });
-        //navigate("/");
         window.location.reload();
       })
       .catch((error) => {
