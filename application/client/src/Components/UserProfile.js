@@ -20,7 +20,7 @@ export default function UserProfile({ profileContents }) {
 
   useEffect(() => {
     setUserID(() => profileContents?.userID);
-    setProfilePic(() => profileContents?.profilePic);
+    setProfilePic(() => profileContents?.image_path);
     setUsername(() => profileContents?.username);
     setEmail(() => profileContents?.email);
     setBio(() => profileContents?.bio);
@@ -77,7 +77,7 @@ export default function UserProfile({ profileContents }) {
               src={
                 profilePic
                   ? profilePic
-                  : "https://media.istockphoto.com/id/1317474419/photo/amazon.jpg?s=1024x1024&w=is&k=20&c=c_fhWiXAuoeQ0vutDiPlVqjVdx23hc1MKtr-HEzmC38="
+                  : "/logo.png"
               }
               className="profile-img"
             />
@@ -92,11 +92,12 @@ export default function UserProfile({ profileContents }) {
         <div className="profile-buttons">
           <textarea
             className="profile-message-textarea"
+            placeholder={`Send a message to ${username}`}
             onChange={(e) => setMessage(e.target.value)}
           ></textarea>
           <Button
             className={"default-button"}
-            content="Message"
+            content="Send"
             onClickEvent={addMessage}
           />
         </div>

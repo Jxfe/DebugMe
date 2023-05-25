@@ -29,7 +29,7 @@ function Post() {
   function showProfile(userID, profilePic, username, bio, onClose) {
     setProfileContents({
       userID: userID,
-      profilePic: profilePic,
+      image_path: profilePic,
       username: username,
       bio: bio,
       onClose: onClose
@@ -79,6 +79,22 @@ function Post() {
     });
   };
 
+  const deleteComment = async (commentID) => {
+    await customAxios({
+      method: "delete",
+      url: "/api/deletecomment",
+      data: {
+        id:commentID
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then((response) => {
+      navigator(`/posts/${id}`);
+      window.location.reload();
+    });
+  };
+
   const renderComments = () => {
     return postContents?.replies?.map((item, index) => {
       return (
@@ -89,9 +105,9 @@ function Post() {
               onClick={() => {
                 showProfile(
                   item?.author?.id,
-                  "",
+                  item?.author?.image_path,
                   item?.author?.name,
-                  `${item?.author?.name}'s Bio goes here.`,
+                  item?.author?.bio,
                   hideProfile
                 );
               }}
@@ -99,8 +115,14 @@ function Post() {
               {item.author?.name}
             </Link>
           </p>
-          <p style={{ fontSize: "12px" }}>{moment.utc(item?.created_at).fromNow()}</p>
+          <div style={{display:"flex", flexDirection:"row", margin:"0 auto"}}>
+            <p style={{ fontSize: "13px" }}>{moment.utc(item?.created_at).fromNow()}</p>
+            {auth?.userID == item?.author?.id && (
+            <p className="comment-delete" onClick={() => deleteComment(item?.id)}>Delete Comment</p>
+          )}
+          </div>
           <p className="comment-content">{item?.content}</p>
+          
         </div>
       );
     });
@@ -142,9 +164,9 @@ function Post() {
               onClick={() => {
                 showProfile(
                   postContents?.author?.id,
-                  "",
+                  postContents?.author?.image_path,
                   postContents?.author?.name,
-                  `${postContents?.author?.name}'s Bio goes here.`,
+                  postContents?.author?.bio,
                   hideProfile
                 );
               }}

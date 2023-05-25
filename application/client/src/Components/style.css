@@ -226,7 +226,7 @@
 
 /* User Profile Modal */
 .profile-container {
-  height: 375px;
+  height: 400px;
   width: 600px;
   border: 1px solid black;
   background-color: var(--lightgray);
@@ -244,8 +244,8 @@
 .user-info {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding-top: 20px;
+  /* justify-content: space-between; */
+  padding: 20px 0;
 }
 
 .picture-container {
@@ -256,6 +256,7 @@
 .profile-img {
   height: 150px;
   width: 150px;
+  border-radius: 50%;
 }
 
 .username-bio {

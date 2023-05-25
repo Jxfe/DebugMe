@@ -12,7 +12,7 @@ import { Stack } from "@mui/material";
 
 import "./showguide.css";
 import { toast } from "react-toastify";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+// import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { ReactDOM } from "react";
 
 function ShowGuide() {
@@ -43,7 +43,7 @@ function ShowGuide() {
   function showProfile(userID, profilePic, username, bio, onClose) {
     setProfileContents({
       userID: userID,
-      profilePic: profilePic,
+      image_path: profilePic,
       username: username,
       bio: bio,
       onClose: onClose
@@ -72,7 +72,6 @@ function ShowGuide() {
           autoClose: 3000,
           hideProgressBar: true
         });
-        //setShowSuccessModal(true);
       }
     } catch (e) {
       console.error("Failed to request mentoring session", e);
@@ -210,9 +209,9 @@ function ShowGuide() {
                 onClick={() => {
                   showProfile(
                     guideContents?.author?.id,
-                    "",
+                    guideContents?.author?.image_path,
                     guideContents?.author.name,
-                    `${guideContents?.author?.name}'s Bio goes here.`,
+                    guideContents?.author?.bio,
                     hideProfile
                   );
                 }}
